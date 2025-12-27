@@ -1,0 +1,86 @@
+@import "tailwindcss";
+
+@theme {
+  /* Eternavue Brand Colors */
+  --color-primary-50: #f0f4f8;
+  --color-primary-100: #d9e2ec;
+  --color-primary-500: #1F3252;
+  --color-primary-600: #172a45;
+  --color-primary-700: #0f1f38;
+  --color-primary-800: #0a1629;
+  --color-primary-900: #050b14;
+  --color-primary-950: #02050a;
+  
+  --color-accent-400: #eac59b;
+  --color-accent-500: #D4A574;
+  --color-accent-600: #c19660;
+  
+  --color-holographic-cyan: #32B8C6;
+  --color-holographic-glow: rgba(50, 184, 198, 0.3);
+  
+  --color-neutral-100: #F5F5FD;
+  --color-neutral-200: #e5e5e5;
+  --color-neutral-300: #d4d4d4;
+  --color-neutral-400: #a3a3a3;
+  --color-neutral-500: #737373;
+  --color-neutral-600: #525252;
+  --color-neutral-700: #404040;
+  --color-neutral-900: #1a1a1a;
+  
+  /* Font families */
+  --font-sans: var(--font-inter), system-ui, -apple-system, sans-serif;
+  --font-serif: var(--font-playfair), Georgia, serif;
+}
+
+/* Base styles */
+:root {
+  --background: #02050a;
+  --foreground: #ffffff;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Headings use serif font */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-serif);
+}
+
+/* Selection color */
+::selection {
+  background-color: var(--color-holographic-cyan);
+  color: white;
+}
+
+/* Focus styles for accessibility */
+*:focus-visible {
+  outline: 2px solid var(--color-holographic-cyan);
+  outline-offset: 2px;
+}
+
+/* Custom scrollbar (Webkit browsers) */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--color-primary-950);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-primary-700);
+  border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-holographic-cyan);
+}
