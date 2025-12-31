@@ -64,7 +64,7 @@ eternavue-web/
 
 
 
-\- ✅ Next.js 14 initialized
+\- ✅ Next.js 16 initialized
 
 \- ✅ TypeScript configured
 
