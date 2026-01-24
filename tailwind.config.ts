@@ -2,6 +2,7 @@ import type { Config } from 'tailwindcss'
 import { tokens } from './src/design/tokens'
 
 const config: Config = {
+  darkMode: 'class',
   content: [
     './src/pages/**/*.{js,ts,jsx,tsx,mdx}',
     './src/components/**/*.{js,ts,jsx,tsx,mdx}',
@@ -17,6 +18,7 @@ const config: Config = {
       },
       fontSize: tokens.typography.fontSize,
       spacing: tokens.spacing,
+      screens: tokens.breakpoints,
     },
   },
   plugins: [],
