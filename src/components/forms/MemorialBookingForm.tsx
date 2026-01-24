@@ -5,6 +5,7 @@ import { Input } from '@/components/ui/Input'
 import { Textarea } from '@/components/ui/Textarea'
 import { Select } from '@/components/ui/Select'
 import { Button } from '@/components/ui/Button'
+import { useTallyForm } from '@/hooks/useTallyForm'
 
 export function MemorialBookingForm() {
   const [formData, setFormData] = useState({
@@ -15,12 +16,27 @@ export function MemorialBookingForm() {
     date: '',
     message: ''
   })
-  
-  const handleSubmit = (e: React.FormEvent) => {
+
+  const formId = process.env.NEXT_PUBLIC_TALLY_FORM_ID_MEMORIAL || 'demo'
+  const { submit, loading, error, success } = useTallyForm(formId)
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    // TODO: Integrate with Tally Forms or backend
-    console.log('Memorial booking submitted:', formData)
-    alert('Thank you for your inquiry. We will contact you within 24 hours.')
+    try {
+      await submit(formData)
+      // Reset form on success
+      setFormData({
+        name: '',
+        email: '',
+        phone: '',
+        serviceType: '',
+        date: '',
+        message: ''
+      })
+    } catch (error) {
+      // Error is handled in the hook
+      console.error('Form submission failed:', error)
+    }
   }
   
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
@@ -36,6 +52,18 @@ export function MemorialBookingForm() {
         <h3 className="text-2xl font-serif font-bold text-white mb-2">Memorial Service Inquiry</h3>
         <p className="text-neutral-400">Fill out the form below and we'll help you honor your loved one's legacy.</p>
       </div>
+
+      {success && (
+        <div className="p-4 rounded-lg bg-green-500/10 border border-green-500/20 text-green-600 dark:text-green-400">
+          ✓ Thank you for your inquiry. We will contact you within 24 hours.
+        </div>
+      )}
+
+      {error && (
+        <div className="p-4 rounded-lg bg-red-500/10 border border-red-500/20 text-red-600 dark:text-red-400">
+          ✗ {error}
+        </div>
+      )}
       
       <Input
         label="Full Name"
@@ -109,8 +137,14 @@ export function MemorialBookingForm() {
         variant="glass"
       />
       
-      <Button type="submit" variant="secondary" size="lg" fullWidth>
-        Submit Inquiry
+      <Button
+        type="submit"
+        variant="secondary"
+        size="lg"
+        fullWidth
+        disabled={loading}
+      >
+        {loading ? 'Submitting...' : 'Submit Inquiry'}
       </Button>
     </form>
   )
