@@ -1,544 +1,419 @@
-# Eternavue Web - Application Quality Assessment
+# Eternavue Web - Application Quality Assessment (Validated)
 
 **Assessment Date:** February 7, 2026
 **Assessor:** Automated Quality Analysis (Cloud Agent)
 **Application:** eternavue-web v0.1.0
 **Tech Stack:** Next.js 16.0.5 / React 19.2.0 / TypeScript 5.9 / Tailwind CSS 4
 **Total Source Lines:** ~1,976 across 22 source files
+**Validation:** All claims verified against build output, rendered HTML, npm audit JSON, WCAG contrast calculations, and static analysis
 
 ---
 
 ## Executive Summary
 
-| Category                    | Score  | Grade |
-|-----------------------------|--------|-------|
-| Code Quality & Architecture | 62/100 | C+    |
-| UI/UX Design                | 72/100 | B-    |
-| Accessibility (a11y)        | 35/100 | F     |
-| Security                    | 30/100 | F     |
-| Performance                 | 58/100 | D+    |
-| Testing                     | 0/100  | F     |
-| SEO & Discoverability       | 45/100 | D     |
-| Documentation               | 70/100 | B-    |
-| DevOps & CI/CD              | 25/100 | F     |
-| Maintainability             | 55/100 | D+    |
-| **Overall**                 | **45/100** | **D+** |
+| Category                    | Original | Validated | Grade | Change |
+|-----------------------------|----------|-----------|-------|--------|
+| Code Quality & Architecture | 62       | 55/100    | D+    | -7 (tokens/TW4 arch issue worse than stated) |
+| UI/UX Design                | 72       | 68/100    | C+    | -4 (dead links worse than stated) |
+| Accessibility (a11y)        | 35       | 28/100    | F     | -7 (opacity:0 SSR issue is critical) |
+| Security                    | 30       | 35/100    | F     | +5 (3 of 6 CVEs actually apply, not all 6) |
+| Performance                 | 58       | 55/100    | D+    | -3 (opacity:0 kills perceived performance) |
+| Testing                     | 0        | 0/100     | F     | -- (confirmed: zero tests) |
+| SEO & Discoverability       | 45       | 50/100    | D     | +5 (Twitter cards auto-generated) |
+| Documentation               | 70       | 62/100    | C-    | -8 (stale/misleading docs worse than stated) |
+| DevOps & CI/CD              | 25       | 28/100    | F     | +3 (CI exists on another branch, just not merged) |
+| Maintainability             | 55       | 48/100    | D     | -7 (dead code, dual config, memory leaks) |
+| **Overall**                 | **45**   | **43/100**| **D** | **-2** |
 
-**Verdict:** The application is an early-stage MVP with a polished visual design but significant gaps in testing, security, accessibility, SEO, and CI/CD. The codebase is well-organized structurally but has lint errors, unused code, and no form backend integration. It is **not production-ready** in its current state.
-
----
-
-## 1. Code Quality & Architecture (62/100 - Grade: C+)
-
-### 1.1 TypeScript Configuration (8/10)
-**Strengths:**
-- Strict mode enabled (`"strict": true`)
-- Path aliases configured (`@/*`)
-- `noEmit: true` with separate type-checking
-- `isolatedModules: true` for bundler compatibility
-
-**Weaknesses:**
-- No explicit `forceConsistentCasingInFileNames`
-- No `noUncheckedIndexedAccess` (would catch potential undefined access)
-- TypeScript compiles cleanly (0 errors) - this is good
-
-### 1.2 ESLint & Linting (4/10)
-**Critical Issues Found:**
-- **8 ESLint errors** (unescaped entities in JSX across 4 files)
-- **6 ESLint warnings** (unused variables/imports in 4 files)
-- Lint command exits with code 1 (would fail CI)
-
-Specific failures:
-| File | Issue | Severity |
-|------|-------|----------|
-| `page.tsx` | `Testimonial` imported but never used | Warning |
-| `page.tsx` | `Button` imported but never used | Warning |
-| `page.tsx` | Unescaped `"` and `'` in JSX text (5 instances) | Error |
-| `CTA.tsx` | `variant` prop destructured but unused | Warning |
-| `Hero.tsx` | `backgroundImage` prop defined but unused | Warning |
-| `GlassCard.tsx` | `cn` imported but never used | Warning |
-| `Testimonial.tsx` | Uses `<img>` instead of `next/image` | Warning |
-| `MemorialBookingForm.tsx` | Unescaped `'` (2 instances) | Error |
-| `EventInquiryForm.tsx` | Unescaped `'` | Error |
-
-### 1.3 Architecture & Organization (8/10)
-**Strengths:**
-- Clean component categorization (ui/, content/, forms/, layout/, media/, branding/)
-- Components are well-scoped and focused (all under 150 lines except `page.tsx`)
-- Design tokens centralized in `src/design/tokens.ts`
-- `cn()` utility for class merging (clsx + tailwind-merge)
-- Named exports used consistently (good tree-shaking)
-- Props interfaces defined for all components
-
-**Weaknesses:**
-- `page.tsx` is 290 lines with `'use client'` - the entire page is client-rendered, defeating Next.js server component benefits
-- No separation of concerns in forms (no validation library, no form state management)
-- Duplicate form handling logic across 3 form components (DRY violation)
-- GlassCard imports `cn` but uses template literals instead (inconsistency)
-
-### 1.4 Code Smells & Anti-patterns (5/10)
-- **5 `console.log()` calls** in production code (forms + BackgroundVideo)
-- **3 `alert()` calls** as form submission feedback (not production-appropriate)
-- **1 TODO comment** left in MemorialBookingForm: `// TODO: Integrate with Tally Forms or backend`
-- GlassCard has a stale comment: `// Assuming a utils file exists, if not I'll handle it`
-- `page.tsx` uses `setTimeout` with `scrollIntoView` (fragile timing hack)
-- The `Testimonial` and `ServiceCard` components are imported/defined but not used via their reusable interfaces in `page.tsx` (testimonials are inlined instead)
+**Verdict:** Validation revealed the app is slightly worse than initially assessed. Key corrections: Framer Motion `opacity:0` makes all content invisible without JavaScript (a major issue missed initially), the design token system is effectively dead code due to Tailwind v4 architecture, and several memory leak risks exist. However, the security score improved because only 3 of 6 reported CVEs actually apply to this codebase.
 
 ---
 
-## 2. UI/UX Design (72/100 - Grade: B-)
+## Validation Methodology
 
-### 2.1 Visual Design (9/10)
-**Strengths:**
-- Cohesive dark theme with glassmorphism aesthetic
-- Well-chosen color palette (professional dark blue, warm gold accent, tech-forward cyan)
-- Holographic/glow effects align with brand identity
-- Typography hierarchy with serif (Playfair Display) for headings and sans-serif (Inter) for body
-- Custom scrollbar styling
-- Selection color customization
-- Animated background orbs create visual interest
+Each claim from the original assessment was verified using:
 
-**Weaknesses:**
-- No actual images or visual media on the page (all text-based)
-- Grid SVG background referenced (`/grid.svg`) but file doesn't exist in `/public`
-
-### 2.2 Responsive Design (7/10)
-**Strengths:**
-- Mobile-first approach with `md:` breakpoints
-- Header has functional mobile menu with AnimatePresence
-- Flex/Grid layouts adapt to screen sizes
-- Buttons stack vertically on mobile
-
-**Weaknesses:**
-- No `sm:` breakpoint usage (jump from mobile to `md:768px` is large)
-- Hero text sizes jump from `text-5xl` directly to `md:text-7xl` to `lg:text-8xl` (large jumps)
-- No container queries or modern responsive patterns
-- Not tested across actual viewport sizes (no visual regression testing)
-
-### 2.3 Interaction Design (6/10)
-**Strengths:**
-- Framer Motion animations throughout (fade-in, scroll-triggered, stagger)
-- Hover effects on service cards (scale, color transitions)
-- Smooth scroll behavior
-- Animated scroll indicator on hero
-
-**Weaknesses:**
-- "Watch Video" button in hero does nothing (no handler attached)
-- "View Our Portfolio" CTA button has no click handler
-- Footer links (Privacy, Terms, About Us, Careers, Press) all point to `#` anchors that don't exist
-- Social media links (LinkedIn, Instagram, Facebook) all point to `#`
-- Navigation links (#memorial, #events, #corporate, #about) reference non-existent sections
-- Contact form uses `alert()` for feedback instead of toast notifications or inline success states
-- Newsletter form success state auto-dismisses after 3 seconds (may confuse users)
-
-### 2.4 Component Design System (7/10)
-**Strengths:**
-- Button component with 3 variants (primary, secondary, ghost) and 3 sizes
-- Input/Select/Textarea with consistent "glass" variant for dark backgrounds
-- Error states and helper text support on form fields
-- GlassCard reusable with optional hover effects
-- Design tokens file provides systematic values
-
-**Weaknesses:**
-- Design tokens in `tokens.ts` are partially duplicated in `globals.css` `@theme` block
-- Tokens file defines `Georgia` as display font, but actual fonts loaded are `Playfair Display` and `Inter` (inconsistency)
-- No loading states/spinners for form submissions
-- No skeleton/placeholder components
-- ColorSwatch and EternavueMark components exist but are never used in the actual app
+| Tool/Technique | What It Validated |
+|---|---|
+| `npm audit --json` | Exact CVE ranges, CVSS scores, applicability analysis |
+| `npm run build` + HTML inspection | SSR output quality, pre-rendered content, opacity:0 elements |
+| Python WCAG 2.1 contrast calculator | Exact contrast ratios for 15 color pairs |
+| `npm run lint` (re-run) | Confirmed 8 errors, 6 warnings unchanged |
+| `npx tsc --noEmit` (re-run) | Confirmed 0 TypeScript errors |
+| Rendered HTML analysis | Semantic HTML audit, ARIA attribute count, anchor link validation |
+| Static code analysis | `use client` necessity, key prop usage, memory leaks, XSS vectors |
+| Bundle size measurement | Exact gzipped sizes for each JS/CSS chunk |
+| GitHub CLI (`gh`) | Repo settings, CI history, branch analysis |
 
 ---
 
-## 3. Accessibility (35/100 - Grade: F)
+## 1. Code Quality & Architecture (55/100 - Grade: D+)
 
-### 3.1 ARIA & Semantic HTML (3/10)
-**Critical Failures:**
-- Only **1 `aria-label`** in the entire codebase (mobile menu toggle)
-- **Zero `role` attributes** anywhere
-- No `aria-live` regions for dynamic content (form submissions, contact form appearance)
-- No `aria-expanded` on mobile menu toggle button
-- No `aria-hidden` on decorative elements (orbs, gradients, holographic effects)
-- Social media links have no accessible labels (`<a href="#"><Linkedin /></a>` - screen reader sees nothing)
-- No skip-to-content link
+### CORRECTION: Score lowered from 62 to 55
 
-### 3.2 Keyboard Navigation (4/10)
-**Strengths:**
-- `focus-visible` styles defined globally
-- `focus:ring-2` on buttons and form inputs
-- `focus:outline-none` with ring replacement
+**New findings that worsened the score:**
 
-**Weaknesses:**
-- Service cards use `onClick` on `<div>` elements (not keyboard accessible)
-- Close button for contact form uses `<button>` (good) but positioned with negative top offset (may be hard to reach)
-- No focus trap in mobile menu overlay (user can tab behind it)
-- No `Escape` key handler to close mobile menu
+#### 1.1 Tailwind v4 Architecture Problem (NEW - Critical)
+The project has a **dual configuration problem** caused by migration to Tailwind CSS v4:
 
-### 3.3 Color Contrast (5/10)
-**Concerns:**
-- `text-neutral-400` on `bg-primary-950` may fail WCAG AA (gray #a3a3a3 on near-black)
-- `text-white/50` used for secondary actions (50% opacity white = ~#808080, likely fails)
-- `text-neutral-500` in footer (#737373 on near-black) likely fails WCAG AA
-- `text-white/30` placeholder text is almost invisible
-- No contrast testing has been performed
+- `globals.css` uses `@import "tailwindcss"` and `@theme { }` (TW v4 way)
+- `tailwind.config.ts` imports `tokens.ts` (TW v3 way)
+- No `@config` directive in CSS, meaning `tailwind.config.ts` is likely **ignored by TW v4**
+- `globals.css @theme` defines **11 colors not present in `tokens.ts`** (primary-800/900/950, accent-400, neutral-200/300/400/500/600/700)
+- `tokens.ts` is therefore **stale/dead code** that misleads developers
 
-### 3.4 Screen Reader Support (2/10)
-- No `alt` text needed since no images are actually rendered on the page
-- Quote marks in testimonials are decorative `"` characters in divs (no semantic `<blockquote>`)
-- Steps in "How It Works" section use numbers in divs instead of ordered lists
-- No landmark roles beyond semantic HTML elements
+This is worse than the original "partially duplicated" assessment. The tokens.ts and tailwind.config.ts files are effectively dead code creating a false source of truth.
 
----
+#### 1.2 React Key Prop Anti-patterns (NEW)
+4 instances of using array index as React key:
 
-## 4. Security (30/100 - Grade: F)
+| File | Line | Context |
+|------|------|---------|
+| `page.tsx` | 115 | Service features list `.map((item, i) => <li key={i}>)` |
+| `page.tsx` | 190 | How It Works steps `.map((item, idx) => ... key={idx})` |
+| `Hero.tsx` | 69 | Title word splitting `.map((word, i) => <span key={i}>)` |
+| `ServiceCard.tsx` | 47 | Features list `.map((feature, index) => <li key={index}>)` |
 
-### 4.1 Dependency Vulnerabilities (2/10)
-**CRITICAL: 1 critical vulnerability found via `npm audit`:**
-- `next@16.0.5` has **6 known vulnerabilities:**
-  - RCE in React flight protocol (CRITICAL)
-  - Server Actions source code exposure
-  - DoS via Server Components
-  - DoS via Image Optimizer
-  - HTTP request deserialization DoS
-  - Unbounded memory consumption via PPR Resume
-- Fix available: `next@16.1.6`
+For static lists this is acceptable, but it violates React best practices and could cause bugs if lists become dynamic.
 
-### 4.2 Outdated Dependencies (4/10)
-| Package | Current | Latest | Risk |
-|---------|---------|--------|------|
-| next | 16.0.5 | 16.1.6 | Critical security patches missing |
-| react | 19.2.0 | 19.2.4 | Bug fixes missing |
-| framer-motion | 11.18.2 | 12.33.0 | Major version behind |
-| lucide-react | 0.400.0 | 0.563.0 | Significantly behind |
-| tailwind-merge | 2.6.1 | 3.4.0 | Major version behind |
+#### 1.3 Memory Leak Risks (NEW)
+- `page.tsx`: `setTimeout` in `handleServiceInquiry` without `clearTimeout` cleanup
+- `NewsletterForm.tsx`: `setTimeout` for auto-dismissing success state without cleanup. If the component unmounts during the 3-second timer (e.g., via AnimatePresence), it would attempt `setState` on an unmounted component.
 
-### 4.3 Input Validation & Sanitization (3/10)
-- **No client-side form validation** beyond HTML `required` attributes
-- No email format validation beyond `type="email"` browser default
-- No phone number format validation
-- No input sanitization library (no DOMPurify or similar)
-- No CSRF protection
-- No rate limiting on form submissions
-- No `dangerouslySetInnerHTML` usage (good)
-- Forms log data to console and show `alert()` - **no actual backend submission**
+#### 1.4 `use client` Directive Issues (NEW)
+- `Footer.tsx`: Has `'use client'` but uses **zero** hooks, event handlers, or browser APIs. Only imports Lucide icons (which are pure SVG server components). This is **unnecessary** and forces the footer into the client bundle.
+- `ServiceCard.tsx`: Has `onClick` prop but no `'use client'` directive. Works only because it's imported from `page.tsx` which is already client-side.
 
-### 4.4 Security Headers & Configuration (3/10)
-- No `middleware.ts` for security headers
-- No Content-Security-Policy (CSP)
-- No `X-Frame-Options`, `X-Content-Type-Options`, or `Strict-Transport-Security` headers configured
-- No `next.config.ts` headers configuration
-- `next.config.ts` is nearly empty (only `reactCompiler: true`)
+#### Confirmed findings from original assessment:
+- 8 ESLint errors, 6 warnings (re-verified, identical results)
+- 0 TypeScript errors (re-verified)
+- 5 `console.log()` calls in production
+- 3 `alert()` calls as form feedback
+- 1 TODO comment, 1 stale comment in GlassCard
+- GlassCard imports `cn` but uses template literals (inconsistency)
 
 ---
 
-## 5. Performance (58/100 - Grade: D+)
+## 2. UI/UX Design (68/100 - Grade: C+)
 
-### 5.1 Build Output (7/10)
-**Strengths:**
-- Build output is only 7.2MB (lean)
-- Build compiles successfully in ~3.2 seconds
-- Static page generation works (page is pre-rendered)
+### CORRECTION: Score lowered from 72 to 68
 
-**Weaknesses:**
-- `baseline-browser-mapping` warning appears 6 times during build (outdated data module)
+#### 2.1 Dead Links - Worse Than Reported (CORRECTED)
+Validation against rendered HTML found **12 dead anchor links** (originally reported as "multiple"):
 
-### 5.2 Client-Side Bundle (4/10)
-**Critical Issue:**
-- `page.tsx` uses `'use client'` making the **entire page client-rendered**
-- This means the full React tree, Framer Motion, and Lucide icons are shipped to the client
-- Framer Motion alone adds ~40KB+ gzipped to the bundle
-- Server Components are completely unused despite Next.js 16 support
+| Anchor | Used In | Target Exists? |
+|--------|---------|----------------|
+| `#memorial` | Header, Footer | **NO** (no element with `id="memorial"`) |
+| `#events` | Header, Footer | **NO** |
+| `#corporate` | Header, Footer | **NO** |
+| `#about` | Header, Footer | **NO** |
+| `#technology` | Footer | **NO** |
+| `#contact` | Footer | **NO** |
+| `#careers` | Footer | **NO** |
+| `#press` | Footer | **NO** |
 
-**Recommendations:**
-- Split page into server and client components
-- Only wrap interactive sections in `'use client'`
-- Consider lazy-loading form components
+Only 2 IDs exist in the rendered HTML: `#services` and `#_R_` (internal React).
+The `#services` ID exists but **no navigation link points to it**.
 
-### 5.3 Image & Asset Optimization (4/10)
-- No actual images used on the page (no photos, hero images, or portfolio)
-- References `/grid.svg` which doesn't exist
-- `Testimonial` component uses native `<img>` instead of `next/image` (ESLint warning)
-- `HolographicImage` and `ResponsiveImage` correctly use `next/image` but are never used
-- No favicon optimization (uses default Next.js favicon)
+#### 2.2 Non-functional Interactive Elements (confirmed)
+- "Watch Video" button: No handler attached (confirmed in HTML output)
+- "View Our Portfolio" button: No `onSecondaryClick` passed (confirmed)
+- 3 social media links: `href="#"` with no real URLs (confirmed)
+- Privacy/Terms links: `href="#"` (confirmed)
 
-### 5.4 Animation Performance (6/10)
-**Strengths:**
-- Framer Motion uses `viewport: { once: true }` to avoid re-triggering
-- Uses `transform` and `opacity` for animations (GPU-accelerated)
+#### 2.3 Missing Asset (confirmed)
+- `/grid.svg` referenced in Hero and CTA backgrounds does not exist in `/public/`. Only `file.svg`, `globe.svg`, `next.svg`, `vercel.svg`, `window.svg` exist (all default Next.js assets, none custom).
 
-**Weaknesses:**
-- Hero has `animate-pulse` on "Holographic" text (infinite CSS animation)
-- Three continuously animating background orbs (infinite Framer Motion animations)
-- `whileHover` scale transforms on cards could cause layout shifts
-- No `will-change` CSS hints
-- No `prefers-reduced-motion` media query respect
+---
 
-### 5.5 Rendering Strategy (5/10)
-- Page is statically generated (good for a landing page)
-- No dynamic routes to worry about
-- No API routes
-- No data fetching
-- However, `'use client'` negates many SSR benefits
-- No loading.tsx or Suspense boundaries
-- No streaming support utilized
+## 3. Accessibility (28/100 - Grade: F)
+
+### CORRECTION: Score lowered from 35 to 28
+
+#### 3.1 CRITICAL NEW FINDING: Content Invisible Without JavaScript
+
+**18 elements** in the pre-rendered HTML have `style="opacity:0"` or `style="opacity:0;transform:translateY(...)"`
+
+This means ALL page content (hero, services, testimonials, how-it-works) is **invisible** in the server-rendered HTML until JavaScript hydrates and Framer Motion triggers the entrance animations. Users with JavaScript disabled, slow connections, or screen readers that don't execute JS see a blank page with only the header and footer.
+
+Affected elements include:
+- Hero content wrapper (`opacity:0; transform:translateY(20px)`)
+- Hero CTA buttons (`opacity:0; transform:translateY(10px)`)
+- Trust signal text (`opacity:0`)
+- Services section title and subtitle
+- All 3 service cards
+- All "How It Works" steps
+- Testimonials section title
+
+**This is a WCAG 2.1 Level A failure** (1.3.1 Info and Relationships, 1.3.2 Meaningful Sequence).
+
+#### 3.2 WCAG Contrast Ratio Results (Validated with calculation)
+
+| Color Combination | Ratio | AA Normal | AA Large | AAA Normal |
+|---|---|---|---|---|
+| text-neutral-400 on primary-950 | 8.09:1 | PASS | PASS | PASS |
+| text-neutral-300 on primary-900 | 13.31:1 | PASS | PASS | PASS |
+| **text-neutral-500 on primary-950 (footer)** | **4.31:1** | **FAIL** | PASS | FAIL |
+| text-white/50 on primary-900 | 5.00:1 | PASS | PASS | FAIL |
+| **text-white/30 placeholder on white/5** | **2.30:1** | **FAIL** | **FAIL** | **FAIL** |
+| text-white on primary-950 | 20.41:1 | PASS | PASS | PASS |
+| text-holographic-cyan on primary-950 | 8.56:1 | PASS | PASS | PASS |
+| text-accent-500 on primary-950 | 9.17:1 | PASS | PASS | PASS |
+| text-white on primary-500 (button) | 12.83:1 | PASS | PASS | PASS |
+| text-primary-950 on accent-500 (secondary btn) | 9.17:1 | PASS | PASS | PASS |
+| **text-green-600 success on white** | **3.30:1** | **FAIL** | PASS | FAIL |
+| **text-neutral-500 footer copyright** | **4.31:1** | **FAIL** | PASS | FAIL |
+
+**CORRECTION from original:** `text-neutral-400 on primary-950` actually **PASSES** WCAG AA at 8.09:1. The original assessment incorrectly flagged this. However, `text-neutral-500` (footer copyright, 4.31:1), `text-white/30` placeholders (2.30:1), and `text-green-600` success message (3.30:1) do genuinely fail.
+
+**4 WCAG AA failures confirmed** (down from originally implied ~5, but with exact ratios).
+
+#### 3.3 ARIA Audit (Validated from rendered HTML)
+- `aria-label`: **1 total** ("Toggle menu" on mobile hamburger)
+- `aria-hidden`: **0** (decorative orbs/gradients need `aria-hidden="true"`)
+- `aria-expanded`: **0** (mobile menu toggle needs this)
+- `aria-live`: **0** (form submission feedback needs this)
+- `role`: **0**
+- Social media icon links: **3 links with NO accessible text** (confirmed - screen readers see empty links)
+- No `<blockquote>` for testimonial quotes
+- No `<ol>` for numbered "How It Works" steps
+
+---
+
+## 4. Security (35/100 - Grade: F)
+
+### CORRECTION: Score raised from 30 to 35
+
+#### 4.1 CVE Applicability Analysis (CORRECTED)
+Deep analysis of the 6 reported CVEs against actual codebase usage:
+
+| CVE | CVSS | Applies? | Reasoning |
+|---|---|---|---|
+| RCE in React flight protocol | **10.0** | **YES** | RSC protocol is used even with `'use client'`. Layout is a server component. RSC payloads served via `_next/static`. **CRITICAL.** |
+| Server Actions source code exposure | 5.3 | **NO** | No `'use server'` directives in codebase. No server actions defined. |
+| DoS with Server Components | 7.5 | **YES** | Layout.tsx is a server component. RSC endpoint exists. Static generation mitigates but doesn't eliminate. |
+| DoS via Image Optimizer remotePatterns | 5.9 | **NO** | No `remotePatterns` in `next.config.ts`. No remote images configured. |
+| HTTP request deserialization DoS | 7.5 | **YES** | RSC deserialization at framework level. Malformed requests could trigger. |
+| Unbounded Memory via PPR Resume | 5.9 | **NO** | PPR not enabled in `next.config.ts`. |
+
+**Result: 3 of 6 CVEs apply** (CVSS 10.0, 7.5, 7.5). The original assessment stated all 6 applied, which was inaccurate. The RCE (CVSS 10.0) still makes this a critical issue regardless.
+
+#### 4.2 XSS Analysis (NEW - Validated)
+- No `dangerouslySetInnerHTML` anywhere (confirmed)
+- Dynamic `href` props in Hero.tsx and CTA.tsx could allow `javascript:` protocol injection, but all values are hardcoded or from component props (not user input). **Low risk currently, but no URL validation exists.**
+- React JSX auto-escaping protects all text content. **No XSS vectors found.**
+
+#### 4.3 Confirmed findings:
+- No security headers (no middleware.ts, no CSP, no HSTS)
+- No form backend (all forms are client-side only)
+- No input sanitization (forms rely on HTML5 `required` only)
+- No CSRF protection needed (no backend exists)
+- No environment variables or secrets in source code
+
+---
+
+## 5. Performance (55/100 - Grade: D+)
+
+### CORRECTION: Score lowered from 58 to 55
+
+#### 5.1 Bundle Size Analysis (Validated with exact measurements)
+
+| Chunk | Raw | Gzipped | Purpose |
+|---|---|---|---|
+| `bdee61417ebd6dc8.js` | 293.3 KB | 87.2 KB | React + ReactDOM runtime |
+| `c4e527d22dfaf34a.js` | 180.5 KB | 56.1 KB | Page component + Framer Motion |
+| `ee23c10f124185e0.js` | 88.4 KB | 22.5 KB | Next.js framework |
+| `42879de7b8087bc9.js` | 27.4 KB | 6.8 KB | Router/hydration |
+| `fd5f064b2a3f9309.js` | 13.0 KB | 4.7 KB | RSC client runtime |
+| `turbopack-*.js` | 9.6 KB | 3.8 KB | Turbopack runtime |
+| `699977e15a5cfb3e.css` | 42.7 KB | 7.7 KB | All CSS |
+| `a6dad97d9634a72d.js` | 110.0 KB | 38.6 KB | noModule polyfill (old browsers only) |
+
+**Modern browser total: 654.9 KB raw / 188.8 KB gzipped**
+
+This is **moderate** for a React SPA with Framer Motion animations. Framer Motion alone contributes ~50KB gzipped. Without it, the bundle would be ~140KB gzipped which is acceptable.
+
+#### 5.2 SSR/Rendering Correction (IMPORTANT)
+
+**Original claim:** "The entire page is client-rendered, defeating Next.js server component benefits."
+
+**Corrected:** The page IS pre-rendered as static HTML (SSG). The pre-rendered HTML is 35.0 KB and contains all content. Next.js generates `index.html` with full markup. However:
+
+1. Framer Motion's `initial={{ opacity: 0 }}` renders as `style="opacity:0"` in the HTML
+2. This makes content **visually invisible** until JavaScript hydrates
+3. The SSR benefit for **visual rendering** is completely negated
+4. The SSR benefit for **SEO crawlers** that parse HTML source still exists (Googlebot reads content even if opacity:0)
+5. The SSR benefit for **meta tags** is preserved
+
+#### 5.3 No `prefers-reduced-motion` Support (confirmed)
+- Zero matches for `prefers-reduced-motion` in codebase
+- 18 animation states that force motion on all users
+- 3 infinite CSS/Framer animations (background orbs, logo pulse)
 
 ---
 
 ## 6. Testing (0/100 - Grade: F)
 
-### 6.1 Unit Tests (0/10)
-- **Zero test files** found (no `.test.ts`, `.test.tsx`, `.spec.ts`, `.spec.tsx`)
-- No testing framework installed (no Jest, Vitest, Testing Library, etc.)
+**Confirmed: Zero test infrastructure.**
+- No `.test.ts`, `.test.tsx`, `.spec.ts`, `.spec.tsx` files
+- No testing framework in dependencies (no Jest, Vitest, Testing Library, Playwright, Cypress)
 - No test scripts in `package.json`
-
-### 6.2 Integration Tests (0/10)
-- No integration test suite
-- No component integration tests
-
-### 6.3 End-to-End Tests (0/10)
-- No E2E framework (no Playwright, Cypress, etc.)
-- No E2E test scripts
-
-### 6.4 Visual Regression Tests (0/10)
-- No visual testing tools
-- No snapshot testing
-
-### 6.5 Accessibility Tests (0/10)
-- No axe-core or similar a11y testing
-- No automated WCAG compliance checks
-
-**This is the single biggest gap in the project.** Even for an MVP, having zero tests means any change could break existing functionality with no safety net.
+- No `__tests__` directories
 
 ---
 
-## 7. SEO & Discoverability (45/100 - Grade: D)
+## 7. SEO & Discoverability (50/100 - Grade: D)
 
-### 7.1 Metadata (7/10)
-**Strengths:**
-- Page title set: "Eternavue | Holographic Experiences That Honor Legacy"
-- Meta description present and descriptive (~190 chars)
-- Keywords defined
-- Author specified
-- OpenGraph title and description configured
-- `lang="en"` on HTML element
+### CORRECTION: Score raised from 45 to 50
 
-**Weaknesses:**
-- No OpenGraph image
-- No Twitter card metadata
-- No canonical URL
-- No structured data (JSON-LD)
+**New finding:** Next.js auto-generates Twitter Card meta tags not explicitly set in source code.
 
-### 7.2 Technical SEO (3/10)
-**Missing:**
-- No `robots.txt` file
-- No `sitemap.xml` or sitemap generation
-- No `not-found.tsx` custom 404 page
-- No breadcrumb structured data
-- No local business schema (important for Detroit Memorial Park connection)
+#### Tags confirmed present in rendered HTML:
+- `<title>` (proper)
+- `meta description` (proper, ~190 chars)
+- `meta author` (Eternavue)
+- `meta keywords` (6 terms)
+- `og:title`, `og:description`, `og:type` (explicit)
+- `twitter:card` = summary (auto-generated by Next.js)
+- `twitter:title`, `twitter:description` (auto-generated)
+- `<link rel="icon">` with cache-busting
+- `<link rel="preload">` for fonts (auto-generated by next/font)
+- `<meta charset="utf-8">`
+- `<meta name="viewport">`
+- `<html lang="en">`
 
-### 7.3 Content SEO (4/10)
-- Single H1 tag (good)
-- H2 and H3 hierarchy present
-- Semantic `<section>` elements used
-- No `<article>`, `<aside>`, or `<nav>` landmarks beyond header
-- Footer links to non-existent pages (#about, #careers, #press, #privacy, #terms)
-- No actual content pages to link to
+#### Still missing:
+- `og:image` / `twitter:image` (no social share image)
+- `og:url` / `canonical` link
+- `og:locale`
+- `robots.txt`
+- `sitemap.xml`
+- JSON-LD structured data (LocalBusiness schema would be ideal)
+- Custom 404 page (uses default Next.js 404)
 
----
-
-## 8. Documentation (70/100 - Grade: B-)
-
-### 8.1 README (8/10)
-**Strengths:**
-- Comprehensive README with project vision, quick start, structure, design system, tech stack, component architecture, development guidelines, deployment instructions, and troubleshooting
-- Well-organized with clear sections and tables
-- Includes component code examples
-
-**Weaknesses:**
-- States "Next.js 15" in structure but actual is Next.js 16
-- Links to "Next.js 15 Docs" but should reference 16
-- Clone URL uses placeholder `yourusername`
-- Says "landing page in progress" but it's built
-
-### 8.2 Additional Documentation (6/10)
-- `DEPLOYMENT.md` with clear Vercel deployment steps
-- `CLAUDE_CONTEXT.md` for AI-assisted development
-- `.claude/project-context.md` exists but contains some outdated info ("Next.js 14")
-- `CONTRIBUTING.md` exists but is empty
-- `LICENSE` (MIT) present
-
-### 8.3 Code Documentation (5/10)
-- TypeScript interfaces serve as API documentation for components
-- Minimal inline comments
-- No JSDoc comments on functions or components
-- No Storybook or component documentation site
-- Design tokens file has inline comments for key colors
+#### Opacity:0 SEO Impact:
+Google's crawler executes JavaScript and should see the content. However, the raw HTML has content at `opacity:0` which older crawlers or social media preview generators may interpret as hidden content (potential ranking penalty).
 
 ---
 
-## 9. DevOps & CI/CD (25/100 - Grade: F)
+## 8. Documentation (62/100 - Grade: C-)
 
-### 9.1 CI/CD Pipeline (0/10)
-- No GitHub Actions workflows
-- No CI pipeline for lint/type-check/test/build
-- No automated deployments configured in repo
-- No branch protection rules visible
+### CORRECTION: Score lowered from 70 to 62
 
-### 9.2 Environment Configuration (3/10)
-- `.env*` in `.gitignore` (good)
-- No `.env.example` file for developers
-- No environment variable validation (no `zod` env schema)
-- No runtime configuration management
+#### Stale/misleading documentation is worse than stated:
 
-### 9.3 Error Monitoring (0/10)
-- No error tracking service (no Sentry, LogRocket, etc.)
-- No analytics integration
-- No performance monitoring
+| Document | Issue |
+|---|---|
+| `README.md` | Says "Next.js 15" in project structure, actual is Next.js 16 |
+| `README.md` | Links to "Next.js 15 Docs" |
+| `README.md` | Clone URL uses placeholder `yourusername` |
+| `README.md` | Documents `tokens.ts` as the design system source of truth, but `globals.css @theme` is the actual source |
+| `.claude/project-context.md` | Says "Next.js 14 initialized" (two major versions off) |
+| `.claude/project-context.md` | Lists `images/` in public dir (doesn't exist) |
+| `.claude/project-context.md` | Lists `.env.local` in structure (doesn't exist) |
+| `CONTRIBUTING.md` | **Empty file** |
+| `CLAUDE_CONTEXT.md` | References Figma MCP connection (not available in this context) |
+| `tokens.ts` | Documents font family as `Georgia` when actual is `Playfair Display` (Georgia is fallback - misleading, not wrong) |
 
-### 9.4 Development Tools (5/10)
-**Present:**
-- ESLint with Next.js config (core-web-vitals + TypeScript)
-- PostCSS for Tailwind
-- React Compiler enabled (`reactCompiler: true`)
-- VS Code settings present
-
-**Missing:**
-- No Prettier (code formatting)
-- No Husky/lint-staged (pre-commit hooks)
-- No commitlint (commit message standards)
-- No `.editorconfig`
+#### Positive documentation:
+- README is well-structured with clear sections
+- DEPLOYMENT.md provides clear Vercel deployment instructions
+- Component interfaces serve as inline API documentation
+- Design token comments explain color purposes
 
 ---
 
-## 10. Maintainability (55/100 - Grade: D+)
+## 9. DevOps & CI/CD (28/100 - Grade: F)
 
-### 10.1 Code Reusability (6/10)
-- Good component structure but some components are unused (ServiceCard, Testimonial, ColorSwatch, EternavueMark, NewsletterForm used only in Footer area)
-- Form components share 90% identical logic (should be abstracted)
-- No custom hooks for shared behavior
-- No shared form validation utilities
+### CORRECTION: Score raised from 25 to 28
 
-### 10.2 State Management (5/10)
-- Simple `useState` for form data (adequate for current scope)
-- No global state management (fine for single page)
-- State is local to components (good encapsulation)
-- No context providers
+**New finding:** A CI/CD pipeline (`ci.yml`) exists on the `claude/review-figma-eternavue-45xGT` branch but was never merged to `main`. It includes:
+- ESLint + TypeScript + Build quality checks
+- Design token sync from Figma (requires `FIGMA_TOKEN` secret)
+- Security audit (`npm audit`)
+- Vercel deployment
+- Lighthouse performance checks on PRs
+- Slack notifications on failure
 
-### 10.3 Scalability Concerns (4/10)
-- Single-page architecture with everything in `page.tsx` (290 lines)
-- No routing structure for future pages
-- No API layer/abstraction
-- No data fetching patterns established
-- No error boundary components
-- No loading states
+However, the 3 recorded CI runs all **failed**, and the pipeline was never merged. The `continue-on-error: true` on lint means lint failures wouldn't block deployment (bad practice).
 
-### 10.4 Dependency Health (5/10)
-- 7 production dependencies (lean)
-- 7 dev dependencies (lean)
-- 1 critical vulnerability in `next`
-- Multiple packages significantly behind latest versions
-- `framer-motion` is a major version behind (11 vs 12)
-- No lockfile audit strategy
+**Still missing on `main`:**
+- Any CI/CD pipeline
+- Pre-commit hooks (Husky/lint-staged)
+- Prettier/code formatting
+- `.editorconfig`
+- `.env.example`
+- Branch protection rules
 
 ---
 
-## Critical Findings Summary
+## 10. Maintainability (48/100 - Grade: D)
 
-### Blockers (Must Fix Before Production)
+### CORRECTION: Score lowered from 55 to 48
 
-1. **CRITICAL SECURITY:** `next@16.0.5` has 6 known vulnerabilities including RCE. Upgrade to 16.1.6+ immediately.
-2. **ZERO TESTS:** No test infrastructure or test files exist. Any deployment is a gamble.
-3. **FORMS DON'T WORK:** All forms log to console and show `alert()`. No backend integration exists.
-4. **LINT FAILURES:** 8 ESLint errors would block any CI pipeline.
-5. **DEAD LINKS:** Multiple navigation and footer links point to non-existent anchors/pages.
+#### New issues affecting maintainability:
 
-### High Priority
+1. **Dead code architecture:** `tokens.ts` + `tailwind.config.ts` form a coherent design system that is **not actually used** by Tailwind v4. The real config is in `globals.css @theme`. New developers would be misled.
 
-6. **ACCESSIBILITY:** Minimal ARIA support, no skip links, questionable color contrast, non-keyboard-accessible interactive elements.
-7. **NO CI/CD:** No automated quality gates - lint, type-check, test, or build verification.
-8. **NO ERROR HANDLING:** No error boundaries, no loading states, no 404 page.
-9. **SECURITY HEADERS:** No CSP, HSTS, or other security headers configured.
-10. **CLIENT-SIDE RENDERING:** Entire page is `'use client'`, defeating SSR benefits and inflating bundle size.
+2. **Footer `'use client'` is unnecessary:** Adds Footer to client bundle for no reason.
 
-### Medium Priority
+3. **Unused components:** `ServiceCard`, `Testimonial`, `ColorSwatch`, `EternavueMark`, `BackgroundVideo`, `HolographicImage`, `ResponsiveImage`, `NewsletterForm` are all built but never rendered on the page. 8 of 22 source files (36%) are dead code.
 
-11. **SEO GAPS:** No robots.txt, sitemap, structured data, or social media cards.
-12. **MISSING MEDIA:** No actual images/photos on the landing page.
-13. **OUTDATED DEPS:** Several dependencies are major versions behind.
-14. **CODE SMELLS:** `console.log` calls, `alert()` usage, stale comments, unused imports.
-15. **NO CODE FORMATTING:** No Prettier configuration for consistent code style.
+4. **Form logic duplication:** Three form components (`MemorialBookingForm`, `EventInquiryForm`, `CorporateContactForm`) share ~80% identical logic with no abstraction.
 
-### Low Priority
+5. **Memory leak risks:** 2 uncleared `setTimeout` calls could cause React warnings in strict mode.
 
-16. **ANIMATION A11Y:** No `prefers-reduced-motion` support.
-17. **UNUSED COMPONENTS:** ServiceCard, Testimonial, ColorSwatch, EternavueMark built but unused.
-18. **STALE DOCUMENTATION:** Context files reference Next.js 14/15, actual is 16.
-19. **EMPTY CONTRIBUTING.md:** Contributing guide is empty.
-20. **NO STORYBOOK:** No component documentation/playground.
+6. **No custom hooks:** No shared logic extraction despite identical patterns across forms.
 
 ---
 
-## Recommended Immediate Action Plan
+## Corrections Summary
 
-### Phase 1: Critical Fixes (Week 1)
-```bash
-# 1. Fix security vulnerability
-npm audit fix --force  # or manually update next to 16.1.6+
-
-# 2. Fix all ESLint errors
-npm run lint -- --fix
-
-# 3. Set up testing infrastructure
-npm install -D vitest @testing-library/react @testing-library/jest-dom @vitejs/plugin-react happy-dom
-
-# 4. Add CI/CD
-# Create .github/workflows/ci.yml with lint, type-check, test, build steps
-```
-
-### Phase 2: Form & Backend Integration (Week 2)
-- Integrate Tally Forms or build API routes for form submission
-- Add client-side form validation (zod + react-hook-form recommended)
-- Replace `alert()` with toast notifications
-- Remove `console.log` statements
-
-### Phase 3: Accessibility & SEO (Week 3)
-- Add ARIA labels to all interactive elements
-- Add skip-to-content link
-- Fix color contrast issues
-- Add robots.txt, sitemap.xml
-- Add structured data (JSON-LD for LocalBusiness)
-- Add OpenGraph images
-
-### Phase 4: Performance & Polish (Week 4)
-- Split `page.tsx` into server and client components
-- Lazy-load form components
-- Add loading/error boundaries
-- Add actual images/media
-- Add `prefers-reduced-motion` support
-- Fix all dead links
+| Finding | Original Claim | Validated Result | Impact |
+|---|---|---|---|
+| CVEs applicable | All 6 apply | Only 3 of 6 apply | Security score +5 |
+| `text-neutral-400` contrast | "May fail WCAG AA" | Passes at 8.09:1 | Accessibility: slight improvement |
+| `text-white/30` contrast | Flagged | Confirmed FAIL at 2.30:1 | Confirmed |
+| Page rendering | "Entirely client-rendered" | SSR'd to HTML, but opacity:0 hides content | Performance/A11y: major new finding |
+| Twitter meta tags | "No Twitter card metadata" | Auto-generated by Next.js | SEO score +5 |
+| Token system | "Partially duplicated" | Dead code (TW v4 ignores tailwind.config.ts) | Code quality/maintainability -7 each |
+| CI/CD | "No CI pipeline" | CI exists on unmerged branch, all runs failed | DevOps +3 |
+| Index keys | Not mentioned | 4 instances found | Code quality -2 |
+| Memory leaks | Not mentioned | 2 uncleared setTimeout | Code quality -2 |
+| Footer `use client` | Not mentioned | Unnecessary directive | Performance -1 |
+| Unused components | Mentioned 4 | Actually 8 of 22 files (36%) unused | Maintainability -5 |
+| Opacity:0 invisibility | Not mentioned | **18 elements invisible without JS** | **A11y -7, Performance -3** |
+| Dead anchor links | "Multiple" | **12 dead links, 0 blank links** | UI/UX -4 |
+| Font tokens | "Doesn't match loaded fonts" | Georgia is fallback, Playfair is primary (misleading, not wrong) | Neutral |
 
 ---
 
-## File-by-File Issue Inventory
+## Final Validated Scores
 
-| File | Issues | Severity |
-|------|--------|----------|
-| `src/app/page.tsx` | `'use client'` on entire page, 2 unused imports, 5 unescaped entities, inline testimonials instead of using Testimonial component, `setTimeout` hack | High |
-| `src/components/ui/GlassCard.tsx` | Unused `cn` import, stale comment, uses template literals instead of `cn()` | Medium |
-| `src/components/content/Hero.tsx` | Unused `backgroundImage` prop, "Watch Video" button non-functional, `/grid.svg` missing | Medium |
-| `src/components/content/CTA.tsx` | Unused `variant` prop, "View Our Portfolio" non-functional | Medium |
-| `src/components/content/Testimonial.tsx` | Uses `<img>` not `next/image`, white-themed (doesn't match dark page) | Low |
-| `src/components/content/ServiceCard.tsx` | White-themed (doesn't match dark page), never used on page | Low |
-| `src/components/forms/MemorialBookingForm.tsx` | `console.log`, `alert()`, unescaped entities, TODO comment, no validation | High |
-| `src/components/forms/EventInquiryForm.tsx` | `console.log`, `alert()`, unescaped entity, no validation | High |
-| `src/components/forms/CorporateContactForm.tsx` | `console.log`, `alert()`, no validation | High |
-| `src/components/forms/NewsletterForm.tsx` | `console.log`, no actual submission, auto-dismissing success | Medium |
-| `src/components/layout/Header.tsx` | Nav links to non-existent sections, no focus trap on mobile menu | Medium |
-| `src/components/layout/Footer.tsx` | All links are dead (`#`), social media links inaccessible | Medium |
-| `src/components/media/BackgroundVideo.tsx` | `console.log` in production, not used anywhere | Low |
-| `src/components/branding/ColorSwatch.tsx` | Never used in app | Low |
-| `src/components/branding/EternavueMark.tsx` | Never used in app | Low |
-| `src/design/tokens.ts` | Font family doesn't match actual loaded fonts | Low |
-| `next.config.ts` | No security headers, no image domains | Medium |
+| Category | Score | Grade | Key Blocker |
+|---|---|---|---|
+| Code Quality & Architecture | 55/100 | D+ | Dead token system, lint errors, memory leaks |
+| UI/UX Design | 68/100 | C+ | 12 dead links, non-functional buttons |
+| Accessibility | 28/100 | F | Content invisible without JS, 4 contrast failures, minimal ARIA |
+| Security | 35/100 | F | Next.js RCE vulnerability (CVSS 10.0) |
+| Performance | 55/100 | D+ | 189KB gzipped JS, opacity:0 kills perceived load |
+| Testing | 0/100 | F | Zero tests exist |
+| SEO & Discoverability | 50/100 | D | No robots.txt, sitemap, structured data, OG image |
+| Documentation | 62/100 | C- | Stale version refs, dead token docs, empty CONTRIBUTING |
+| DevOps & CI/CD | 28/100 | F | No CI on main, no pre-commit hooks |
+| Maintainability | 48/100 | D | 36% unused files, dead config, no abstractions |
+| **Overall** | **43/100** | **D** | Not production-ready |
 
 ---
 
-*This assessment was generated by automated analysis of the codebase including: dependency audit (`npm audit`), TypeScript type checking (`tsc --noEmit`), ESLint linting (`npm run lint`), production build (`npm run build`), code pattern analysis, and manual code review of all 22 source files.*
+## Top 5 Highest-Impact Fixes
+
+1. **Upgrade Next.js** (`npm install next@16.1.6`) - Fixes CVSS 10.0 RCE vulnerability. 5 minutes.
+2. **Fix Framer Motion opacity:0** - Add `initial={false}` or use CSS animations with `@starting-style`. Restores content visibility without JS. 2 hours.
+3. **Add basic test suite** - Install Vitest + Testing Library. Write smoke tests for each component. 1 day.
+4. **Clean up dead code** - Remove unused `tokens.ts`/`tailwind.config.ts`, unused components, or integrate them. 2 hours.
+5. **Fix all ESLint errors** - Escape HTML entities in JSX, remove unused imports. `npx eslint --fix` handles most. 15 minutes.
+
+---
+
+*This validated assessment was produced through: `npm audit --json` (CVE analysis), `npm run build` + HTML output inspection (SSR validation), Python WCAG 2.1 relative luminance calculation (contrast ratios for 15 color pairs), `npm run lint` (ESLint verification), `npx tsc --noEmit` (TypeScript verification), rendered HTML parsing (semantic audit, ARIA count, anchor link validation, opacity analysis), static code analysis (use client necessity, key props, memory leaks, XSS vectors), bundle size measurement (gzip compression of each chunk), and GitHub CLI (repo settings, CI history).*
