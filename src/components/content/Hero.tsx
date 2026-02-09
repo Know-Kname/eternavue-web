@@ -26,6 +26,12 @@ export function Hero({
     <section className="relative min-h-[85vh] flex items-center justify-center overflow-hidden bg-primary-950">
       {/* Dynamic Background */}
       <div className="absolute inset-0 overflow-hidden">
+        {backgroundImage && (
+          <div
+            className="absolute inset-0 bg-cover bg-center"
+            style={{ backgroundImage: `url(${backgroundImage})` }}
+          />
+        )}
         {/* Dark overlay with slight gradient */}
         <div className="absolute inset-0 bg-gradient-to-b from-primary-900/50 via-primary-950/80 to-primary-950 z-10" />
         

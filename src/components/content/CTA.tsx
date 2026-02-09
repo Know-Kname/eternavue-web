@@ -6,6 +6,7 @@ import { motion } from 'framer-motion'
 import { Sparkles, ArrowRight } from 'lucide-react'
 
 export interface CTAProps {
+  id?: string
   title: string
   description: string
   primaryButtonText: string
@@ -18,6 +19,7 @@ export interface CTAProps {
 }
 
 export function CTA({ 
+  id,
   title,
   description,
   primaryButtonText,
@@ -28,9 +30,14 @@ export function CTA({
   onSecondaryClick,
   variant = 'primary'
 }: CTAProps) {
+  const sectionStyles = {
+    primary: 'bg-primary-950',
+    accent: 'bg-primary-900',
+    dark: 'bg-black'
+  }
   
   return (
-    <section className="relative py-32 px-6 overflow-hidden bg-primary-950">
+    <section id={id} className={`relative py-32 px-6 overflow-hidden ${sectionStyles[variant]}`}>
       {/* Background Effects */}
       <div className="absolute inset-0 bg-[url('/grid.svg')] bg-center opacity-5 [mask-image:linear-gradient(180deg,white,rgba(255,255,255,0))]" />
       

@@ -34,7 +34,7 @@ export function EventInquiryForm() {
     <form onSubmit={handleSubmit} className="space-y-6 max-w-2xl mx-auto">
       <div className="mb-8">
         <h3 className="text-2xl font-serif font-bold text-white mb-2">Special Event Inquiry</h3>
-        <p className="text-neutral-400">Let's create an unforgettable experience for your special occasion.</p>
+        <p className="text-neutral-400">Let&apos;s create an unforgettable experience for your special occasion.</p>
       </div>
       
       <Input

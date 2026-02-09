@@ -2,18 +2,17 @@
 
 import React from 'react'
 import { motion } from 'framer-motion'
-import { cn } from '@/lib/utils' // Assuming a utils file exists, if not I'll handle it
-// If utils doesn't exist, I will inline the class merging or create it.
-
 interface GlassCardProps {
+  id?: string
   children: React.ReactNode
   className?: string
   hoverEffect?: boolean
 }
 
-export function GlassCard({ children, className = '', hoverEffect = true }: GlassCardProps) {
+export function GlassCard({ id, children, className = '', hoverEffect = true }: GlassCardProps) {
   return (
     <motion.div
+      id={id}
       initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-50px" }}

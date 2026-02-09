@@ -1,4 +1,5 @@
 import React from 'react'
+import Image from 'next/image'
 
 export interface TestimonialProps {
   quote: string
@@ -30,8 +31,8 @@ export function Testimonial({
       {/* Author info */}
       <div className="flex items-center gap-4">
         {image && (
-          <div className="w-12 h-12 rounded-full overflow-hidden bg-neutral-200">
-            <img src={image} alt={author} className="w-full h-full object-cover" />
+          <div className="relative w-12 h-12 rounded-full overflow-hidden bg-neutral-200">
+            <Image src={image} alt={author} fill sizes="48px" className="object-cover" />
           </div>
         )}
         <div>

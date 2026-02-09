@@ -30,7 +30,7 @@ export function Footer() {
               <li><a href="#memorial" className="hover:text-holographic-cyan transition-colors">Memorial Services</a></li>
               <li><a href="#events" className="hover:text-holographic-cyan transition-colors">Special Events</a></li>
               <li><a href="#corporate" className="hover:text-holographic-cyan transition-colors">Corporate Solutions</a></li>
-              <li><a href="#technology" className="hover:text-holographic-cyan transition-colors">Our Technology</a></li>
+              <li><a href="#how-it-works" className="hover:text-holographic-cyan transition-colors">How It Works</a></li>
             </ul>
           </div>
           
@@ -39,9 +39,8 @@ export function Footer() {
             <h4 className="font-serif font-bold text-lg text-white mb-6">Company</h4>
             <ul className="space-y-4 text-sm text-neutral-400">
               <li><a href="#about" className="hover:text-holographic-cyan transition-colors">About Us</a></li>
+              <li><a href="#testimonials" className="hover:text-holographic-cyan transition-colors">Client Stories</a></li>
               <li><a href="#contact" className="hover:text-holographic-cyan transition-colors">Contact</a></li>
-              <li><a href="#careers" className="hover:text-holographic-cyan transition-colors">Careers</a></li>
-              <li><a href="#press" className="hover:text-holographic-cyan transition-colors">Press</a></li>
             </ul>
           </div>
           

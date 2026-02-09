@@ -34,7 +34,7 @@ export function MemorialBookingForm() {
     <form onSubmit={handleSubmit} className="space-y-6 max-w-2xl mx-auto">
       <div className="mb-8">
         <h3 className="text-2xl font-serif font-bold text-white mb-2">Memorial Service Inquiry</h3>
-        <p className="text-neutral-400">Fill out the form below and we'll help you honor your loved one's legacy.</p>
+        <p className="text-neutral-400">Fill out the form below and we&apos;ll help you honor your loved one&apos;s legacy.</p>
       </div>
       
       <Input

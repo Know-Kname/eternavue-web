@@ -25,10 +25,11 @@ export function Header({ onCtaClick }: HeaderProps) {
   }, [])
 
   const navLinks = [
-    { name: 'Memorial Services', href: '#memorial' },
-    { name: 'Special Events', href: '#events' },
-    { name: 'Corporate Solutions', href: '#corporate' },
-    { name: 'About Us', href: '#about' },
+    { name: 'About', href: '#about' },
+    { name: 'Services', href: '#services' },
+    { name: 'How It Works', href: '#how-it-works' },
+    { name: 'Client Stories', href: '#testimonials' },
+    { name: 'Contact', href: '#contact' },
   ]
 
   return (

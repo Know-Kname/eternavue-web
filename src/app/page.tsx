@@ -5,13 +5,11 @@ import { PageWrapper } from '@/components/layout/PageWrapper'
 import { Hero } from '@/components/content/Hero'
 import { GlassCard } from '@/components/ui/GlassCard'
 import { CTA } from '@/components/content/CTA'
-import { Testimonial } from '@/components/content/Testimonial'
 import { MemorialBookingForm } from '@/components/forms/MemorialBookingForm'
 import { EventInquiryForm } from '@/components/forms/EventInquiryForm'
 import { CorporateContactForm } from '@/components/forms/CorporateContactForm'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Heart, PartyPopper, Building2, ArrowRight, Sparkles, X } from 'lucide-react'
-import { Button } from '@/components/ui/Button'
 
 export default function Home() {
   const [showContactForm, setShowContactForm] = useState(false)
@@ -55,7 +53,7 @@ export default function Home() {
       />
 
       {/* Trust Signal - Dark Themed */}
-      <section className="bg-primary-950 border-b border-white/5 py-8">
+      <section id="about" className="bg-primary-950 border-b border-white/5 py-8">
         <div className="max-w-7xl mx-auto px-6 text-center">
           <motion.p 
             initial={{ opacity: 0 }}
@@ -102,7 +100,7 @@ export default function Home() {
             className="grid grid-cols-1 md:grid-cols-3 gap-6 auto-rows-[minmax(300px,auto)]"
           >
             {/* Memorial Services - Large Card */}
-            <GlassCard className="md:col-span-2 md:row-span-2 p-10 flex flex-col justify-between group cursor-pointer" hoverEffect={true}>
+            <GlassCard id="memorial" className="md:col-span-2 md:row-span-2 p-10 flex flex-col justify-between group cursor-pointer" hoverEffect={true}>
               <div onClick={() => handleServiceInquiry('memorial')}>
                 <div className="w-16 h-16 bg-holographic-cyan/10 rounded-2xl flex items-center justify-center text-holographic-cyan mb-8 group-hover:bg-holographic-cyan group-hover:text-white transition-colors duration-300">
                   <Heart className="w-8 h-8" />
@@ -126,7 +124,7 @@ export default function Home() {
             </GlassCard>
 
             {/* Special Events */}
-            <GlassCard className="p-8 flex flex-col justify-between group cursor-pointer" hoverEffect={true}>
+            <GlassCard id="events" className="p-8 flex flex-col justify-between group cursor-pointer" hoverEffect={true}>
               <div onClick={() => handleServiceInquiry('event')}>
                 <div className="w-12 h-12 bg-accent-500/10 rounded-xl flex items-center justify-center text-accent-500 mb-6 group-hover:bg-accent-500 group-hover:text-white transition-colors duration-300">
                   <PartyPopper className="w-6 h-6" />
@@ -142,7 +140,7 @@ export default function Home() {
             </GlassCard>
 
             {/* Corporate Solutions */}
-            <GlassCard className="p-8 flex flex-col justify-between group cursor-pointer" hoverEffect={true}>
+            <GlassCard id="corporate" className="p-8 flex flex-col justify-between group cursor-pointer" hoverEffect={true}>
                <div onClick={() => handleServiceInquiry('corporate')}>
                 <div className="w-12 h-12 bg-white/10 rounded-xl flex items-center justify-center text-white mb-6 group-hover:bg-white group-hover:text-primary-900 transition-colors duration-300">
                   <Building2 className="w-6 h-6" />
@@ -161,7 +159,7 @@ export default function Home() {
       </section>
 
       {/* How It Works - Dark Mode Version */}
-      <section className="py-24 px-6 bg-primary-950">
+      <section id="how-it-works" className="py-24 px-6 bg-primary-950">
         <div className="max-w-5xl mx-auto">
           <div className="text-center mb-20">
             <motion.h2 
@@ -210,7 +208,7 @@ export default function Home() {
       </section>
 
       {/* Testimonials - Using Glass Cards */}
-      <section className="py-24 px-6 bg-primary-900">
+      <section id="testimonials" className="py-24 px-6 bg-primary-900">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-16">
             <motion.h2 
@@ -223,7 +221,7 @@ export default function Home() {
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             <GlassCard className="p-8">
-              <div className="text-accent-500 text-4xl font-serif mb-4">"</div>
+              <div className="text-accent-500 text-4xl font-serif mb-4">&ldquo;</div>
               <p className="text-neutral-200 text-lg italic mb-6">
                 The holographic memorial for my father was beyond anything I could have imagined. It brought his personality to life in such a beautiful, respectful way.
               </p>
@@ -233,9 +231,9 @@ export default function Home() {
               </div>
             </GlassCard>
             <GlassCard className="p-8">
-              <div className="text-accent-500 text-4xl font-serif mb-4">"</div>
+              <div className="text-accent-500 text-4xl font-serif mb-4">&ldquo;</div>
               <p className="text-neutral-200 text-lg italic mb-6">
-                Eternavue's holographic display at our product launch stopped traffic. Attendees couldn't stop talking about it. Best investment we've made.
+                Eternavue&apos;s holographic display at our product launch stopped traffic. Attendees couldn&apos;t stop talking about it. Best investment we&apos;ve made.
               </p>
               <div>
                 <div className="font-bold text-white">David Chen</div>
@@ -278,6 +276,7 @@ export default function Home() {
 
       {/* Final CTA */}
       <CTA
+        id="contact"
         title="Ready to Create Something Extraordinary?"
         description="Let's discuss how holographic technology can transform your next memorial, event, or brand experience."
         primaryButtonText="Get Started Today"
