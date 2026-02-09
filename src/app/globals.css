@@ -1,5 +1,14 @@
 @import "tailwindcss";
 
+/* Roboto font via CDN - variable font (cutting-edge optimization) */
+@font-face {
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 400 700;
+  src: url('https://fonts.gstatic.com/s/roboto/v32/KFOiCnqEu92Fr1Mu51QrIzc.woff2') format('woff2');
+  font-display: swap;
+}
+
 @theme {
   /* Eternavue Brand Colors */
   --color-primary-50: #f0f4f8;
@@ -27,13 +36,17 @@
   --color-neutral-700: #404040;
   --color-neutral-900: #1a1a1a;
   
-  /* Font families */
-  --font-sans: var(--font-inter), system-ui, -apple-system, sans-serif;
-  --font-serif: var(--font-playfair), Georgia, serif;
+  /* Font families - Roboto for all text (per Figma design system) */
+  --font-sans: var(--font-roboto), system-ui, -apple-system, sans-serif;
 }
 
-/* Base styles */
+/* Base styles - Light mode by default, dark mode with .dark class */
 :root {
+  --background: #ffffff;
+  --foreground: #1a1a1a;
+}
+
+.dark {
   --background: #02050a;
   --foreground: #ffffff;
 }
@@ -50,10 +63,7 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* Headings use serif font */
-h1, h2, h3, h4, h5, h6 {
-  font-family: var(--font-serif);
-}
+/* All text uses Roboto (per Figma design system) */
 
 /* Selection color */
 ::selection {
