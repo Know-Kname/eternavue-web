@@ -9,18 +9,18 @@ export interface SelectProps extends React.SelectHTMLAttributes<HTMLSelectElemen
   variant?: 'default' | 'glass'
 }
 
-export function Select({ 
-  label, 
-  error, 
+export function Select({
+  label,
+  error,
   helperText,
   options,
   className = '',
   id,
   variant = 'default',
-  ...props 
+  ...props
 }: SelectProps) {
   const selectId = id || `select-${label?.toLowerCase().replace(/\s+/g, '-')}`
-  
+
   const variantStyles = {
     default: "bg-white border-neutral-200 text-neutral-900 focus:border-primary-500 focus:ring-primary-500",
     glass: "bg-black/55 border-primary-500/25 text-white focus:border-primary-400/60 focus:ring-primary-500/30 backdrop-blur-[10px] shadow-[inset_0_1px_0_rgba(255,255,255,0.05)]"
@@ -29,8 +29,8 @@ export function Select({
   return (
     <div className="w-full">
       {label && (
-        <label 
-          htmlFor={selectId} 
+        <label
+          htmlFor={selectId}
           className={cn(
             "block text-sm font-medium mb-2",
             variant === 'glass' ? "text-ghost" : "text-neutral-700"
@@ -54,9 +54,9 @@ export function Select({
           {...props}
         >
           {options.map((option) => (
-            <option 
-              key={option.value} 
-              value={option.value} 
+            <option
+              key={option.value}
+              value={option.value}
               className={variant === 'glass' ? "bg-neutral-900 text-white" : "bg-white text-neutral-900"}
             >
               {option.label}

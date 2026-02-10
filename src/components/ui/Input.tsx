@@ -8,17 +8,17 @@ export interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> 
   variant?: 'default' | 'glass'
 }
 
-export function Input({ 
-  label, 
-  error, 
+export function Input({
+  label,
+  error,
   helperText,
   className = '',
   id,
   variant = 'default',
-  ...props 
+  ...props
 }: InputProps) {
   const inputId = id || `input-${label?.toLowerCase().replace(/\s+/g, '-')}`
-  
+
   const variantStyles = {
     default: "bg-white border-neutral-200 text-neutral-900 focus:border-primary-500 focus:ring-primary-500 placeholder:text-neutral-400",
     glass: "bg-black/55 border-primary-500/25 text-white focus:border-primary-400/60 focus:ring-primary-500/30 placeholder:text-ghost/60 backdrop-blur-[10px] shadow-[inset_0_1px_0_rgba(255,255,255,0.05)]"
@@ -27,8 +27,8 @@ export function Input({
   return (
     <div className="w-full">
       {label && (
-        <label 
-          htmlFor={inputId} 
+        <label
+          htmlFor={inputId}
           className={cn(
             "block text-sm font-medium mb-2",
             variant === 'glass' ? "text-ghost" : "text-neutral-700"
