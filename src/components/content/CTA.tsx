@@ -4,6 +4,7 @@ import React from 'react'
 import { Button } from '@/components/ui/Button'
 import { motion } from 'framer-motion'
 import { Sparkles, ArrowRight } from 'lucide-react'
+import { GlitchText } from '@/components/ui/GlitchText'
 
 export interface CTAProps {
   title: string
@@ -17,7 +18,7 @@ export interface CTAProps {
   variant?: 'primary' | 'accent' | 'dark'
 }
 
-export function CTA({ 
+export function CTA({
   title,
   description,
   primaryButtonText,
@@ -28,15 +29,15 @@ export function CTA({
   onSecondaryClick,
   variant = 'primary'
 }: CTAProps) {
-  
   return (
-    <section className="relative py-32 px-6 overflow-hidden bg-primary-950">
+    <section className="relative overflow-hidden bg-void py-32 px-6">
       {/* Background Effects */}
       <div className="absolute inset-0 bg-[url('/grid.svg')] bg-center opacity-5 [mask-image:linear-gradient(180deg,white,rgba(255,255,255,0))]" />
-      
-      {/* Holographic Glows */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-holographic-cyan/10 rounded-full blur-[100px] pointer-events-none" />
-      <div className="absolute top-0 right-0 w-[400px] h-[400px] bg-accent-500/10 rounded-full blur-[100px] pointer-events-none" />
+
+      {/* Living gradient + dual glow */}
+      <div className="bg-pulse-radial pointer-events-none absolute inset-0 animate-pulse-gradient" />
+      <div className="pointer-events-none absolute left-1/2 top-1/2 h-[600px] w-[600px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-primary-500/20 blur-[100px]" />
+      <div className="pointer-events-none absolute right-0 top-0 h-[400px] w-[400px] rounded-full bg-accent-500/20 blur-[100px]" />
 
       <div className="relative z-10 max-w-4xl mx-auto text-center">
         <motion.div
@@ -45,52 +46,52 @@ export function CTA({
           viewport={{ once: true }}
           transition={{ duration: 0.8 }}
         >
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-holographic-cyan/10 border border-holographic-cyan/20 text-holographic-cyan text-sm font-medium mb-8 backdrop-blur-md">
+          <div className="mb-8 inline-flex items-center gap-2 rounded-full border border-primary-500/20 bg-primary-500/10 px-4 py-1.5 text-sm font-medium text-primary-300 backdrop-blur-md">
             <Sparkles className="w-4 h-4" />
             <span>Start Your Journey</span>
           </div>
 
-          <h2 className="text-4xl md:text-5xl lg:text-6xl font-serif font-bold text-white mb-6 leading-tight">
-            {title}
+          <h2 className="mb-6 text-4xl font-bold leading-tight text-white md:text-5xl lg:text-6xl">
+            <GlitchText text={title.toLowerCase()} className="text-glow font-heading lowercase" />
           </h2>
-          
-          <p className="text-xl md:text-2xl text-neutral-300 mb-12 max-w-2xl mx-auto leading-relaxed">
+
+          <p className="mx-auto mb-12 max-w-2xl text-xl leading-relaxed text-ghost md:text-2xl">
             {description}
           </p>
 
           <div className="flex flex-col sm:flex-row gap-6 justify-center items-center">
             {primaryButtonLink ? (
               <a href={primaryButtonLink} className="w-full sm:w-auto">
-                <Button variant="secondary" size="lg" className="w-full sm:w-auto min-w-[200px] shadow-[0_0_20px_rgba(212,165,116,0.3)] hover:shadow-[0_0_30px_rgba(212,165,116,0.5)]">
+                <Button variant="primary" size="lg" className="w-full min-w-[200px] sm:w-auto">
                   {primaryButtonText}
                   <ArrowRight className="ml-2 w-5 h-5" />
                 </Button>
               </a>
             ) : (
-              <Button 
-                variant="secondary" 
-                size="lg" 
+              <Button
+                variant="primary"
+                size="lg"
                 onClick={onPrimaryClick}
-                className="w-full sm:w-auto min-w-[200px] shadow-[0_0_20px_rgba(212,165,116,0.3)] hover:shadow-[0_0_30px_rgba(212,165,116,0.5)]"
+                className="w-full min-w-[200px] sm:w-auto"
               >
                 {primaryButtonText}
                 <ArrowRight className="ml-2 w-5 h-5" />
               </Button>
             )}
-            
+
             {secondaryButtonText && (
               secondaryButtonLink ? (
                 <a href={secondaryButtonLink} className="w-full sm:w-auto">
-                  <Button variant="ghost" size="lg" className="w-full sm:w-auto border-white/20 text-white hover:bg-white/10 hover:border-white/40">
+                  <Button variant="ghost" size="lg" className="w-full sm:w-auto border-primary-500/40 text-white hover:border-primary-500/70">
                     {secondaryButtonText}
                   </Button>
                 </a>
               ) : (
-                <Button 
-                  variant="ghost" 
-                  size="lg" 
+                <Button
+                  variant="ghost"
+                  size="lg"
                   onClick={onSecondaryClick}
-                  className="w-full sm:w-auto border-white/20 text-white hover:bg-white/10 hover:border-white/40"
+                  className="w-full sm:w-auto border-primary-500/40 text-white hover:border-primary-500/70"
                 >
                   {secondaryButtonText}
                 </Button>

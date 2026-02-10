@@ -25,19 +25,19 @@ export function Header({ onCtaClick }: HeaderProps) {
   }, [])
 
   const navLinks = [
-    { name: 'Memorial Services', href: '#memorial' },
-    { name: 'Special Events', href: '#events' },
-    { name: 'Corporate Solutions', href: '#corporate' },
-    { name: 'About Us', href: '#about' },
+    { name: 'Services', href: '#services' },
+    { name: 'How It Works', href: '#technology' },
+    { name: 'About', href: '#about' },
+    { name: 'FAQ', href: '#faq' },
   ]
 
   return (
     <>
-      <header 
+      <header
         className={cn(
           "fixed top-0 left-0 right-0 z-50 transition-all duration-300 border-b",
-          isScrolled 
-            ? "bg-primary-950/80 backdrop-blur-md border-white/10 py-3 shadow-lg" 
+          isScrolled
+            ? "bg-[#09090b]/80 backdrop-blur-md border-white/10 py-3 shadow-lg"
             : "bg-transparent border-transparent py-5"
         )}
       >
@@ -45,39 +45,42 @@ export function Header({ onCtaClick }: HeaderProps) {
           <div className="flex items-center justify-between">
             {/* Logo */}
             <Logo size="sm" variant="light" />
-            
+
             {/* Desktop Navigation */}
             <div className="hidden md:flex items-center gap-8">
               {navLinks.map((link) => (
-                <a 
+                <a
                   key={link.name}
-                  href={link.href} 
+                  href={link.href}
                   className={cn(
-                    "text-sm font-medium transition-colors hover:text-holographic-cyan",
-                    isScrolled ? "text-neutral-300" : "text-white/90"
+                    "text-sm font-medium transition-colors hover:text-primary-400",
+                    isScrolled ? "text-ghost" : "text-white/90"
                   )}
                 >
                   {link.name}
                 </a>
               ))}
+              <span className="rounded-full border border-amber-500/30 bg-gradient-to-r from-amber-700/20 to-amber-500/20 px-3 py-1 text-xs font-heading text-amber-300">
+                est. 1926
+              </span>
             </div>
-            
+
             {/* CTA Button */}
             <div className="hidden md:block">
-              <Button 
-                variant={isScrolled ? "primary" : "secondary"} // Use secondary (white/glass) when transparent
-                size="sm" 
+              <Button
+                variant="primary"
+                size="sm"
                 onClick={onCtaClick}
                 className={cn(
-                  !isScrolled && "bg-white/10 border-white/20 text-white hover:bg-white/20"
+                  !isScrolled && "bg-primary-500/80 hover:bg-primary-500"
                 )}
               >
                 Request a Demo
               </Button>
             </div>
-            
+
             {/* Mobile Menu Button */}
-            <button 
+            <button
               className="md:hidden p-2 text-white"
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
               aria-label="Toggle menu"
@@ -96,14 +99,14 @@ export function Header({ onCtaClick }: HeaderProps) {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
             transition={{ duration: 0.2 }}
-            className="fixed inset-0 z-40 bg-primary-950 pt-24 px-6 md:hidden"
+            className="fixed inset-0 z-40 bg-void pt-24 px-6 md:hidden"
           >
             <div className="flex flex-col gap-6">
               {navLinks.map((link) => (
-                <a 
+                <a
                   key={link.name}
-                  href={link.href} 
-                  className="text-xl font-medium text-white hover:text-holographic-cyan transition-colors"
+                  href={link.href}
+                  className="text-xl font-medium text-white transition-colors hover:text-primary-400"
                   onClick={() => setIsMobileMenuOpen(false)}
                 >
                   {link.name}

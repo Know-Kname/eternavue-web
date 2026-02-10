@@ -1,29 +1,59 @@
 export const tokens = {
   colors: {
     primary: {
-      50: '#f0f4f8',
-      100: '#d9e2ec',
-      500: '#1F3252', // Eternavue dark blue
-      600: '#172a45',
-      700: '#0f1f38',
+      50: '#eef2ff',
+      100: '#e0e7ff',
+      200: '#c7d2fe',
+      300: '#a5b4fc',
+      400: '#818cf8',
+      500: '#6366f1', // Digital Soul Indigo
+      600: '#4f46e5',
+      700: '#4338ca',
+      800: '#3730a3',
+      900: '#312e81',
+      950: '#1e1b4b',
     },
     accent: {
-      500: '#D4A574', // Gold
-      600: '#c19660',
+      50: '#fdf2f8',
+      100: '#fce7f3',
+      200: '#fbcfe8',
+      300: '#f9a8d4',
+      400: '#f472b6',
+      500: '#ec4899', // Heartbeat Pink
+      600: '#db2777',
+      700: '#be185d',
+      800: '#9d174d',
+      900: '#831843',
+      950: '#500724',
     },
     holographic: {
-      cyan: '#32B8C6',
-      glow: 'rgba(50, 184, 198, 0.3)',
+      cyan: '#6366f1',
+      glow: 'rgba(99, 102, 241, 0.3)',
+      glowStrong: 'rgba(99, 102, 241, 0.5)',
+      pinkGlow: 'rgba(236, 72, 153, 0.3)',
     },
+    void: '#09090b',
+    ghost: '#9ca3af',
     neutral: {
-      100: '#F5F5FD', // Light background
-      900: '#1a1a1a',
+      50: '#fafafa',
+      100: '#f4f4f5',
+      200: '#e4e4e7',
+      300: '#d4d4d8',
+      400: '#a1a1aa',
+      500: '#71717a',
+      600: '#52525b',
+      700: '#3f3f46',
+      800: '#27272a',
+      900: '#18181b',
+      950: '#09090b',
     },
   },
   typography: {
     fontFamily: {
-      sans: ['system-ui', 'sans-serif'],
-      display: ['Georgia', 'serif'], // For headings with gravitas
+      heading: ['Space Grotesk', 'system-ui', 'sans-serif'],
+      body: ['Inter', 'system-ui', 'sans-serif'],
+      sans: ['Inter', 'system-ui', 'sans-serif'],
+      serif: ['Space Grotesk', 'system-ui', 'sans-serif'],
     },
     fontSize: {
       xs: '0.75rem',

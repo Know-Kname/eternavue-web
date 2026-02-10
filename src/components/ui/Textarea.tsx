@@ -21,7 +21,7 @@ export function Textarea({
   
   const variantStyles = {
     default: "bg-white border-neutral-200 text-neutral-900 focus:border-primary-500 focus:ring-primary-500 placeholder:text-neutral-400",
-    glass: "bg-white/5 border-white/10 text-white focus:border-holographic-cyan/50 focus:ring-holographic-cyan/50 placeholder:text-white/30 backdrop-blur-md"
+    glass: "bg-black/55 border-primary-500/25 text-white focus:border-primary-400/60 focus:ring-primary-500/30 placeholder:text-ghost/60 backdrop-blur-[10px] shadow-[inset_0_1px_0_rgba(255,255,255,0.05)]"
   }
 
   return (
@@ -31,7 +31,7 @@ export function Textarea({
           htmlFor={textareaId} 
           className={cn(
             "block text-sm font-medium mb-2",
-            variant === 'glass' ? "text-neutral-300" : "text-neutral-700"
+            variant === 'glass' ? "text-ghost" : "text-neutral-700"
           )}
         >
           {label}
@@ -41,7 +41,7 @@ export function Textarea({
       <textarea
         id={textareaId}
         className={cn(
-          "w-full px-4 py-3 rounded-lg border transition-colors resize-y min-h-[120px]",
+          "w-full px-4 py-3 rounded-lg border transition-all duration-300 resize-y min-h-[120px]",
           "focus:outline-none focus:ring-2",
           "disabled:opacity-50 disabled:cursor-not-allowed",
           variantStyles[variant],
@@ -51,12 +51,12 @@ export function Textarea({
         {...props}
       />
       {error && (
-        <p className="mt-1 text-sm text-red-600">{error}</p>
+        <p className="mt-1 text-sm text-red-300">{error}</p>
       )}
       {helperText && !error && (
         <p className={cn(
           "mt-1 text-sm",
-          variant === 'glass' ? "text-neutral-400" : "text-neutral-500"
+          variant === 'glass' ? "text-ghost" : "text-neutral-500"
         )}>{helperText}</p>
       )}
     </div>
