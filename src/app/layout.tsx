@@ -17,15 +17,15 @@ const spaceGrotesk = Space_Grotesk({
 export const metadata: Metadata = {
   metadataBase: new URL('https://eternavue.com'),
   title: {
-    default: "Eternavue | Holographic Experiences That Honor Legacy",
+    default: "Eternavue | Where Memory Becomes Light",
     template: "%s | Eternavue",
   },
-  description: "Transform memories into immersive holographic tributes. Memorial services, special events, and corporate solutions using cutting-edge holographic technology. Founded at Detroit Memorial Park, serving families since 1925.",
+  description: "Eternavue transforms ordinary events into extraordinary experiences with stunning holographic visuals. Concerts, product launches, brand activations, weddings, and private celebrations — powered by cutting-edge holographic technology. Detroit-born innovation.",
   keywords: [
-    "holographic memorial", "holographic display", "memorial services",
-    "holographic tribute", "special events hologram", "corporate holographic display",
-    "Detroit Memorial Park", "Michigan holographic services", "celebration of life",
-    "funeral technology", "memorial tribute", "event hologram", "Warren Michigan"
+    "holographic memorial", "holographic tribute", "memorial services",
+    "holographic experience", "celebration of life hologram", "corporate holographic display",
+    "Detroit Memorial Park", "Michigan holographic services", "immersive memorial",
+    "holographic projection", "memorial technology", "event hologram", "Warren Michigan"
   ],
   authors: [{ name: "Eternavue", url: "https://eternavue.com" }],
   creator: "Eternavue",
@@ -42,8 +42,8 @@ export const metadata: Metadata = {
     },
   },
   openGraph: {
-    title: "Eternavue | Holographic Experiences That Honor Legacy",
-    description: "Transform memories into immersive holographic tributes using cutting-edge technology. Memorial services, special events, and corporate solutions.",
+    title: "Eternavue | Where Memory Becomes Light",
+    description: "Stunning holographic visuals for events, brand activations, and celebrations. Detroit-born innovation.",
     url: "https://eternavue.com",
     siteName: "Eternavue",
     locale: "en_US",
@@ -53,14 +53,14 @@ export const metadata: Metadata = {
         url: "/og-image.png",
         width: 1200,
         height: 630,
-        alt: "Eternavue - Holographic Experiences That Honor Legacy",
+        alt: "Eternavue - Where Memory Becomes Light",
       }
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Eternavue | Holographic Experiences",
-    description: "Transform memories into immersive holographic tributes.",
+    title: "Eternavue | Where Memory Becomes Light",
+    description: "Transforming ordinary events into extraordinary experiences with holographic visuals.",
     images: ["/og-image.png"],
   },
   alternates: {
@@ -73,7 +73,7 @@ const jsonLd = {
   "@context": "https://schema.org",
   "@type": "LocalBusiness",
   name: "Eternavue",
-  description: "Holographic memorial services, event displays, and corporate solutions. Transform memories into immersive holographic tributes.",
+  description: "Transforming ordinary events into extraordinary experiences with high-quality holographic visuals. Concerts, corporate activations, celebrations, and more.",
   url: "https://eternavue.com",
   telephone: "+15867511313",
   email: "info@eternavue.com",
@@ -96,10 +96,9 @@ const jsonLd = {
     opens: "09:00",
     closes: "17:00",
   },
-  foundingDate: "1925",
   founder: {
     "@type": "Organization",
-    name: "Detroit Memorial Park",
+    name: "Eternavue",
   },
   sameAs: [
     "https://www.linkedin.com/company/eternavue",
@@ -107,9 +106,10 @@ const jsonLd = {
     "https://www.facebook.com/eternavue",
   ],
   serviceType: [
-    "Holographic Memorial Services",
-    "Holographic Event Displays",
-    "Corporate Holographic Solutions",
+    "Holographic Event Experiences",
+    "Holographic Brand Activations",
+    "Corporate Holographic Displays",
+    "Private Event Holographic Visuals",
   ],
   areaServed: {
     "@type": "State",

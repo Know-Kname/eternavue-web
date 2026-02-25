@@ -50,7 +50,7 @@ export function EventInquiryForm() {
       <motion.div initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} className="text-center py-12 max-w-md mx-auto">
         <CheckCircle className="w-16 h-16 text-green-400 mx-auto mb-6" />
         <h3 className="mb-3 font-heading text-2xl font-bold lowercase text-white">thank you</h3>
-        <p className="mb-8 text-ghost">Your event inquiry has been received. Our team will contact you within 24 hours to discuss your vision.</p>
+        <p className="mb-8 text-ghost">Your inquiry has been received. Our production team will reach out within 24 hours to discuss your event.</p>
         <Button variant="ghost" onClick={() => setStatus('idle')} className="text-white border-primary-500/35 hover:border-primary-500/60">Submit Another Inquiry</Button>
       </motion.div>
     )
@@ -59,8 +59,8 @@ export function EventInquiryForm() {
   return (
     <form onSubmit={handleSubmit} className="space-y-6 max-w-2xl mx-auto">
       <div className="mb-8">
-        <h3 className="mb-2 font-heading text-2xl font-bold lowercase text-white">special event inquiry</h3>
-        <p className="text-ghost">Let&apos;s create an unforgettable experience for your special occasion.</p>
+        <h3 className="mb-2 font-heading text-2xl font-bold lowercase text-white">event inquiry</h3>
+        <p className="text-ghost">Tell us about your event and we&apos;ll create a custom holographic experience for it.</p>
       </div>
 
       {status === 'error' && (
@@ -93,7 +93,7 @@ export function EventInquiryForm() {
         <Input label="Expected Guest Count" name="guestCount" type="number" value={formData.guestCount} onChange={handleChange} placeholder="50" variant="glass" disabled={status === 'submitting'} />
       </div>
 
-      <Textarea label="Event Details" name="message" value={formData.message} onChange={handleChange} required placeholder="Tell us about your event and how you'd like to incorporate holographic experiences..." rows={5} variant="glass" disabled={status === 'submitting'} />
+      <Textarea label="Event Details" name="message" value={formData.message} onChange={handleChange} required placeholder="Describe your event vision — theme, atmosphere, and how holographic visuals could enhance it..." rows={5} variant="glass" disabled={status === 'submitting'} />
 
       <Button type="submit" variant="primary" size="lg" fullWidth disabled={status === 'submitting'}>
         {status === 'submitting' ? <><Loader2 className="w-5 h-5 mr-2 animate-spin" /> Submitting...</> : 'Submit Inquiry'}

@@ -56,24 +56,24 @@ export default function Home() {
 
   const faqs = [
     {
-      q: 'What exactly is a holographic memorial?',
-      a: 'A holographic memorial uses advanced projection technology to create a lifelike, three-dimensional display of your loved one. We combine photos, videos, and audio to craft an immersive tribute that feels as though they are present in the room.'
+      q: 'What is a holographic experience?',
+      a: 'Eternavue uses advanced projection technology to create stunning, lifelike three-dimensional visuals. We combine custom content, lighting design, and spatial audio to produce immersive displays that captivate live audiences.'
+    },
+    {
+      q: 'What types of events do you work with?',
+      a: 'We serve a wide range of occasions — concerts, corporate launches, trade shows, brand activations, weddings, private celebrations, and memorial tributes. If it has an audience, we can make it extraordinary.'
     },
     {
       q: 'How far in advance should I book?',
-      a: 'We recommend booking at least 2-4 weeks in advance for memorial services to allow time for content creation. For corporate events and large productions, 6-8 weeks is ideal. Rush services are available for urgent needs.'
-    },
-    {
-      q: 'What materials do you need from me?',
-      a: 'We work with whatever you have: photos, video clips, audio recordings, letters, or stories from family members. Our creative team transforms these into a cohesive holographic experience. A consultation call helps us understand your vision.'
+      a: 'For most events, 4-6 weeks gives us time for creative development and production. Larger corporate installations benefit from 6-8 weeks. We offer expedited timelines when needed — just ask.'
     },
     {
       q: 'What venues can accommodate holographic displays?',
-      a: 'Our portable equipment works in most indoor venues including funeral homes, churches, event halls, and conference centers. We handle all technical setup and teardown. A minimum room size of 15x15 feet with controlled lighting is ideal.'
+      a: 'Our portable equipment works in most indoor venues — event halls, conference centers, hotels, concert spaces, and more. We handle all technical setup and teardown. A minimum space of 15x15 feet with controlled lighting is ideal.'
     },
     {
-      q: 'What is the pricing structure?',
-      a: 'Pricing varies based on the type of service, duration, and complexity of the holographic content. Memorial services start at a consultation to understand your needs. Corporate solutions are custom-quoted. Contact us for a personalized estimate.'
+      q: 'How does pricing work?',
+      a: 'Every project is custom-scoped based on the type of experience, venue requirements, and content complexity. We start with a free consultation to understand your goals, then provide a transparent estimate. No surprises.'
     },
   ]
 
@@ -81,10 +81,10 @@ export default function Home() {
     <PageWrapper onHeaderCtaClick={() => handleServiceInquiry('memorial')}>
       {/* Hero Section */}
       <Hero
-        title="Holographic Experiences That Honor Legacy"
-        subtitle="Transform memories into immersive holographic tributes. From intimate memorials to grand celebrations, we bring stories to life through cutting-edge technology."
-        ctaText="Request a Demo"
-        onCtaClick={() => handleServiceInquiry('memorial')}
+        title="transforming ordinary events with holographic visuals"
+        subtitle="Eternavue delivers stunning, high-quality holographic experiences that bring a touch of magic to every occasion — from intimate celebrations to large-scale productions."
+        ctaText="Explore Our Work"
+        onCtaClick={() => handleServiceInquiry('event')}
       />
 
       {/* Trust Signal Bar */}
@@ -97,7 +97,7 @@ export default function Home() {
             transition={{ duration: 1 }}
             className="text-ghost font-medium"
           >
-            Founded at <span className="font-bold text-primary-300">Detroit Memorial Park</span> &middot; Serving families since 1925
+            Powered by <span className="font-bold text-primary-300">Eternavue Holographic Technology</span> &middot; Detroit-born innovation
           </motion.p>
         </div>
       </section>
@@ -107,10 +107,10 @@ export default function Home() {
         <div className="max-w-7xl mx-auto">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
             {[
-              { icon: Users, value: '500+', label: 'Families Served' },
+              { icon: Users, value: '500+', label: 'Events Transformed' },
               { icon: Award, value: '98%', label: 'Client Satisfaction' },
-              { icon: MapPin, value: '3', label: 'Locations in Michigan' },
-              { icon: Clock, value: '100', label: 'Years of Heritage' },
+              { icon: MapPin, value: '3', label: 'Michigan Locations' },
+              { icon: Clock, value: '24/7', label: 'Production Support' },
             ].map((stat, idx) => (
               <motion.div
                 key={idx}
@@ -148,7 +148,7 @@ export default function Home() {
               <GlitchText text="our services" className="text-glow text-4xl md:text-5xl font-heading lowercase" />
             </motion.h2>
             <motion.p {...fadeInUp} transition={{ delay: 0.1, duration: 0.8 }} className="mx-auto max-w-2xl text-xl text-ghost">
-              Cutting-edge holographic technology for meaningful moments
+              High-quality holographic visuals for every occasion
             </motion.p>
           </div>
 
@@ -165,12 +165,12 @@ export default function Home() {
                 <div className="mb-8 flex h-16 w-16 items-center justify-center rounded-2xl bg-primary-500/10 text-primary-400 transition-colors duration-300 group-hover:bg-primary-500 group-hover:text-white">
                   <NeonIcon icon={Heart} className="h-8 w-8 text-current" />
                 </div>
-                <h3 className="mb-4 font-heading text-3xl font-bold text-white lowercase">memorial services</h3>
+                <h3 className="mb-4 font-heading text-3xl font-bold text-white lowercase">holographic experiences</h3>
                 <p className="mb-8 max-w-md text-lg text-ghost">
-                  Honor loved ones with dignified holographic memorials that celebrate their life story, personality, and legacy in a way never before possible.
+                  Immersive, lifelike holographic visuals that captivate audiences and create emotional impact — whether it&apos;s a tribute, a celebration, or a moment that demands to be unforgettable.
                 </p>
                 <ul className="space-y-3 mb-8">
-                  {['Holographic tributes', 'Interactive life stories', 'Respectful presentation'].map((item, i) => (
+                  {['High-quality 3D visuals', 'Customizable to your vision', 'Full-service production'].map((item, i) => (
                     <li key={i} className="flex items-center text-ghost">
                       <NeonIcon icon={Sparkles} className="mr-2 h-4 w-4 shrink-0 text-accent-400" />
                       {item}
@@ -189,9 +189,9 @@ export default function Home() {
                 <div className="mb-6 flex h-12 w-12 items-center justify-center rounded-xl bg-accent-500/10 text-accent-400 transition-colors duration-300 group-hover:bg-accent-500 group-hover:text-white">
                   <NeonIcon icon={PartyPopper} className="h-6 w-6 text-current" />
                 </div>
-                <h3 className="mb-3 font-heading text-2xl font-bold lowercase text-white">special events</h3>
+                <h3 className="mb-3 font-heading text-2xl font-bold lowercase text-white">events & celebrations</h3>
                 <p className="mb-4 text-sm text-ghost">
-                  Add wow-factor to weddings and milestones with stunning holographic displays.
+                  Weddings, milestones, and private gatherings — elevated with holographic visuals that leave guests in awe.
                 </p>
               </div>
               <div className="flex items-center text-sm text-ghost transition-colors group-hover:text-primary-300">
@@ -205,9 +205,9 @@ export default function Home() {
                 <div className="mb-6 flex h-12 w-12 items-center justify-center rounded-xl bg-white/10 text-white transition-colors duration-300 group-hover:bg-primary-500 group-hover:text-white">
                   <NeonIcon icon={Building2} className="h-6 w-6 text-current" />
                 </div>
-                <h3 className="mb-3 font-heading text-2xl font-bold lowercase text-white">corporate</h3>
+                <h3 className="mb-3 font-heading text-2xl font-bold lowercase text-white">corporate & brand</h3>
                 <p className="mb-4 text-sm text-ghost">
-                  Stand out at trade shows and launches with unforgettable experiences.
+                  Product launches, trade shows, and brand activations powered by holographic technology that commands attention.
                 </p>
               </div>
               <div className="flex items-center text-sm text-ghost transition-colors group-hover:text-primary-300">
@@ -226,7 +226,7 @@ export default function Home() {
               <GlitchText text="how it works" className="text-glow text-4xl md:text-5xl font-heading lowercase" />
             </motion.h2>
             <motion.p {...fadeInUp} transition={{ delay: 0.1, duration: 0.8 }} className="text-xl text-ghost">
-              Simple process, extraordinary results
+              From concept to showtime in three steps
             </motion.p>
           </div>
 
@@ -234,9 +234,9 @@ export default function Home() {
             <div className="absolute left-[16%] right-[16%] top-8 hidden h-0.5 bg-gradient-to-r from-transparent via-primary-500/30 to-transparent md:block" />
 
             {[
-              { step: 1, title: 'Consultation', desc: 'Share your vision with our team. We discuss your needs, timeline, and creative direction.' },
-              { step: 2, title: 'Creation', desc: 'Our artists craft custom holographic content from your photos, videos, and cherished stories.' },
-              { step: 3, title: 'Experience', desc: 'Watch as your vision comes to life through stunning, lifelike holographic projection.' }
+              { step: 1, title: 'Consultation', desc: 'Tell us your vision. We map out the creative direction, technical requirements, and timeline for your event.' },
+              { step: 2, title: 'Production', desc: 'Our team designs and produces custom holographic content — tailored to your brand, your story, your audience.' },
+              { step: 3, title: 'Showtime', desc: 'We handle the full setup and technical execution. You and your guests experience the magic firsthand.' }
             ].map((item, idx) => (
               <motion.div
                 key={idx}
@@ -271,19 +271,19 @@ export default function Home() {
                 <span>Our Story</span>
               </div>
               <h2 className="mb-6 font-heading text-4xl font-bold lowercase text-white md:text-5xl">
-                a century of honoring legacy
+                detroit-born. future-forward.
               </h2>
               <p className="mb-6 text-lg leading-relaxed text-ghost">
-                Born from Detroit Memorial Park's century-long tradition of serving families, Eternavue represents the next chapter in how we celebrate and remember the people who matter most.
+                Eternavue was founded on a simple belief: technology should make people feel something. We specialize in high-quality holographic visuals that bring a sense of wonder to every occasion.
               </p>
               <p className="mb-8 leading-relaxed text-ghost">
-                We combine the reverence and compassion of memorial tradition with cutting-edge holographic technology. Our team of artists, technologists, and compassionate professionals work together to create experiences that are as unique as the lives they honor.
+                Our team of artists, engineers, and producers work together to create customizable experiences for the events industry, entertainment, advertising, corporate activations, and private celebrations. Every project is crafted to captivate your audience and leave a lasting impression.
               </p>
               <div className="flex flex-wrap gap-6">
                 {[
-                  { icon: Shield, label: 'Trusted Heritage' },
-                  { icon: Zap, label: 'Cutting-Edge Tech' },
-                  { icon: Star, label: 'Personalized Care' },
+                  { icon: Shield, label: 'Reliable Production' },
+                  { icon: Zap, label: 'Advanced Technology' },
+                  { icon: Star, label: 'Custom Creative' },
                 ].map((item, i) => (
                   <div key={i} className="flex items-center gap-2 text-ghost">
                     <NeonIcon icon={item.icon} className="h-5 w-5 text-primary-400" />
@@ -302,10 +302,10 @@ export default function Home() {
               <GlassCard className="p-8 space-y-6">
                 <h3 className="font-heading text-2xl font-bold lowercase text-white">why eternavue?</h3>
                 {[
-                  { title: 'Deeply Personal', desc: 'Every holographic experience is custom-crafted to tell a unique story.' },
-                  { title: 'Technology Meets Compassion', desc: 'State-of-the-art projection guided by a century of caregiving tradition.' },
-                  { title: 'Full-Service', desc: 'From consultation to installation, we handle every detail so you can focus on what matters.' },
-                  { title: 'Michigan-Based', desc: 'Local team serving the Detroit metro, Southeast Michigan, and beyond.' },
+                  { title: 'High-Quality Visuals', desc: 'Stunning holographic displays that captivate audiences and create emotional impact.' },
+                  { title: 'Customizable Experiences', desc: 'Every project is tailored to your specific needs, brand, and creative vision.' },
+                  { title: 'Versatile Applications', desc: 'From concerts to conferences, memorials to marketing — our technology adapts to any event.' },
+                  { title: 'Full-Service Production', desc: 'We handle creative, technical setup, and on-site execution so you can focus on your guests.' },
                 ].map((item, i) => (
                   <div key={i} className="flex gap-4">
                     <div className="mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-primary-500/10 text-primary-400">
@@ -331,26 +331,26 @@ export default function Home() {
               <GlitchText text="client stories" className="text-glow-pink text-4xl md:text-5xl font-heading lowercase" />
             </motion.h2>
             <motion.p {...fadeInUp} transition={{ delay: 0.1, duration: 0.8 }} className="text-lg text-ghost">
-              Hear from families and organizations we&apos;ve served
+              Real experiences from the people we&apos;ve worked with
             </motion.p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {[
               {
-                quote: 'The holographic memorial for my father was beyond anything I could have imagined. It brought his personality to life in such a beautiful, respectful way.',
-                name: 'Sarah Mitchell',
-                role: 'Family Memorial Client'
+                quote: 'Our holographic visuals brought a sense of awe and wonder to our concert. It was truly a one-of-a-kind experience.',
+                name: 'Marcus Thompson',
+                role: 'Event Producer'
               },
               {
-                quote: "Eternavue's holographic display at our product launch stopped traffic. Attendees couldn't stop talking about it. Best investment we've made.",
+                quote: "Eternavue's holographic display at our product launch stopped traffic on the expo floor. Attendees couldn't stop talking about it for weeks.",
                 name: 'David Chen',
                 role: 'Marketing Director, Tech Innovations'
               },
               {
-                quote: 'Our wedding guests were in tears seeing my grandmother appear holographically to give her blessing. Eternavue made the impossible possible.',
+                quote: 'We wanted something our wedding guests would never forget. The holographic visuals were absolutely breathtaking — pure magic.',
                 name: 'Maria Rodriguez',
-                role: 'Wedding Client'
+                role: 'Private Event Client'
               }
             ].map((t, idx) => (
               <motion.div
@@ -388,7 +388,7 @@ export default function Home() {
               frequently asked questions
             </motion.h2>
             <motion.p {...fadeInUp} transition={{ delay: 0.1, duration: 0.8 }} className="text-lg text-ghost">
-              Everything you need to know about our holographic services
+              Everything you need to know before your first project
             </motion.p>
           </div>
 
@@ -462,10 +462,10 @@ export default function Home() {
 
       {/* Final CTA */}
       <CTA
-        title="Ready to Create Something Extraordinary?"
-        description="Let's discuss how holographic technology can transform your next memorial, event, or brand experience."
-        primaryButtonText="Get Started Today"
-        onPrimaryClick={() => handleServiceInquiry('memorial')}
+        title="ready to transform your next event?"
+        description="Tell us what you're envisioning. We'll show you how holographic technology can make it unforgettable."
+        primaryButtonText="Start a Conversation"
+        onPrimaryClick={() => handleServiceInquiry('event')}
         secondaryButtonText="View FAQ"
         secondaryButtonLink="#faq"
         variant="primary"

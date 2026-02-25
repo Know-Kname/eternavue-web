@@ -51,7 +51,7 @@ export function CorporateContactForm() {
       <motion.div initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} className="text-center py-12 max-w-md mx-auto">
         <CheckCircle className="w-16 h-16 text-green-400 mx-auto mb-6" />
         <h3 className="mb-3 font-heading text-2xl font-bold lowercase text-white">thank you</h3>
-        <p className="mb-8 text-ghost">Your corporate inquiry has been received. Our solutions team will reach out within one business day.</p>
+        <p className="mb-8 text-ghost">Your inquiry has been received. Our solutions team will reach out within one business day to discuss your project.</p>
         <Button variant="ghost" onClick={() => setStatus('idle')} className="text-white border-primary-500/35 hover:border-primary-500/60">Submit Another Inquiry</Button>
       </motion.div>
     )
@@ -60,8 +60,8 @@ export function CorporateContactForm() {
   return (
     <form onSubmit={handleSubmit} className="space-y-6 max-w-2xl mx-auto">
       <div className="mb-8">
-        <h3 className="mb-2 font-heading text-2xl font-bold lowercase text-white">corporate solutions inquiry</h3>
-        <p className="text-ghost">Elevate your brand with cutting-edge holographic technology.</p>
+        <h3 className="mb-2 font-heading text-2xl font-bold lowercase text-white">corporate & brand inquiry</h3>
+        <p className="text-ghost">Let&apos;s explore how holographic visuals can amplify your next launch, activation, or brand moment.</p>
       </div>
 
       {status === 'error' && (
@@ -107,7 +107,7 @@ export function CorporateContactForm() {
         ]}
       />
 
-      <Textarea label="Project Details" name="message" value={formData.message} onChange={handleChange} required placeholder="Tell us about your project goals, timeline, and how holographic technology can help achieve your objectives..." rows={5} variant="glass" disabled={status === 'submitting'} />
+      <Textarea label="Project Details" name="message" value={formData.message} onChange={handleChange} required placeholder="Tell us about your goals, audience, and how you envision holographic technology fitting into the experience..." rows={5} variant="glass" disabled={status === 'submitting'} />
 
       <Button type="submit" variant="primary" size="lg" fullWidth disabled={status === 'submitting'}>
         {status === 'submitting' ? <><Loader2 className="w-5 h-5 mr-2 animate-spin" /> Submitting...</> : 'Submit Inquiry'}

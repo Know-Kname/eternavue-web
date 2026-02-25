@@ -54,7 +54,7 @@ export function MemorialBookingForm() {
         <CheckCircle className="w-16 h-16 text-green-400 mx-auto mb-6" />
         <h3 className="mb-3 font-heading text-2xl font-bold lowercase text-white">thank you</h3>
         <p className="mb-8 text-ghost">
-          Your memorial service inquiry has been received. Our compassionate team will contact you within 24 hours.
+          Your inquiry has been received. A member of our team will reach out within 24 hours to discuss your vision.
         </p>
         <Button variant="ghost" onClick={() => setStatus('idle')} className="text-white border-primary-500/35 hover:border-primary-500/60">
           Submit Another Inquiry
@@ -66,8 +66,8 @@ export function MemorialBookingForm() {
   return (
     <form onSubmit={handleSubmit} className="space-y-6 max-w-2xl mx-auto">
       <div className="mb-8">
-        <h3 className="mb-2 font-heading text-2xl font-bold lowercase text-white">memorial service inquiry</h3>
-        <p className="text-ghost">Fill out the form below and we&apos;ll help you honor your loved one&apos;s legacy.</p>
+        <h3 className="mb-2 font-heading text-2xl font-bold lowercase text-white">holographic experience inquiry</h3>
+        <p className="text-ghost">Tell us about your project and we&apos;ll design a holographic experience tailored to your vision.</p>
       </div>
 
       {status === 'error' && (
@@ -100,7 +100,7 @@ export function MemorialBookingForm() {
 
       <Textarea
         label="Tell us about your needs" name="message" value={formData.message} onChange={handleChange} required
-        placeholder="Please share details about the person you'd like to honor and your vision for the memorial service..."
+        placeholder="Tell us about your event, audience, and how you envision using holographic visuals..."
         rows={5} variant="glass" disabled={status === 'submitting'}
       />
 

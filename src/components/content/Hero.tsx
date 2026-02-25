@@ -78,7 +78,7 @@ export function Hero({
         >
           <div className="mb-8 inline-flex items-center gap-2 rounded-full border border-primary-500/20 bg-primary-500/10 px-3 py-1 text-sm text-primary-300 backdrop-blur-sm">
             <Sparkles className="w-4 h-4" />
-            <span>The Future of Remembrance</span>
+            <span>The Future of Live Experiences</span>
           </div>
 
           <h1 className="text-glow mb-8 font-heading text-5xl font-bold lowercase leading-tight tracking-tight text-white md:text-7xl lg:text-8xl">

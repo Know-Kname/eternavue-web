@@ -15,14 +15,11 @@ export function Footer() {
           <div className="md:col-span-1 space-y-6">
             <Logo size="md" variant="light" />
             <p className="text-sm leading-relaxed text-ghost">
-              Holographic experiences that honor legacy and create unforgettable moments.
+              Transforming ordinary events into extraordinary experiences with high-quality holographic visuals.
             </p>
             <div className="text-xs text-ghost">
-              <p>Founded at Detroit Memorial Park</p>
-              <p>Serving families since 1925</p>
-            </div>
-            <div className="inline-flex items-center gap-2 rounded-full border border-amber-500/30 bg-gradient-to-r from-amber-700/25 to-amber-500/20 px-4 py-2 text-xs font-heading text-amber-300">
-              Est. 1926 - Detroit Legacy
+              <p>Detroit-born innovation</p>
+              <p>Serving clients nationwide</p>
             </div>
           </div>
 
@@ -30,9 +27,9 @@ export function Footer() {
           <div>
             <h4 className="mb-6 text-lg font-heading font-bold lowercase text-white">services</h4>
             <ul className="space-y-4 text-sm text-ghost">
-              <li><a href="#services" className="transition-colors hover:text-primary-400">Memorial Services</a></li>
-              <li><a href="#services" className="transition-colors hover:text-primary-400">Special Events</a></li>
-              <li><a href="#services" className="transition-colors hover:text-primary-400">Corporate Solutions</a></li>
+              <li><a href="#services" className="transition-colors hover:text-primary-400">Holographic Experiences</a></li>
+              <li><a href="#services" className="transition-colors hover:text-primary-400">Events & Celebrations</a></li>
+              <li><a href="#services" className="transition-colors hover:text-primary-400">Corporate & Brand</a></li>
               <li><a href="#technology" className="transition-colors hover:text-primary-400">How It Works</a></li>
             </ul>
           </div>

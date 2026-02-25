@@ -48,7 +48,7 @@ export function CTA({
         >
           <div className="mb-8 inline-flex items-center gap-2 rounded-full border border-primary-500/20 bg-primary-500/10 px-4 py-1.5 text-sm font-medium text-primary-300 backdrop-blur-md">
             <Sparkles className="w-4 h-4" />
-            <span>Start Your Journey</span>
+            <span>Let&apos;s Build Something Extraordinary</span>
           </div>
 
           <h2 className="mb-6 text-4xl font-bold leading-tight text-white md:text-5xl lg:text-6xl">

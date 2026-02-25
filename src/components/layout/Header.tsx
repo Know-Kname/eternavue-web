@@ -26,7 +26,7 @@ export function Header({ onCtaClick }: HeaderProps) {
 
   const navLinks = [
     { name: 'Services', href: '#services' },
-    { name: 'How It Works', href: '#technology' },
+    { name: 'Solutions', href: '#technology' },
     { name: 'About', href: '#about' },
     { name: 'FAQ', href: '#faq' },
   ]
@@ -60,9 +60,7 @@ export function Header({ onCtaClick }: HeaderProps) {
                   {link.name}
                 </a>
               ))}
-              <span className="rounded-full border border-amber-500/30 bg-gradient-to-r from-amber-700/20 to-amber-500/20 px-3 py-1 text-xs font-heading text-amber-300">
-                est. 1926
-              </span>
+
             </div>
 
             {/* CTA Button */}
@@ -75,7 +73,7 @@ export function Header({ onCtaClick }: HeaderProps) {
                   !isScrolled && "bg-primary-500/80 hover:bg-primary-500"
                 )}
               >
-                Request a Demo
+                Contact Us
               </Button>
             </div>
 
@@ -117,7 +115,7 @@ export function Header({ onCtaClick }: HeaderProps) {
                   onCtaClick?.()
                   setIsMobileMenuOpen(false)
                 }} fullWidth>
-                  Request a Demo
+                  Contact Us
                 </Button>
               </div>
             </div>
