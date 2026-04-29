@@ -48,11 +48,12 @@ export async function searchListings(query: string, page = 1): Promise<SearchRes
 
   const url = `${config.typesense.protocol}://${config.typesense.host}:${config.typesense.port}/collections/listings/documents/search?${params}`
 
-  const res = await fetch(url, {
+  type NextFetchInit = RequestInit & { next?: { revalidate?: number | false } }
+  const init: NextFetchInit = {
     headers: { 'X-TYPESENSE-API-KEY': config.typesense.searchKey },
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     next: { revalidate: 0 },
-  } as any)
+  }
+  const res = await fetch(url, init)
 
   if (!res.ok) return { results: [], total: 0, query }
 

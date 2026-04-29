@@ -16,14 +16,16 @@ import type {
 } from './types'
 import { LISTING_TYPE_MAP, isValidListingType } from './listing-types'
 
+type NextFetchInit = RequestInit & { next?: { revalidate?: number | false; tags?: string[] } }
+
 async function fetchGraphQL<T>(query: string, variables?: Record<string, unknown>): Promise<T> {
-  const res = await fetch(config.wp.graphqlUrl, {
+  const init: NextFetchInit = {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ query, variables }),
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     next: { tags: ['wp'] },
-  } as any)
+  }
+  const res = await fetch(config.wp.graphqlUrl, init)
 
   if (!res.ok) throw new Error(`WPGraphQL request failed: ${res.status}`)
 

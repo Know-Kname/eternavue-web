@@ -1,4 +1,4 @@
-import type { Listing, Article, ListingsResult, ArticlesResult } from './types'
+import type { Listing, Article } from './types'
 
 export const MOCK_LISTINGS: Listing[] = [
   {
