@@ -1,23 +1,96 @@
 'use client'
 
-import React, { useState } from 'react'
+import React, { useState, useRef } from 'react'
+import { motion, useScroll, useTransform } from 'framer-motion'
+import { Heart, PartyPopper, Building2, ArrowRight, Sparkles, X, Star, MessageCircle, Wand2, Eye } from 'lucide-react'
 import { PageWrapper } from '@/components/layout/PageWrapper'
 import { Hero } from '@/components/content/Hero'
-import { GlassCard } from '@/components/ui/GlassCard'
 import { CTA } from '@/components/content/CTA'
-import { Testimonial } from '@/components/content/Testimonial'
+import { GlowCard } from '@/components/ui/GlowCard'
+import { Button } from '@/components/ui/Button'
+import { Marquee } from '@/components/ui/Marquee'
+import { AnimatedCounter } from '@/components/ui/AnimatedCounter'
+import { MagneticButton } from '@/components/ui/MagneticButton'
+import { BackgroundBeams } from '@/components/effects/BackgroundBeams'
+import { Meteors } from '@/components/effects/Meteors'
+import { TextGenerateEffect } from '@/components/effects/TextGenerateEffect'
 import { MemorialBookingForm } from '@/components/forms/MemorialBookingForm'
 import { EventInquiryForm } from '@/components/forms/EventInquiryForm'
 import { CorporateContactForm } from '@/components/forms/CorporateContactForm'
-import { motion, AnimatePresence } from 'framer-motion'
-import { Heart, PartyPopper, Building2, ArrowRight, Sparkles, X } from 'lucide-react'
-import { Button } from '@/components/ui/Button'
+import { AnimatePresence } from 'framer-motion'
+
+/* ─── Reusable fade-up variant ──────────────────────────── */
+const fadeUp = {
+  initial:     { opacity: 0, y: 32 },
+  whileInView: { opacity: 1, y: 0 },
+  viewport:    { once: true, margin: '-80px' },
+  transition:  { duration: 0.7, ease: [0.25, 0.1, 0.25, 1] as const },
+}
+
+/* ─── Marquee items ─────────────────────────────────────── */
+const MARQUEE_ITEMS = [
+  'Founded 1925',
+  'Detroit Memorial Park',
+  'Holographic Pioneers',
+  '100+ Memorials Served',
+  'Award-Winning Technology',
+  'Warren, Michigan',
+  'Trusted Since 1925',
+  'Immersive Experiences',
+]
+
+/* ─── Stats ─────────────────────────────────────────────── */
+const STATS = [
+  { target: 500, suffix: '+', label: 'Moments Created' },
+  { target: 100, suffix: '+', label: 'Memorials Served' },
+  { target: 25,  suffix: '+', label: 'Corporate Partners' },
+  { target: 1925, suffix: '',  label: 'Est. Year'         },
+]
+
+/* ─── Process steps ─────────────────────────────────────── */
+const STEPS = [
+  { icon: MessageCircle, step: 1, title: 'Consultation',
+    desc: 'Share your vision with our team. We discuss your needs, timeline, and the story you want to tell.' },
+  { icon: Wand2,         step: 2, title: 'Creation',
+    desc: 'We craft custom holographic content integrating your photos, videos, and personal stories.' },
+  { icon: Eye,           step: 3, title: 'Experience',
+    desc: 'Watch as your vision comes to life through stunning, immersive holographic projection.' },
+]
+
+/* ─── Testimonials ──────────────────────────────────────── */
+const TESTIMONIALS = [
+  {
+    quote: 'The holographic memorial for my father was beyond anything I could have imagined. It brought his personality to life in such a beautiful, respectful way.',
+    name:  'Sarah Mitchell',
+    role:  'Family Memorial Client',
+  },
+  {
+    quote: "Eternavue's holographic display at our product launch stopped traffic. Attendees couldn't stop talking about it. Best investment we've made.",
+    name:  'David Chen',
+    role:  'Marketing Director, Tech Innovations',
+  },
+  {
+    quote: 'The holographic first dance moment at my clients\' wedding was absolutely magical. Guests were in tears of joy. Eternavue exceeded every expectation.',
+    name:  'Jennifer Patel',
+    role:  'Wedding Planner, Luxe Events',
+  },
+]
+
+/* ════════════════════════════════════════════════════════ */
 
 export default function Home() {
   const [showContactForm, setShowContactForm] = useState(false)
   const [selectedService, setSelectedService] = useState<'memorial' | 'event' | 'corporate' | null>(null)
 
-  const handleServiceInquiry = (service: 'memorial' | 'event' | 'corporate') => {
+  /* "How It Works" scroll-linked reveal */
+  const howRef = useRef<HTMLDivElement>(null)
+  const { scrollYProgress } = useScroll({
+    target: howRef,
+    offset: ['start 0.8', 'end 0.2'],
+  })
+  const lineWidth = useTransform(scrollYProgress, [0, 1], ['0%', '100%'])
+
+  function handleServiceInquiry(service: 'memorial' | 'event' | 'corporate') {
     setSelectedService(service)
     setShowContactForm(true)
     setTimeout(() => {
@@ -25,28 +98,15 @@ export default function Home() {
     }, 100)
   }
 
-  const closeForm = () => {
+  function closeForm() {
     setShowContactForm(false)
     setSelectedService(null)
   }
 
-  const fadeInUp = {
-    initial: { opacity: 0, y: 30 },
-    whileInView: { opacity: 1, y: 0 },
-    viewport: { once: true, margin: "-100px" },
-    transition: { duration: 0.8, ease: "easeOut" }
-  }
-
-  const staggerChildren = {
-    initial: { opacity: 0 },
-    whileInView: { opacity: 1 },
-    viewport: { once: true },
-    transition: { staggerChildren: 0.2 }
-  }
-
   return (
     <PageWrapper onHeaderCtaClick={() => handleServiceInquiry('memorial')}>
-      {/* Hero Section */}
+
+      {/* ── Hero ─────────────────────────────────────────── */}
       <Hero
         title="Holographic Experiences That Honor Legacy"
         subtitle="Transform memories into immersive holographic tributes. From intimate memorials to grand celebrations, we bring stories to life through cutting-edge technology."
@@ -54,229 +114,279 @@ export default function Home() {
         onCtaClick={() => handleServiceInquiry('memorial')}
       />
 
-      {/* Trust Signal - Dark Themed */}
-      <section className="bg-primary-950 border-b border-white/5 py-8">
-        <div className="max-w-7xl mx-auto px-6 text-center">
-          <motion.p 
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true }}
-            transition={{ duration: 1 }}
-            className="text-neutral-400 font-medium"
-          >
-            Founded at <span className="text-white font-bold">Detroit Memorial Park</span> • Serving families since 1925
-          </motion.p>
+      {/* ── Marquee Trust Strip ───────────────────────────── */}
+      <section className="border-y border-white/[0.05] bg-space py-5">
+        <Marquee
+          items={MARQUEE_ITEMS}
+          speed="35s"
+          className="py-1"
+          itemClassName="text-sm font-medium tracking-widest uppercase text-neutral-400"
+          separator={<span className="mx-8 text-holographic-cyan/40">✦</span>}
+        />
+      </section>
+
+      {/* ── Stats ────────────────────────────────────────── */}
+      <section className="bg-surface py-20 px-6">
+        <div className="mx-auto max-w-6xl">
+          <div className="grid grid-cols-2 gap-6 md:grid-cols-4">
+            {STATS.map(({ target, suffix, label }, i) => (
+              <GlowCard key={label} delay={i * 0.08} className="p-8 text-center">
+                <p className="mb-2 font-serif text-4xl text-holographic-cyan md:text-5xl">
+                  <AnimatedCounter target={target} suffix={suffix} />
+                </p>
+                <p className="text-xs font-medium uppercase tracking-widest text-neutral-500">{label}</p>
+              </GlowCard>
+            ))}
+          </div>
         </div>
       </section>
 
-      {/* Services Section - Bento Grid */}
-      <section id="services" className="py-24 px-6 bg-primary-900 relative overflow-hidden">
-        {/* Background Gradients */}
-        <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none">
-           <div className="absolute top-1/4 -right-20 w-[600px] h-[600px] bg-primary-800/30 rounded-full blur-[100px]" />
-           <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-holographic-cyan/5 rounded-full blur-[100px]" />
+      {/* ── Services ─────────────────────────────────────── */}
+      <section id="services" className="relative overflow-hidden bg-space py-28 px-6">
+        {/* Background */}
+        <div className="pointer-events-none absolute inset-0">
+          <Meteors number={8} />
+          <div className="absolute right-0 top-1/4 h-[500px] w-[500px] rounded-full bg-violet/[0.04] blur-[100px]" />
+          <div className="absolute bottom-0 left-0 h-[400px] w-[400px] rounded-full bg-holographic-cyan/[0.04] blur-[100px]" />
         </div>
 
-        <div className="max-w-7xl mx-auto relative z-10">
-          <div className="text-center mb-16">
-            <motion.h2 
-              {...fadeInUp}
-              className="text-4xl md:text-5xl font-serif font-bold text-white mb-6"
+        <div className="relative z-10 mx-auto max-w-7xl">
+          <div className="mb-16 text-center">
+            <motion.p {...fadeUp} className="mb-3 text-sm font-medium uppercase tracking-widest text-holographic-cyan">
+              What We Do
+            </motion.p>
+            <motion.h2
+              {...fadeUp}
+              transition={{ delay: 0.08, duration: 0.7, ease: [0.25, 0.1, 0.25, 1] }}
+              className="font-serif text-4xl font-normal text-white md:text-5xl lg:text-6xl"
             >
-              Our Services
+              <TextGenerateEffect words="Our Services" duration={0.5} staggerDuration={0.12} />
             </motion.h2>
-            <motion.p 
-              {...fadeInUp}
-              transition={{ delay: 0.1, duration: 0.8 }}
-              className="text-xl text-neutral-300 max-w-2xl mx-auto"
+            <motion.p
+              {...fadeUp}
+              transition={{ delay: 0.15, duration: 0.7, ease: [0.25, 0.1, 0.25, 1] }}
+              className="mx-auto mt-4 max-w-xl text-lg text-neutral-400"
             >
-              Cutting-edge holographic technology for meaningful moments
+              Cutting-edge holographic technology for the moments that matter most
             </motion.p>
           </div>
 
-          <motion.div 
-            variants={staggerChildren}
-            initial="initial"
-            whileInView="whileInView"
-            viewport={{ once: true }}
-            className="grid grid-cols-1 md:grid-cols-3 gap-6 auto-rows-[minmax(300px,auto)]"
-          >
-            {/* Memorial Services - Large Card */}
-            <GlassCard className="md:col-span-2 md:row-span-2 p-10 flex flex-col justify-between group cursor-pointer" hoverEffect={true}>
+          <div className="grid grid-cols-1 gap-5 md:grid-cols-3 md:auto-rows-[minmax(280px,auto)]">
+
+            {/* Memorial – large card */}
+            <GlowCard
+              delay={0}
+              className="cursor-pointer p-10 md:col-span-2 md:row-span-2 flex flex-col justify-between group"
+              spotlightColor="rgba(50, 184, 198, 0.1)"
+            >
               <div onClick={() => handleServiceInquiry('memorial')}>
-                <div className="w-16 h-16 bg-holographic-cyan/10 rounded-2xl flex items-center justify-center text-holographic-cyan mb-8 group-hover:bg-holographic-cyan group-hover:text-white transition-colors duration-300">
-                  <Heart className="w-8 h-8" />
+                <div className="mb-8 flex h-16 w-16 items-center justify-center rounded-2xl bg-holographic-cyan/10 text-holographic-cyan transition-colors duration-300 group-hover:bg-holographic-cyan group-hover:text-space">
+                  <Heart className="h-8 w-8" />
                 </div>
-                <h3 className="text-3xl font-serif font-bold text-white mb-4">Memorial Services</h3>
-                <p className="text-neutral-300 text-lg mb-8 max-w-md">
+                <h3 className="mb-4 font-serif text-3xl text-white">Memorial Services</h3>
+                <p className="mb-8 max-w-md text-lg leading-relaxed text-neutral-300">
                   Honor loved ones with dignified holographic memorials that celebrate their life story, personality, and legacy in a way never before possible.
                 </p>
-                <ul className="space-y-3 mb-8">
-                   {['Holographic tributes', 'Interactive life stories', 'Respectful presentation'].map((item, i) => (
-                     <li key={i} className="flex items-center text-neutral-400">
-                       <Sparkles className="w-4 h-4 text-accent-500 mr-2" />
-                       {item}
-                     </li>
-                   ))}
+                <ul className="mb-8 space-y-3">
+                  {['Holographic tributes', 'Interactive life stories', 'Respectful presentation'].map((item) => (
+                    <li key={item} className="flex items-center gap-2 text-neutral-400">
+                      <Sparkles className="h-4 w-4 text-accent-500 shrink-0" />
+                      {item}
+                    </li>
+                  ))}
                 </ul>
               </div>
-              <div className="flex items-center text-accent-500 font-medium group-hover:translate-x-2 transition-transform">
-                Learn more <ArrowRight className="ml-2 w-4 h-4" />
+              <div className="flex items-center gap-2 text-accent-500 font-medium transition-transform duration-200 group-hover:translate-x-2">
+                Learn more <ArrowRight className="h-4 w-4" />
               </div>
-            </GlassCard>
+            </GlowCard>
 
             {/* Special Events */}
-            <GlassCard className="p-8 flex flex-col justify-between group cursor-pointer" hoverEffect={true}>
+            <GlowCard
+              delay={0.1}
+              className="cursor-pointer p-8 flex flex-col justify-between group"
+              spotlightColor="rgba(212, 165, 116, 0.1)"
+            >
               <div onClick={() => handleServiceInquiry('event')}>
-                <div className="w-12 h-12 bg-accent-500/10 rounded-xl flex items-center justify-center text-accent-500 mb-6 group-hover:bg-accent-500 group-hover:text-white transition-colors duration-300">
-                  <PartyPopper className="w-6 h-6" />
+                <div className="mb-6 flex h-12 w-12 items-center justify-center rounded-xl bg-accent-500/10 text-accent-500 transition-colors duration-300 group-hover:bg-accent-500 group-hover:text-space">
+                  <PartyPopper className="h-6 w-6" />
                 </div>
-                <h3 className="text-2xl font-serif font-bold text-white mb-3">Special Events</h3>
-                <p className="text-neutral-300 text-sm mb-4">
+                <h3 className="mb-3 font-serif text-2xl text-white">Special Events</h3>
+                <p className="text-sm leading-relaxed text-neutral-300">
                   Add wow-factor to weddings and milestones with stunning holographic displays.
                 </p>
               </div>
-              <div className="flex items-center text-white/50 text-sm group-hover:text-white transition-colors">
-                Explore Events <ArrowRight className="ml-2 w-4 h-4" />
+              <div className="mt-6 flex items-center gap-2 text-sm text-neutral-500 transition-colors group-hover:text-white">
+                Explore Events <ArrowRight className="h-4 w-4" />
               </div>
-            </GlassCard>
+            </GlowCard>
 
-            {/* Corporate Solutions */}
-            <GlassCard className="p-8 flex flex-col justify-between group cursor-pointer" hoverEffect={true}>
-               <div onClick={() => handleServiceInquiry('corporate')}>
-                <div className="w-12 h-12 bg-white/10 rounded-xl flex items-center justify-center text-white mb-6 group-hover:bg-white group-hover:text-primary-900 transition-colors duration-300">
-                  <Building2 className="w-6 h-6" />
+            {/* Corporate */}
+            <GlowCard
+              delay={0.18}
+              className="cursor-pointer p-8 flex flex-col justify-between group"
+              spotlightColor="rgba(99, 102, 241, 0.1)"
+            >
+              <div onClick={() => handleServiceInquiry('corporate')}>
+                <div className="mb-6 flex h-12 w-12 items-center justify-center rounded-xl bg-iris/10 text-iris transition-colors duration-300 group-hover:bg-iris group-hover:text-white">
+                  <Building2 className="h-6 w-6" />
                 </div>
-                <h3 className="text-2xl font-serif font-bold text-white mb-3">Corporate</h3>
-                <p className="text-neutral-300 text-sm mb-4">
-                  Stand out at trade shows and launches with unforgettable experiences.
+                <h3 className="mb-3 font-serif text-2xl text-white">Corporate Solutions</h3>
+                <p className="text-sm leading-relaxed text-neutral-300">
+                  Stand out at trade shows and launches with unforgettable holographic experiences.
                 </p>
               </div>
-              <div className="flex items-center text-white/50 text-sm group-hover:text-white transition-colors">
-                Corporate Solutions <ArrowRight className="ml-2 w-4 h-4" />
+              <div className="mt-6 flex items-center gap-2 text-sm text-neutral-500 transition-colors group-hover:text-white">
+                Corporate Solutions <ArrowRight className="h-4 w-4" />
               </div>
-            </GlassCard>
-          </motion.div>
+            </GlowCard>
+          </div>
         </div>
       </section>
 
-      {/* How It Works - Dark Mode Version */}
-      <section className="py-24 px-6 bg-primary-950">
-        <div className="max-w-5xl mx-auto">
-          <div className="text-center mb-20">
-            <motion.h2 
-              {...fadeInUp}
-              className="text-4xl md:text-5xl font-serif font-bold text-white mb-4"
+      {/* ── How It Works ──────────────────────────────────── */}
+      <section className="relative overflow-hidden bg-surface py-28 px-6" ref={howRef}>
+        <div className="pointer-events-none absolute inset-0">
+          <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 h-[600px] w-[600px] rounded-full bg-holographic-cyan/[0.03] blur-[120px]" />
+        </div>
+
+        <div className="relative z-10 mx-auto max-w-5xl">
+          <div className="mb-20 text-center">
+            <motion.p {...fadeUp} className="mb-3 text-sm font-medium uppercase tracking-widest text-holographic-cyan">
+              The Process
+            </motion.p>
+            <motion.h2
+              {...fadeUp}
+              transition={{ delay: 0.08, duration: 0.7, ease: [0.25, 0.1, 0.25, 1] }}
+              className="font-serif text-4xl font-normal text-white md:text-5xl lg:text-6xl"
             >
               How It Works
             </motion.h2>
-            <motion.p 
-              {...fadeInUp}
-              transition={{ delay: 0.1, duration: 0.8 }}
-              className="text-xl text-neutral-400"
+            <motion.p
+              {...fadeUp}
+              transition={{ delay: 0.15, duration: 0.7, ease: [0.25, 0.1, 0.25, 1] }}
+              className="mx-auto mt-4 max-w-xl text-lg text-neutral-400"
             >
               Simple process, extraordinary results
             </motion.p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-12 relative">
-            {/* Connecting Line */}
-            <div className="hidden md:block absolute top-8 left-[16%] right-[16%] h-0.5 bg-gradient-to-r from-transparent via-holographic-cyan/30 to-transparent" />
+          {/* Steps */}
+          <div className="relative grid grid-cols-1 gap-12 md:grid-cols-3">
+            {/* Animated connecting line */}
+            <div className="hidden md:block absolute top-10 left-[calc(16%+2rem)] right-[calc(16%+2rem)] h-px overflow-hidden rounded-full bg-white/5">
+              <motion.div
+                style={{ width: lineWidth }}
+                className="h-full bg-gradient-to-r from-holographic-cyan/60 via-violet/60 to-accent-500/60"
+              />
+            </div>
 
-            {[
-              { step: 1, title: 'Consultation', desc: 'Share your vision with our team. We discuss your needs and timeline.' },
-              { step: 2, title: 'Creation', desc: 'We create custom holographic content integrating your photos and stories.' },
-              { step: 3, title: 'Experience', desc: 'Watch as your vision comes to life through stunning projection.' }
-            ].map((item, idx) => (
-              <motion.div 
-                key={idx}
-                initial={{ opacity: 0, y: 20 }}
+            {STEPS.map(({ icon: Icon, step, title, desc }, i) => (
+              <motion.div
+                key={step}
+                initial={{ opacity: 0, y: 28 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: idx * 0.2 }}
-                className="text-center relative z-10"
+                viewport={{ once: true, margin: '-60px' }}
+                transition={{ delay: i * 0.15, duration: 0.7, ease: [0.25, 0.1, 0.25, 1] }}
+                className="relative z-10 flex flex-col items-center text-center"
               >
-                <div className="w-16 h-16 bg-primary-900 border border-holographic-cyan/30 rounded-full flex items-center justify-center text-holographic-cyan text-2xl font-bold mx-auto mb-6 shadow-[0_0_15px_rgba(50,184,198,0.2)]">
-                  {item.step}
+                {/* Icon ring */}
+                <div className="relative mb-6">
+                  <div className="absolute inset-0 rounded-full bg-holographic-cyan/10 blur-xl" />
+                  <div className="relative flex h-20 w-20 items-center justify-center rounded-full border border-holographic-cyan/20 bg-surface shadow-[0_0_20px_rgba(50,184,198,0.15)]">
+                    {/* Step number */}
+                    <span className="absolute -top-2 -right-2 flex h-6 w-6 items-center justify-center rounded-full bg-holographic-cyan text-xs font-bold text-space">
+                      {step}
+                    </span>
+                    <Icon className="h-8 w-8 text-holographic-cyan" />
+                  </div>
                 </div>
-                <h3 className="text-xl font-serif font-bold text-white mb-3">{item.title}</h3>
-                <p className="text-neutral-400 text-sm leading-relaxed">
-                  {item.desc}
-                </p>
+                <h3 className="mb-3 font-serif text-xl text-white">{title}</h3>
+                <p className="text-sm leading-relaxed text-neutral-400">{desc}</p>
               </motion.div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* Testimonials - Using Glass Cards */}
-      <section className="py-24 px-6 bg-primary-900">
-        <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-16">
-            <motion.h2 
-              {...fadeInUp}
-              className="text-4xl md:text-5xl font-serif font-bold text-white mb-4"
+      {/* ── Testimonials ──────────────────────────────────── */}
+      <section id="about" className="relative overflow-hidden bg-space py-28 px-6">
+        <div className="pointer-events-none absolute inset-0">
+          <div className="absolute right-1/4 top-0 h-[400px] w-[400px] rounded-full bg-accent-500/[0.04] blur-[100px]" />
+        </div>
+
+        <div className="relative z-10 mx-auto max-w-7xl">
+          <div className="mb-16 text-center">
+            <motion.p {...fadeUp} className="mb-3 text-sm font-medium uppercase tracking-widest text-holographic-cyan">
+              Stories
+            </motion.p>
+            <motion.h2
+              {...fadeUp}
+              transition={{ delay: 0.08, duration: 0.7, ease: [0.25, 0.1, 0.25, 1] }}
+              className="font-serif text-4xl font-normal text-white md:text-5xl lg:text-6xl"
             >
               Client Stories
             </motion.h2>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            <GlassCard className="p-8">
-              <div className="text-accent-500 text-4xl font-serif mb-4">"</div>
-              <p className="text-neutral-200 text-lg italic mb-6">
-                The holographic memorial for my father was beyond anything I could have imagined. It brought his personality to life in such a beautiful, respectful way.
-              </p>
-              <div>
-                <div className="font-bold text-white">Sarah Mitchell</div>
-                <div className="text-sm text-neutral-400">Family Memorial Client</div>
-              </div>
-            </GlassCard>
-            <GlassCard className="p-8">
-              <div className="text-accent-500 text-4xl font-serif mb-4">"</div>
-              <p className="text-neutral-200 text-lg italic mb-6">
-                Eternavue's holographic display at our product launch stopped traffic. Attendees couldn't stop talking about it. Best investment we've made.
-              </p>
-              <div>
-                <div className="font-bold text-white">David Chen</div>
-                <div className="text-sm text-neutral-400">Marketing Director, Tech Innovations</div>
-              </div>
-            </GlassCard>
+          <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
+            {TESTIMONIALS.map(({ quote, name, role }, i) => (
+              <GlowCard key={name} delay={i * 0.1} className="flex flex-col justify-between p-8">
+                {/* Stars */}
+                <div className="mb-4 flex gap-0.5">
+                  {Array.from({ length: 5 }).map((_, j) => (
+                    <Star key={j} className="h-4 w-4 fill-accent-500 text-accent-500" />
+                  ))}
+                </div>
+                {/* Quote mark */}
+                <p className="mb-1 font-serif text-5xl leading-none text-accent-500/40">"</p>
+                <p className="mb-6 flex-grow text-base leading-relaxed text-neutral-300 italic">
+                  {quote}
+                </p>
+                <div className="flex items-center gap-3 border-t border-white/5 pt-5">
+                  {/* Avatar placeholder */}
+                  <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-holographic-cyan/30 to-violet/30 text-sm font-bold text-white">
+                    {name[0]}
+                  </div>
+                  <div>
+                    <p className="text-sm font-semibold text-white">{name}</p>
+                    <p className="text-xs text-neutral-500">{role}</p>
+                  </div>
+                </div>
+              </GlowCard>
+            ))}
           </div>
         </div>
       </section>
 
-      {/* Contact Form Section */}
+      {/* ── Contact Form ──────────────────────────────────── */}
       <AnimatePresence>
         {showContactForm && (
-          <motion.section 
+          <motion.section
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: 'auto' }}
             exit={{ opacity: 0, height: 0 }}
-            transition={{ duration: 0.5, ease: "easeInOut" }}
-            id="contact-form" 
-            className="py-24 px-6 bg-primary-950 relative overflow-hidden border-t border-white/5"
+            transition={{ duration: 0.5, ease: 'easeInOut' }}
+            id="contact-form"
+            className="relative overflow-hidden border-t border-white/5 bg-surface py-24 px-6"
           >
-             {/* Background Effects */}
-            <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-holographic-cyan/5 rounded-full blur-[100px] pointer-events-none" />
-            
-            <div className="max-w-3xl mx-auto relative z-10">
-              <button 
+            <div className="pointer-events-none absolute top-0 right-0 h-[400px] w-[400px] rounded-full bg-holographic-cyan/5 blur-[100px]" />
+            <div className="relative z-10 mx-auto max-w-3xl">
+              <button
                 onClick={closeForm}
-                className="absolute -top-12 right-0 text-neutral-400 hover:text-white transition-colors flex items-center gap-2 mb-4"
+                className="absolute -top-10 right-0 flex items-center gap-2 text-sm text-neutral-400 hover:text-white transition-colors"
               >
-                <X className="w-5 h-5" /> Close
+                <X className="h-4 w-4" /> Close
               </button>
-              
-              {selectedService === 'memorial' && <MemorialBookingForm />}
-              {selectedService === 'event' && <EventInquiryForm />}
+              {selectedService === 'memorial'  && <MemorialBookingForm />}
+              {selectedService === 'event'     && <EventInquiryForm />}
               {selectedService === 'corporate' && <CorporateContactForm />}
             </div>
           </motion.section>
         )}
       </AnimatePresence>
 
-      {/* Final CTA */}
+      {/* ── CTA ──────────────────────────────────────────── */}
       <CTA
         title="Ready to Create Something Extraordinary?"
         description="Let's discuss how holographic technology can transform your next memorial, event, or brand experience."

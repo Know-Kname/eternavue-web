@@ -1,23 +1,26 @@
 'use client'
 
 import React from 'react'
-import { Button } from '@/components/ui/Button'
 import { motion } from 'framer-motion'
-import { Sparkles, ArrowRight } from 'lucide-react'
+import { ArrowRight, Sparkles } from 'lucide-react'
+import { BackgroundBeams } from '@/components/effects/BackgroundBeams'
+import { TextGenerateEffect } from '@/components/effects/TextGenerateEffect'
+import { MagneticButton } from '@/components/ui/MagneticButton'
+import { Button } from '@/components/ui/Button'
 
 export interface CTAProps {
-  title: string
-  description: string
-  primaryButtonText: string
-  primaryButtonLink?: string
-  onPrimaryClick?: () => void
+  title:                string
+  description:          string
+  primaryButtonText:    string
+  primaryButtonLink?:   string
+  onPrimaryClick?:      () => void
   secondaryButtonText?: string
   secondaryButtonLink?: string
-  onSecondaryClick?: () => void
-  variant?: 'primary' | 'accent' | 'dark'
+  onSecondaryClick?:    () => void
+  variant?:             'primary' | 'accent' | 'dark'
 }
 
-export function CTA({ 
+export function CTA({
   title,
   description,
   primaryButtonText,
@@ -26,75 +29,73 @@ export function CTA({
   secondaryButtonText,
   secondaryButtonLink,
   onSecondaryClick,
-  variant = 'primary'
 }: CTAProps) {
-  
   return (
-    <section className="relative py-32 px-6 overflow-hidden bg-primary-950">
-      {/* Background Effects */}
-      <div className="absolute inset-0 bg-[url('/grid.svg')] bg-center opacity-5 [mask-image:linear-gradient(180deg,white,rgba(255,255,255,0))]" />
-      
-      {/* Holographic Glows */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-holographic-cyan/10 rounded-full blur-[100px] pointer-events-none" />
-      <div className="absolute top-0 right-0 w-[400px] h-[400px] bg-accent-500/10 rounded-full blur-[100px] pointer-events-none" />
+    <section className="relative overflow-hidden bg-space py-36 px-6">
+      {/* Background beams */}
+      <BackgroundBeams />
 
-      <div className="relative z-10 max-w-4xl mx-auto text-center">
+      {/* Centre glow */}
+      <div className="pointer-events-none absolute inset-0">
+        <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 h-[600px] w-[600px] rounded-full bg-holographic-cyan/[0.07] blur-[120px]" />
+        <div className="absolute right-0 top-0 h-[400px] w-[400px] rounded-full bg-accent-500/[0.06] blur-[100px]" />
+      </div>
+
+      <div className="relative z-10 mx-auto max-w-4xl text-center">
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 24 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.8 }}
+          transition={{ duration: 0.7, ease: [0.25, 0.1, 0.25, 1] }}
         >
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-holographic-cyan/10 border border-holographic-cyan/20 text-holographic-cyan text-sm font-medium mb-8 backdrop-blur-md">
-            <Sparkles className="w-4 h-4" />
-            <span>Start Your Journey</span>
+          {/* Badge */}
+          <div className="mb-8 inline-flex items-center gap-2 rounded-full border border-holographic-cyan/20 bg-holographic-cyan/5 px-4 py-1.5 text-sm font-medium text-holographic-cyan backdrop-blur-md">
+            <Sparkles className="h-3.5 w-3.5" />
+            Start Your Journey
           </div>
 
-          <h2 className="text-4xl md:text-5xl lg:text-6xl font-serif font-bold text-white mb-6 leading-tight">
-            {title}
+          {/* Heading */}
+          <h2 className="mb-6 font-serif text-4xl font-normal leading-tight text-white md:text-5xl lg:text-6xl">
+            <TextGenerateEffect words={title} duration={0.6} staggerDuration={0.07} />
           </h2>
-          
-          <p className="text-xl md:text-2xl text-neutral-300 mb-12 max-w-2xl mx-auto leading-relaxed">
+
+          {/* Description */}
+          <p className="mx-auto mb-12 max-w-2xl text-xl leading-relaxed text-neutral-400">
             {description}
           </p>
 
-          <div className="flex flex-col sm:flex-row gap-6 justify-center items-center">
-            {primaryButtonLink ? (
-              <a href={primaryButtonLink} className="w-full sm:w-auto">
-                <Button variant="secondary" size="lg" className="w-full sm:w-auto min-w-[200px] shadow-[0_0_20px_rgba(212,165,116,0.3)] hover:shadow-[0_0_30px_rgba(212,165,116,0.5)]">
-                  {primaryButtonText}
-                  <ArrowRight className="ml-2 w-5 h-5" />
-                </Button>
-              </a>
-            ) : (
-              <Button 
-                variant="secondary" 
-                size="lg" 
-                onClick={onPrimaryClick}
-                className="w-full sm:w-auto min-w-[200px] shadow-[0_0_20px_rgba(212,165,116,0.3)] hover:shadow-[0_0_30px_rgba(212,165,116,0.5)]"
-              >
-                {primaryButtonText}
-                <ArrowRight className="ml-2 w-5 h-5" />
-              </Button>
-            )}
-            
-            {secondaryButtonText && (
-              secondaryButtonLink ? (
-                <a href={secondaryButtonLink} className="w-full sm:w-auto">
-                  <Button variant="ghost" size="lg" className="w-full sm:w-auto border-white/20 text-white hover:bg-white/10 hover:border-white/40">
-                    {secondaryButtonText}
+          {/* Buttons */}
+          <div className="flex flex-col items-center justify-center gap-5 sm:flex-row">
+            <MagneticButton strength={0.3}>
+              {primaryButtonLink ? (
+                <a href={primaryButtonLink}>
+                  <Button variant="primary" size="lg" className="min-w-[200px]">
+                    {primaryButtonText}
+                    <ArrowRight className="ml-2 h-4 w-4" />
                   </Button>
                 </a>
               ) : (
-                <Button 
-                  variant="ghost" 
-                  size="lg" 
-                  onClick={onSecondaryClick}
-                  className="w-full sm:w-auto border-white/20 text-white hover:bg-white/10 hover:border-white/40"
-                >
-                  {secondaryButtonText}
+                <Button variant="primary" size="lg" onClick={onPrimaryClick} className="min-w-[200px]">
+                  {primaryButtonText}
+                  <ArrowRight className="ml-2 h-4 w-4" />
                 </Button>
-              )
+              )}
+            </MagneticButton>
+
+            {secondaryButtonText && (
+              <MagneticButton strength={0.25}>
+                {secondaryButtonLink ? (
+                  <a href={secondaryButtonLink}>
+                    <Button variant="ghost" size="lg" className="min-w-[180px]">
+                      {secondaryButtonText}
+                    </Button>
+                  </a>
+                ) : (
+                  <Button variant="ghost" size="lg" onClick={onSecondaryClick} className="min-w-[180px]">
+                    {secondaryButtonText}
+                  </Button>
+                )}
+              </MagneticButton>
             )}
           </div>
         </motion.div>

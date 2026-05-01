@@ -1,127 +1,158 @@
 'use client'
 
 import React from 'react'
-import { Button } from '@/components/ui/Button'
 import { motion } from 'framer-motion'
-import { ChevronRight, Sparkles } from 'lucide-react'
+import { ChevronDown, Play } from 'lucide-react'
+import { BackgroundBeams } from '@/components/effects/BackgroundBeams'
+import { Meteors } from '@/components/effects/Meteors'
+import { MovingBorder } from '@/components/effects/MovingBorder'
+import { TextGenerateEffect } from '@/components/effects/TextGenerateEffect'
+import { MagneticButton } from '@/components/ui/MagneticButton'
+import { Button } from '@/components/ui/Button'
 
 export interface HeroProps {
-  title: string
-  subtitle: string
-  ctaText: string
-  ctaLink?: string
-  onCtaClick?: () => void
-  backgroundImage?: string
+  title:        string
+  subtitle:     string
+  ctaText:      string
+  ctaLink?:     string
+  onCtaClick?:  () => void
 }
 
-export function Hero({ 
-  title, 
-  subtitle, 
-  ctaText, 
-  ctaLink,
-  onCtaClick,
-  backgroundImage 
-}: HeroProps) {
+export function Hero({ title, subtitle, ctaText, onCtaClick, ctaLink }: HeroProps) {
   return (
-    <section className="relative min-h-[85vh] flex items-center justify-center overflow-hidden bg-primary-950">
-      {/* Dynamic Background */}
-      <div className="absolute inset-0 overflow-hidden">
-        {/* Dark overlay with slight gradient */}
-        <div className="absolute inset-0 bg-gradient-to-b from-primary-900/50 via-primary-950/80 to-primary-950 z-10" />
-        
-        {/* Animated Orbs - Simulating Holographic Light */}
-        <motion.div 
-          animate={{ 
-            scale: [1, 1.2, 1],
-            opacity: [0.3, 0.5, 0.3],
-            rotate: [0, 45, 0]
-          }}
-          transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
-          className="absolute top-0 left-1/4 w-[500px] h-[500px] bg-holographic-cyan/20 rounded-full blur-[100px]" 
-        />
-        <motion.div 
-          animate={{ 
-            scale: [1, 1.3, 1],
-            opacity: [0.2, 0.4, 0.2],
-            x: [0, 100, 0]
-          }}
-          transition={{ duration: 15, repeat: Infinity, ease: "easeInOut", delay: 1 }}
-          className="absolute bottom-0 right-1/4 w-[600px] h-[600px] bg-accent-500/20 rounded-full blur-[120px]" 
-        />
+    <section className="relative flex min-h-screen items-center justify-center overflow-hidden bg-space">
+      {/* ── Layers ────────────────────────────────────────── */}
+
+      {/* 1. Deep radial glow behind everything */}
+      <div className="pointer-events-none absolute inset-0">
+        <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 h-[900px] w-[900px] rounded-full bg-holographic-cyan/[0.04] blur-[140px]" />
+        <div className="absolute right-0 top-0 h-[600px] w-[600px] rounded-full bg-violet/[0.06] blur-[120px]" />
+        <div className="absolute bottom-0 left-0 h-[500px] w-[500px] rounded-full bg-accent-500/[0.05] blur-[100px]" />
       </div>
-      
-      {/* Grid Pattern Overlay */}
-      <div className="absolute inset-0 bg-[url('/grid.svg')] bg-center [mask-image:linear-gradient(180deg,white,rgba(255,255,255,0))] opacity-10 z-10" />
-      
-      {/* Content */}
-      <div className="relative z-20 max-w-5xl mx-auto px-6 py-20 text-center">
+
+      {/* 2. Animated SVG beams */}
+      <BackgroundBeams />
+
+      {/* 3. Meteor shower */}
+      <div className="pointer-events-none absolute inset-0 overflow-hidden">
+        <Meteors number={14} />
+      </div>
+
+      {/* 4. Subtle grid */}
+      <div
+        className="pointer-events-none absolute inset-0 opacity-[0.025]"
+        style={{
+          backgroundImage: `linear-gradient(rgba(50,184,198,0.5) 1px, transparent 1px),
+                            linear-gradient(90deg, rgba(50,184,198,0.5) 1px, transparent 1px)`,
+          backgroundSize: '60px 60px',
+        }}
+      />
+
+      {/* ── Content ──────────────────────────────────────── */}
+      <div className="relative z-20 mx-auto max-w-5xl px-6 py-32 text-center">
+
+        {/* Badge */}
+        <motion.div
+          initial={{ opacity: 0, y: 16 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.7, ease: [0.25, 0.1, 0.25, 1] }}
+          className="mb-10 inline-flex"
+        >
+          <MovingBorder
+            duration={3500}
+            containerClassName="rounded-full"
+            innerClassName="px-4 py-1.5 rounded-full bg-space/70"
+          >
+            <span className="text-sm font-medium text-holographic-light tracking-wide">
+              ✦ The Future of Remembrance
+            </span>
+          </MovingBorder>
+        </motion.div>
+
+        {/* Headline */}
+        <h1 className="mb-8 font-serif text-[clamp(2.8rem,8vw,6.5rem)] font-normal leading-[1.05] tracking-tight text-white">
+          <TextGenerateEffect
+            words={title}
+            className="text-gradient-holographic"
+            duration={0.7}
+            staggerDuration={0.1}
+          />
+        </h1>
+
+        {/* Subtitle */}
+        <motion.p
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 1.2, duration: 0.8, ease: [0.25, 0.1, 0.25, 1] }}
+          className="mx-auto mb-14 max-w-2xl text-lg leading-relaxed text-neutral-400 md:text-xl"
+        >
+          {subtitle}
+        </motion.p>
+
+        {/* CTAs */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, ease: "easeOut" }}
+          transition={{ delay: 1.5, duration: 0.7 }}
+          className="flex flex-col items-center justify-center gap-4 sm:flex-row sm:gap-6"
         >
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/5 border border-white/10 text-holographic-cyan text-sm mb-8 backdrop-blur-sm">
-            <Sparkles className="w-4 h-4" />
-            <span>The Future of Remembrance</span>
-          </div>
-          
-          <h1 className="text-5xl md:text-7xl lg:text-8xl font-serif font-bold text-white mb-8 leading-tight tracking-tight">
-            {title.split(' ').map((word, i) => (
-              <span key={i} className="inline-block mr-4">
-                {word === 'Holographic' ? (
-                  <span className="text-transparent bg-clip-text bg-gradient-to-r from-holographic-cyan to-white animate-pulse">
-                    {word}
-                  </span>
-                ) : word}
-              </span>
-            ))}
-          </h1>
-          
-          <p className="text-xl md:text-2xl text-neutral-300 mb-12 max-w-2xl mx-auto leading-relaxed">
-            {subtitle}
-          </p>
-          
-          <motion.div 
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.2, duration: 0.5 }}
-            className="flex flex-col sm:flex-row gap-6 justify-center items-center"
-          >
-            {ctaLink ? (
-              <a href={ctaLink} className="w-full sm:w-auto">
-                <Button variant="primary" size="lg" className="w-full sm:w-auto min-w-[200px] shadow-[0_0_20px_rgba(50,184,198,0.3)] hover:shadow-[0_0_30px_rgba(50,184,198,0.5)] transition-shadow">
-                  {ctaText}
-                  <ChevronRight className="ml-2 w-5 h-5" />
-                </Button>
-              </a>
-            ) : (
-              <Button 
-                variant="primary" 
-                size="lg" 
-                onClick={onCtaClick}
-                className="w-full sm:w-auto min-w-[200px] shadow-[0_0_20px_rgba(50,184,198,0.3)] hover:shadow-[0_0_30px_rgba(50,184,198,0.5)] transition-shadow"
-              >
+          <MagneticButton strength={0.3}>
+            <MovingBorder
+              duration={2800}
+              containerClassName="rounded-full"
+              innerClassName="rounded-full px-8 py-4 font-semibold text-white bg-space/80"
+              onClick={ctaLink ? undefined : onCtaClick}
+              as={ctaLink ? 'a' : 'button'}
+              {...(ctaLink ? { href: ctaLink } : {})}
+            >
+              <span className="flex items-center gap-2 text-base">
                 {ctaText}
-                <ChevronRight className="ml-2 w-5 h-5" />
-              </Button>
-            )}
-            
-            <Button variant="ghost" size="lg" className="text-white hover:text-holographic-cyan hover:bg-white/5">
+              </span>
+            </MovingBorder>
+          </MagneticButton>
+
+          <MagneticButton strength={0.25}>
+            <Button
+              variant="ghost"
+              size="lg"
+              className="group flex items-center gap-2 border-white/10 text-neutral-300 hover:border-white/20 hover:text-white"
+            >
+              <span className="flex h-8 w-8 items-center justify-center rounded-full bg-white/10 group-hover:bg-white/15 transition-colors">
+                <Play className="h-3 w-3 fill-current" />
+              </span>
               Watch Video
             </Button>
-          </motion.div>
+          </MagneticButton>
+        </motion.div>
+
+        {/* Stats row */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 2, duration: 0.8 }}
+          className="mt-20 flex items-center justify-center gap-8 text-center md:gap-16"
+        >
+          {[
+            { value: '500+', label: 'Moments Created' },
+            { value: '100+', label: 'Memorials Served' },
+            { value: '1925', label: 'Est. Year' },
+          ].map(({ value, label }) => (
+            <div key={label} className="space-y-1">
+              <p className="text-2xl font-serif text-holographic-cyan md:text-3xl">{value}</p>
+              <p className="text-xs uppercase tracking-widest text-neutral-500">{label}</p>
+            </div>
+          ))}
         </motion.div>
       </div>
-      
-      {/* Scroll Indicator */}
-      <motion.div 
-        animate={{ y: [0, 10, 0] }}
-        transition={{ duration: 2, repeat: Infinity }}
-        className="absolute bottom-10 left-1/2 -translate-x-1/2 text-white/50 z-20"
+
+      {/* Scroll indicator */}
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1, y: [0, 10, 0] }}
+        transition={{ delay: 2.5, duration: 2, repeat: Infinity, ease: 'easeInOut' }}
+        className="absolute bottom-10 left-1/2 z-20 -translate-x-1/2 text-white/30"
       >
-        <div className="w-6 h-10 border-2 border-white/20 rounded-full flex justify-center p-1">
-          <div className="w-1 h-2 bg-white/50 rounded-full" />
-        </div>
+        <ChevronDown className="h-6 w-6" />
       </motion.div>
     </section>
   )
