@@ -61,7 +61,9 @@ async function legiscanFetch<T>(op: string, params: Record<string, string>): Pro
   for (const [k, v] of Object.entries(params)) {
     url.searchParams.set(k, v)
   }
-  const res = await fetch(url.toString(), { next: { revalidate: config.legiscan.cacheTtlHours * 3600 } })
+  const res = await fetch(url.toString(), {
+    next: { revalidate: config.legiscan.cacheTtlHours * 3600 },
+  })
   if (!res.ok) throw new Error(`LegiScan API error: ${res.status}`)
   return res.json() as Promise<T>
 }
@@ -82,12 +84,12 @@ export async function getBill(billId: string | number): Promise<Bill | null> {
       lastAction: b.last_action,
       lastActionDate: b.last_action_date,
       url: b.url,
-      sponsors: (b.sponsors ?? []).map(s => ({
+      sponsors: (b.sponsors ?? []).map((s) => ({
         name: s.name,
         party: s.party,
         district: s.district,
       })),
-      history: (b.history ?? []).map(h => ({
+      history: (b.history ?? []).map((h) => ({
         date: h.date,
         action: h.action,
         chamber: h.chamber,
@@ -99,11 +101,7 @@ export async function getBill(billId: string | number): Promise<Bill | null> {
   }
 }
 
-export async function searchBills(
-  state: string,
-  query: string,
-  page = 1
-): Promise<Bill[]> {
+export async function searchBills(state: string, query: string, page = 1): Promise<Bill[]> {
   try {
     const data = await legiscanFetch<LegiScanSearchResponse>('search', {
       state,
@@ -111,7 +109,7 @@ export async function searchBills(
       page: String(page),
     })
     if (data.status !== 'OK') return []
-    return (data.searchresult?.results ?? []).map(r => ({
+    return (data.searchresult?.results ?? []).map((r) => ({
       id: String(r.bill_id),
       billNumber: r.bill_number,
       title: r.title,
@@ -134,9 +132,8 @@ export async function searchBills(
 export async function getBillsForState(state: string): Promise<Bill[]> {
   if (!config.legiscan.apiKey) {
     const { MOCK_BILLS } = await import('./mock-community')
-    return MOCK_BILLS.filter(b => b.state === state)
+    return MOCK_BILLS.filter((b) => b.state === state)
   }
   const industryTerms = 'funeral cremation cemetery preneed burial embalming death care'
   return searchBills(state, industryTerms)
 }
-

@@ -9,16 +9,16 @@ Complete every section before connecting the Next.js frontend.
 
 Install and activate all of these from the WordPress plugin directory or zip upload:
 
-| Plugin | Where to get it | Purpose |
-|---|---|---|
-| **WPGraphQL** | wordpress.org/plugins/wp-graphql | GraphQL API at `/graphql` |
-| **CPT UI** | wordpress.org/plugins/custom-post-type-ui | Register custom post types |
-| **WPGraphQL for CPT UI** | wordpress.org/plugins/wpgraphql-for-cpt-ui | Auto-wires CPT UI types into GraphQL |
-| **Advanced Custom Fields (ACF)** | wordpress.org/plugins/advanced-custom-fields | Custom fields per CPT |
-| **WPGraphQL for ACF** | github.com/wp-graphql/wpgraphql-acf | Exposes ACF fields through GraphQL |
-| **FacetWP** | facetwp.com (paid) | Faceted filtering |
-| **WPGraphQL for FacetWP** | github.com/FacetWP/facetwp-wpgraphql | Exposes facets through GraphQL |
-| **WPGraphQL Smart Cache** | wordpress.org/plugins/wpgraphql-smart-cache | On-demand ISR cache invalidation |
+| Plugin                           | Where to get it                              | Purpose                              |
+| -------------------------------- | -------------------------------------------- | ------------------------------------ |
+| **WPGraphQL**                    | wordpress.org/plugins/wp-graphql             | GraphQL API at `/graphql`            |
+| **CPT UI**                       | wordpress.org/plugins/custom-post-type-ui    | Register custom post types           |
+| **WPGraphQL for CPT UI**         | wordpress.org/plugins/wpgraphql-for-cpt-ui   | Auto-wires CPT UI types into GraphQL |
+| **Advanced Custom Fields (ACF)** | wordpress.org/plugins/advanced-custom-fields | Custom fields per CPT                |
+| **WPGraphQL for ACF**            | github.com/wp-graphql/wpgraphql-acf          | Exposes ACF fields through GraphQL   |
+| **FacetWP**                      | facetwp.com (paid)                           | Faceted filtering                    |
+| **WPGraphQL for FacetWP**        | github.com/FacetWP/facetwp-wpgraphql         | Exposes facets through GraphQL       |
+| **WPGraphQL Smart Cache**        | wordpress.org/plugins/wpgraphql-smart-cache  | On-demand ISR cache invalidation     |
 
 ---
 
@@ -27,6 +27,7 @@ Install and activate all of these from the WordPress plugin directory or zip upl
 For **each** CPT below, create it in CPT UI → Add/Edit Post Types with these settings:
 
 ### Required settings for all CPTs:
+
 - **Show in REST API**: `true`
 - **Show in GraphQL**: `true`
 - **GraphQL Single Name**: see column below
@@ -35,13 +36,13 @@ For **each** CPT below, create it in CPT UI → Add/Edit Post Types with these s
 - **Public**: `true`
 - **Supports**: Title, Editor, Excerpt, Thumbnail
 
-| Slug | Label | GraphQL Single | GraphQL Plural |
-|---|---|---|---|
-| `funeral_home` | Funeral Home | `funeralHome` | `funeralHomes` |
-| `crematorium` | Crematorium | `crematorium` | `crematoria` |
-| `cemetery` | Cemetery | `cemetery` | `cemeteries` |
-| `supplier` | Supplier | `supplier` | `suppliers` |
-| `tech_vendor` | Tech Vendor | `techVendor` | `techVendors` |
+| Slug             | Label          | GraphQL Single  | GraphQL Plural   |
+| ---------------- | -------------- | --------------- | ---------------- |
+| `funeral_home`   | Funeral Home   | `funeralHome`   | `funeralHomes`   |
+| `crematorium`    | Crematorium    | `crematorium`   | `crematoria`     |
+| `cemetery`       | Cemetery       | `cemetery`      | `cemeteries`     |
+| `supplier`       | Supplier       | `supplier`      | `suppliers`      |
+| `tech_vendor`    | Tech Vendor    | `techVendor`    | `techVendors`    |
 | `grief_resource` | Grief Resource | `griefResource` | `griefResources` |
 
 ---
@@ -51,21 +52,23 @@ For **each** CPT below, create it in CPT UI → Add/Edit Post Types with these s
 For each taxonomy, go to CPT UI → Add/Edit Taxonomies:
 
 ### Required settings for all taxonomies:
+
 - **Show in REST API**: `true`
 - **Show in GraphQL**: `true`
 - **Attach to all 6 CPTs above**
 
-| Slug | Label | GraphQL Single | GraphQL Plural |
-|---|---|---|---|
-| `service_type` | Service Type | `serviceType` | `serviceTypes` |
-| `location_state` | State | `locationState` | `locationStates` |
-| `location_city` | City | `locationCity` | `locationCities` |
-| `certification` | Certification | `certification` | `certifications` |
+| Slug               | Label            | GraphQL Single    | GraphQL Plural      |
+| ------------------ | ---------------- | ----------------- | ------------------- |
+| `service_type`     | Service Type     | `serviceType`     | `serviceTypes`      |
+| `location_state`   | State            | `locationState`   | `locationStates`    |
+| `location_city`    | City             | `locationCity`    | `locationCities`    |
+| `certification`    | Certification    | `certification`   | `certifications`    |
 | `listing_category` | Listing Category | `listingCategory` | `listingCategories` |
 
 ### Add taxonomy terms
 
 **service_type** terms (slug → label):
+
 - `traditional-burial` → Traditional Burial
 - `cremation` → Cremation
 - `direct-cremation` → Direct Cremation
@@ -80,6 +83,7 @@ For each taxonomy, go to CPT UI → Add/Edit Taxonomies:
 - `online-memorials` → Online Memorials
 
 **certification** terms (slug → label):
+
 - `nfda-member` → NFDA Member
 - `iccfa-member` → ICCFA Member
 - `cana-member` → CANA Member
@@ -99,23 +103,23 @@ Set **Location Rule**: Show if `Post Type` is any of the 6 CPTs.
 
 Add these fields:
 
-| Field Label | Field Name | Type | Notes |
-|---|---|---|---|
-| Address | `address` | Text | Street address |
-| City | `city` | Text | |
-| State | `state` | Text | 2-letter code (MI, OH…) |
-| ZIP Code | `zip` | Text | |
-| Phone | `phone` | Text | Include area code |
-| Email | `email` | Email | |
-| Website | `website` | URL | |
-| Latitude | `geo_lat` | Number | For proximity search |
-| Longitude | `geo_lng` | Number | For proximity search |
-| Logo | `logo` | Image | Returns image object |
-| Photos | `photos` | Gallery | Additional photos |
-| Business Hours | `business_hours` | Textarea | e.g. "Mon–Fri 9am–5pm, Sat 10am–2pm" |
-| Featured | `featured` | True/False | Paid featured listing |
-| Claimed | `claimed` | True/False | Owner has claimed this listing |
-| Year Founded | `year_founded` | Number | |
+| Field Label    | Field Name       | Type       | Notes                                |
+| -------------- | ---------------- | ---------- | ------------------------------------ |
+| Address        | `address`        | Text       | Street address                       |
+| City           | `city`           | Text       |                                      |
+| State          | `state`          | Text       | 2-letter code (MI, OH…)              |
+| ZIP Code       | `zip`            | Text       |                                      |
+| Phone          | `phone`          | Text       | Include area code                    |
+| Email          | `email`          | Email      |                                      |
+| Website        | `website`        | URL        |                                      |
+| Latitude       | `geo_lat`        | Number     | For proximity search                 |
+| Longitude      | `geo_lng`        | Number     | For proximity search                 |
+| Logo           | `logo`           | Image      | Returns image object                 |
+| Photos         | `photos`         | Gallery    | Additional photos                    |
+| Business Hours | `business_hours` | Textarea   | e.g. "Mon–Fri 9am–5pm, Sat 10am–2pm" |
+| Featured       | `featured`       | True/False | Paid featured listing                |
+| Claimed        | `claimed`        | True/False | Owner has claimed this listing       |
+| Year Founded   | `year_founded`   | Number     |                                      |
 
 ### Enable ACF fields in GraphQL
 
@@ -127,14 +131,14 @@ In each field's settings, scroll to **GraphQL** → enable "Show in GraphQL".
 
 Go to FacetWP → Facets → Add New. Create these facets:
 
-| Facet Name | Type | Data Source |
-|---|---|---|
-| State | Checkboxes | Taxonomy: `location_state` |
-| City | Checkboxes | Taxonomy: `location_city` |
-| Service Type | Checkboxes | Taxonomy: `service_type` |
-| Certification | Checkboxes | Taxonomy: `certification` |
-| Featured | Radio | Post field: `featured` (ACF) |
-| Proximity | Proximity | Post fields: `geo_lat`, `geo_lng` |
+| Facet Name    | Type       | Data Source                       |
+| ------------- | ---------- | --------------------------------- |
+| State         | Checkboxes | Taxonomy: `location_state`        |
+| City          | Checkboxes | Taxonomy: `location_city`         |
+| Service Type  | Checkboxes | Taxonomy: `service_type`          |
+| Certification | Checkboxes | Taxonomy: `certification`         |
+| Featured      | Radio      | Post field: `featured` (ACF)      |
+| Proximity     | Proximity  | Post fields: `geo_lat`, `geo_lng` |
 
 Go to FacetWP → Settings → enable "WPGraphQL Integration".
 

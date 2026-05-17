@@ -23,7 +23,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 
 export async function generateStaticParams() {
   const { articles } = await getArticles()
-  return articles.map(a => ({ slug: a.slug }))
+  return articles.map((a) => ({ slug: a.slug }))
 }
 
 export const revalidate = 86400
@@ -35,18 +35,18 @@ export default async function ArticlePage({ params }: PageProps) {
   const article = articleData
 
   return (
-    <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-      <nav className="flex items-center gap-2 text-sm text-slate-500 mb-6">
+    <div className="mx-auto max-w-3xl px-4 py-8 sm:px-6 lg:px-8">
+      <nav className="mb-6 flex items-center gap-2 text-sm text-slate-500">
         <Link href="/resources" className="hover:text-sage-600 transition-colors">
           Resources
         </Link>
         <span>/</span>
-        <span className="text-slate-800 font-medium line-clamp-1">{article.title}</span>
+        <span className="line-clamp-1 font-medium text-slate-800">{article.title}</span>
       </nav>
 
-      <article className="bg-white rounded-2xl border border-warm-200 shadow-sm overflow-hidden">
+      <article className="border-warm-200 overflow-hidden rounded-2xl border bg-white shadow-sm">
         {article.featuredImage && (
-          <div className="relative h-64 sm:h-80 w-full">
+          <div className="relative h-64 w-full sm:h-80">
             <Image
               src={article.featuredImage.sourceUrl}
               alt={article.featuredImage.altText || article.title}
@@ -59,32 +59,32 @@ export default async function ArticlePage({ params }: PageProps) {
         )}
 
         <div className="p-8">
-          <div className="flex items-center gap-2 mb-4 flex-wrap">
-            {article.categories?.map(cat => (
+          <div className="mb-4 flex flex-wrap items-center gap-2">
+            {article.categories?.map((cat) => (
               <Badge key={cat} variant="outline">
                 {slugToLabel(cat)}
               </Badge>
             ))}
           </div>
 
-          <h1 className="text-3xl font-serif font-bold text-slate-800 mb-4 leading-tight">
+          <h1 className="mb-4 font-serif text-3xl leading-tight font-bold text-slate-800">
             {article.title}
           </h1>
 
-          <div className="flex items-center gap-3 text-sm text-slate-400 mb-8 pb-6 border-b border-warm-200">
+          <div className="border-warm-200 mb-8 flex items-center gap-3 border-b pb-6 text-sm text-slate-400">
             {article.author && <span>{article.author}</span>}
             <span>·</span>
             <time dateTime={article.date}>{formatDate(article.date)}</time>
           </div>
 
           {article.excerpt && (
-            <p className="text-lg text-slate-600 leading-relaxed mb-6 font-medium">
+            <p className="mb-6 text-lg leading-relaxed font-medium text-slate-600">
               {article.excerpt}
             </p>
           )}
 
-          <div className="prose prose-slate max-w-none text-slate-700 leading-relaxed">
-            <p className="text-slate-500 italic text-sm">
+          <div className="prose prose-slate max-w-none leading-relaxed text-slate-700">
+            <p className="text-sm text-slate-500 italic">
               Full article content loads when WordPress is connected.
             </p>
           </div>
@@ -94,9 +94,9 @@ export default async function ArticlePage({ params }: PageProps) {
       <div className="mt-6">
         <Link
           href="/resources"
-          className="inline-flex items-center gap-1.5 text-sm text-sage-600 hover:text-sage-700 transition-colors"
+          className="text-sage-600 hover:text-sage-700 inline-flex items-center gap-1.5 text-sm transition-colors"
         >
-          <ChevronLeft className="w-4 h-4" />
+          <ChevronLeft className="h-4 w-4" />
           Back to Resources
         </Link>
       </div>

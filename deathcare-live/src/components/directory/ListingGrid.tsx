@@ -11,7 +11,7 @@ interface ListingGridProps {
 export function ListingGrid({ listings, loading = false }: ListingGridProps) {
   if (loading) {
     return (
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
         {Array.from({ length: 9 }).map((_, i) => (
           <ListingCardSkeleton key={i} />
         ))}
@@ -24,8 +24,8 @@ export function ListingGrid({ listings, loading = false }: ListingGridProps) {
   }
 
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-      {listings.map(listing => (
+    <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+      {listings.map((listing) => (
         <ListingCard key={listing.id} listing={listing} />
       ))}
     </div>

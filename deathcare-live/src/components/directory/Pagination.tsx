@@ -25,7 +25,11 @@ export function Pagination({ pageInfo, basePath, currentParams = {} }: Paginatio
   } else {
     pages.push(1)
     if (currentPage > 3) pages.push('ellipsis')
-    for (let i = Math.max(2, currentPage - 1); i <= Math.min(totalPages - 1, currentPage + 1); i++) {
+    for (
+      let i = Math.max(2, currentPage - 1);
+      i <= Math.min(totalPages - 1, currentPage + 1);
+      i++
+    ) {
       pages.push(i)
     }
     if (currentPage < totalPages - 2) pages.push('ellipsis')
@@ -37,10 +41,10 @@ export function Pagination({ pageInfo, basePath, currentParams = {} }: Paginatio
       {pageInfo.hasPreviousPage && (
         <Link
           href={buildHref(currentPage - 1)}
-          className="p-2 rounded-lg text-slate-500 hover:bg-warm-200 transition-colors"
+          className="hover:bg-warm-200 rounded-lg p-2 text-slate-500 transition-colors"
           aria-label="Previous page"
         >
-          <ChevronLeft className="w-4 h-4" />
+          <ChevronLeft className="h-4 w-4" />
         </Link>
       )}
 
@@ -54,10 +58,8 @@ export function Pagination({ pageInfo, basePath, currentParams = {} }: Paginatio
             key={page}
             href={buildHref(page)}
             className={cn(
-              'w-9 h-9 flex items-center justify-center rounded-lg text-sm font-medium transition-colors',
-              page === currentPage
-                ? 'bg-sage-400 text-white'
-                : 'text-slate-600 hover:bg-warm-200'
+              'flex h-9 w-9 items-center justify-center rounded-lg text-sm font-medium transition-colors',
+              page === currentPage ? 'bg-sage-400 text-white' : 'hover:bg-warm-200 text-slate-600'
             )}
             aria-current={page === currentPage ? 'page' : undefined}
           >
@@ -69,10 +71,10 @@ export function Pagination({ pageInfo, basePath, currentParams = {} }: Paginatio
       {pageInfo.hasNextPage && (
         <Link
           href={buildHref(currentPage + 1)}
-          className="p-2 rounded-lg text-slate-500 hover:bg-warm-200 transition-colors"
+          className="hover:bg-warm-200 rounded-lg p-2 text-slate-500 transition-colors"
           aria-label="Next page"
         >
-          <ChevronRight className="w-4 h-4" />
+          <ChevronRight className="h-4 w-4" />
         </Link>
       )}
     </nav>

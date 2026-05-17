@@ -1,7 +1,16 @@
 import { notFound } from 'next/navigation'
 import Image from 'next/image'
 import Link from 'next/link'
-import { MapPin, Phone, Globe, Mail, Clock, CalendarDays, ExternalLink, ChevronLeft } from 'lucide-react'
+import {
+  MapPin,
+  Phone,
+  Globe,
+  Mail,
+  Clock,
+  CalendarDays,
+  ExternalLink,
+  ChevronLeft,
+} from 'lucide-react'
 import { getListing, getListings } from '@/lib/wpgraphql'
 import { Badge } from '@/components/ui/Badge'
 import { LISTING_TYPE_MAP, isValidListingType } from '@/lib/listing-types'
@@ -48,9 +57,9 @@ export default async function ListingProfilePage({ params }: PageProps) {
   const typeInfo = LISTING_TYPE_MAP[type as keyof typeof LISTING_TYPE_MAP]
 
   return (
-    <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <div className="mx-auto max-w-4xl px-4 py-8 sm:px-6 lg:px-8">
       {/* Breadcrumb */}
-      <nav className="flex items-center gap-2 text-sm text-slate-500 mb-6">
+      <nav className="mb-6 flex items-center gap-2 text-sm text-slate-500">
         <Link href="/directory" className="hover:text-sage-600 transition-colors">
           Directory
         </Link>
@@ -59,15 +68,15 @@ export default async function ListingProfilePage({ params }: PageProps) {
           {typeInfo.plural}
         </Link>
         <span>/</span>
-        <span className="text-slate-800 font-medium">{title}</span>
+        <span className="font-medium text-slate-800">{title}</span>
       </nav>
 
-      <div className="bg-white rounded-2xl border border-warm-200 shadow-sm overflow-hidden">
+      <div className="border-warm-200 overflow-hidden rounded-2xl border bg-white shadow-sm">
         {/* Header */}
-        <div className="p-8 border-b border-warm-200">
+        <div className="border-warm-200 border-b p-8">
           <div className="flex items-start gap-5">
             {acf.logo ? (
-              <div className="w-20 h-20 relative rounded-xl overflow-hidden border border-warm-200 shrink-0">
+              <div className="border-warm-200 relative h-20 w-20 shrink-0 overflow-hidden rounded-xl border">
                 <Image
                   src={acf.logo.sourceUrl}
                   alt={acf.logo.altText || title}
@@ -77,36 +86,36 @@ export default async function ListingProfilePage({ params }: PageProps) {
                 />
               </div>
             ) : (
-              <div className="w-20 h-20 rounded-xl bg-sage-50 border border-sage-100 flex items-center justify-center text-3xl font-serif font-bold text-sage-300 shrink-0">
+              <div className="bg-sage-50 border-sage-100 text-sage-300 flex h-20 w-20 shrink-0 items-center justify-center rounded-xl border font-serif text-3xl font-bold">
                 {title.charAt(0)}
               </div>
             )}
-            <div className="flex-1 min-w-0">
-              <div className="flex items-start justify-between gap-3 mb-2">
-                <h1 className="text-2xl font-serif font-bold text-slate-800">{title}</h1>
+            <div className="min-w-0 flex-1">
+              <div className="mb-2 flex items-start justify-between gap-3">
+                <h1 className="font-serif text-2xl font-bold text-slate-800">{title}</h1>
                 {acf.featured && <Badge variant="gold">Featured</Badge>}
               </div>
-              <div className="flex items-center gap-2 flex-wrap">
+              <div className="flex flex-wrap items-center gap-2">
                 <Badge variant="sage">{typeInfo.label}</Badge>
                 {acf.claimed && <Badge variant="outline">Verified</Badge>}
               </div>
               {listing.excerpt && (
-                <p className="text-slate-600 mt-3 leading-relaxed">{listing.excerpt}</p>
+                <p className="mt-3 leading-relaxed text-slate-600">{listing.excerpt}</p>
               )}
             </div>
           </div>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-0">
+        <div className="grid grid-cols-1 gap-0 md:grid-cols-3">
           {/* Contact info */}
-          <div className="md:col-span-1 p-6 border-b md:border-b-0 md:border-r border-warm-200 space-y-4">
-            <h2 className="font-semibold text-slate-700 text-sm uppercase tracking-wider">
+          <div className="border-warm-200 space-y-4 border-b p-6 md:col-span-1 md:border-r md:border-b-0">
+            <h2 className="text-sm font-semibold tracking-wider text-slate-700 uppercase">
               Contact
             </h2>
 
             {(acf.address || acf.city) && (
               <div className="flex items-start gap-3 text-sm text-slate-600">
-                <MapPin className="w-4 h-4 text-slate-400 mt-0.5 shrink-0" />
+                <MapPin className="mt-0.5 h-4 w-4 shrink-0 text-slate-400" />
                 <span>
                   {[acf.address, acf.city, acf.state, acf.zip].filter(Boolean).join(', ')}
                 </span>
@@ -116,9 +125,9 @@ export default async function ListingProfilePage({ params }: PageProps) {
             {acf.phone && (
               <a
                 href={`tel:${acf.phone}`}
-                className="flex items-center gap-3 text-sm text-slate-600 hover:text-sage-600 transition-colors"
+                className="hover:text-sage-600 flex items-center gap-3 text-sm text-slate-600 transition-colors"
               >
-                <Phone className="w-4 h-4 text-slate-400 shrink-0" />
+                <Phone className="h-4 w-4 shrink-0 text-slate-400" />
                 {acf.phone}
               </a>
             )}
@@ -126,9 +135,9 @@ export default async function ListingProfilePage({ params }: PageProps) {
             {acf.email && (
               <a
                 href={`mailto:${acf.email}`}
-                className="flex items-center gap-3 text-sm text-slate-600 hover:text-sage-600 transition-colors"
+                className="hover:text-sage-600 flex items-center gap-3 text-sm text-slate-600 transition-colors"
               >
-                <Mail className="w-4 h-4 text-slate-400 shrink-0" />
+                <Mail className="h-4 w-4 shrink-0 text-slate-400" />
                 {acf.email}
               </a>
             )}
@@ -138,34 +147,34 @@ export default async function ListingProfilePage({ params }: PageProps) {
                 href={acf.website}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center gap-3 text-sm text-sage-600 hover:text-sage-700 transition-colors"
+                className="text-sage-600 hover:text-sage-700 flex items-center gap-3 text-sm transition-colors"
               >
-                <Globe className="w-4 h-4 shrink-0" />
+                <Globe className="h-4 w-4 shrink-0" />
                 <span className="truncate">Visit website</span>
-                <ExternalLink className="w-3 h-3 shrink-0" />
+                <ExternalLink className="h-3 w-3 shrink-0" />
               </a>
             )}
 
             {acf.businessHours && (
               <div className="flex items-start gap-3 text-sm text-slate-600">
-                <Clock className="w-4 h-4 text-slate-400 mt-0.5 shrink-0" />
+                <Clock className="mt-0.5 h-4 w-4 shrink-0 text-slate-400" />
                 <span>{acf.businessHours}</span>
               </div>
             )}
 
             {acf.yearFounded && (
               <div className="flex items-center gap-3 text-sm text-slate-600">
-                <CalendarDays className="w-4 h-4 text-slate-400 shrink-0" />
+                <CalendarDays className="h-4 w-4 shrink-0 text-slate-400" />
                 <span>Est. {acf.yearFounded}</span>
               </div>
             )}
           </div>
 
           {/* Services + Certifications */}
-          <div className="md:col-span-2 p-6 space-y-6">
+          <div className="space-y-6 p-6 md:col-span-2">
             {services.length > 0 && (
               <div>
-                <h2 className="font-semibold text-slate-700 text-sm uppercase tracking-wider mb-3">
+                <h2 className="mb-3 text-sm font-semibold tracking-wider text-slate-700 uppercase">
                   Services
                 </h2>
                 <div className="flex flex-wrap gap-2">
@@ -180,7 +189,7 @@ export default async function ListingProfilePage({ params }: PageProps) {
 
             {certs.length > 0 && (
               <div>
-                <h2 className="font-semibold text-slate-700 text-sm uppercase tracking-wider mb-3">
+                <h2 className="mb-3 text-sm font-semibold tracking-wider text-slate-700 uppercase">
                   Certifications
                 </h2>
                 <div className="flex flex-wrap gap-2">
@@ -199,9 +208,9 @@ export default async function ListingProfilePage({ params }: PageProps) {
       <div className="mt-6">
         <Link
           href={`/directory/${type}`}
-          className="inline-flex items-center gap-1.5 text-sm text-sage-600 hover:text-sage-700 transition-colors"
+          className="text-sage-600 hover:text-sage-700 inline-flex items-center gap-1.5 text-sm transition-colors"
         >
-          <ChevronLeft className="w-4 h-4" />
+          <ChevronLeft className="h-4 w-4" />
           Back to {typeInfo.plural}
         </Link>
       </div>

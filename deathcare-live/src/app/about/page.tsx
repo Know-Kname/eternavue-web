@@ -7,9 +7,9 @@ export const metadata: Metadata = {
 
 export default function AboutPage() {
   return (
-    <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-      <h1 className="text-4xl font-serif font-bold text-slate-800 mb-6">About deathcare.live</h1>
-      <div className="prose prose-slate max-w-none space-y-4 text-slate-600 leading-relaxed">
+    <div className="mx-auto max-w-3xl px-4 py-16 sm:px-6 lg:px-8">
+      <h1 className="mb-6 font-serif text-4xl font-bold text-slate-800">About deathcare.live</h1>
+      <div className="prose prose-slate max-w-none space-y-4 leading-relaxed text-slate-600">
         <p>
           deathcare.live is the free, open industry hub for deathcare professionals and the families
           they serve. Our mission is to make it easy to find trusted funeral homes, cremation

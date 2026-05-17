@@ -67,9 +67,8 @@ export async function getListings(filters: ListingFilters): Promise<ListingsResu
   }
 
   const taxQuery = buildTaxQuery(filters)
-  const typeFilter = filters.type && isValidListingType(filters.type)
-    ? LISTING_TYPE_MAP[filters.type].cpt
-    : null
+  const typeFilter =
+    filters.type && isValidListingType(filters.type) ? LISTING_TYPE_MAP[filters.type].cpt : null
 
   const { GET_LISTINGS } = await import('../gql/queries')
   const data = await fetchGraphQL<{ listings: { nodes: Listing[]; pageInfo: PageInfo } }>(

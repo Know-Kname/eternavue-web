@@ -90,10 +90,16 @@ async function ensureCollection() {
   await tsRequest('/collections', 'POST', COLLECTION_SCHEMA)
 }
 
-type WPNode = { id: string; slug: string; title: string; excerpt?: string; acf: { city?: string; state?: string; featured?: boolean } }
+type WPNode = {
+  id: string
+  slug: string
+  title: string
+  excerpt?: string
+  acf: { city?: string; state?: string; featured?: boolean }
+}
 
 function mapNodes(nodes: WPNode[], listingType: string) {
-  return nodes.map(n => ({
+  return nodes.map((n) => ({
     id: n.id,
     slug: n.slug,
     title: n.title,
@@ -106,14 +112,17 @@ function mapNodes(nodes: WPNode[], listingType: string) {
 }
 
 async function indexDocuments(docs: object[]) {
-  const ndjson = docs.map(d => JSON.stringify(d)).join('\n')
+  const ndjson = docs.map((d) => JSON.stringify(d)).join('\n')
   const res = await fetch(`${TS_BASE}/collections/listings/documents/import?action=upsert`, {
     method: 'POST',
     headers: { 'X-TYPESENSE-API-KEY': TS_KEY!, 'Content-Type': 'text/plain' },
     body: ndjson,
   })
   const text = await res.text()
-  const results = text.trim().split('\n').map(l => JSON.parse(l))
+  const results = text
+    .trim()
+    .split('\n')
+    .map((l) => JSON.parse(l))
   const failed = results.filter((r: { success: boolean }) => !r.success)
   if (failed.length) console.warn(`${failed.length} documents failed to index`)
   return results.length - failed.length
@@ -150,7 +159,7 @@ async function main() {
   console.log(`\nDone. ${totalIndexed} listings indexed in Typesense.`)
 }
 
-main().catch(err => {
+main().catch((err) => {
   console.error(err)
   process.exit(1)
 })

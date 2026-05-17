@@ -94,7 +94,8 @@ export const MOCK_LISTINGS: Listing[] = [
     id: '5',
     slug: 'memorial-software-solutions',
     title: 'Memorial Software Solutions',
-    excerpt: 'All-in-one funeral home management software: scheduling, accounting, and family portal.',
+    excerpt:
+      'All-in-one funeral home management software: scheduling, accounting, and family portal.',
     listingType: 'technology',
     acf: {
       address: '200 Tech Park Way',
@@ -116,7 +117,8 @@ export const MOCK_LISTINGS: Listing[] = [
     id: '6',
     slug: 'compassionate-grief-center',
     title: 'Compassionate Grief Center',
-    excerpt: 'Licensed grief therapists offering individual, family, and group bereavement support.',
+    excerpt:
+      'Licensed grief therapists offering individual, family, and group bereavement support.',
     listingType: 'grief-support',
     acf: {
       address: '350 Healing Way',
@@ -291,7 +293,7 @@ export const MOCK_ARTICLES: Article[] = [
     slug: 'preneed-planning-guide',
     title: 'The Complete Guide to Preneed Planning for Families',
     excerpt:
-      'Preplanning a funeral reduces family stress and locks in today\'s prices. This guide walks through every step.',
+      "Preplanning a funeral reduces family stress and locks in today's prices. This guide walks through every step.",
     date: '2026-01-20',
     categories: ['consumer-guide', 'preneed'],
     author: 'Staff Writer',
@@ -317,9 +319,9 @@ export function getMockListings(filters: {
 }): { listings: Listing[]; total: number } {
   let results = [...MOCK_LISTINGS]
 
-  if (filters.type) results = results.filter(l => l.listingType === filters.type)
-  if (filters.state) results = results.filter(l => l.locationState === filters.state)
-  if (filters.featured) results = results.filter(l => l.acf.featured)
+  if (filters.type) results = results.filter((l) => l.listingType === filters.type)
+  if (filters.state) results = results.filter((l) => l.locationState === filters.state)
+  if (filters.featured) results = results.filter((l) => l.acf.featured)
 
   const perPage = filters.perPage ?? 12
   const page = filters.page ?? 1
@@ -328,7 +330,7 @@ export function getMockListings(filters: {
 }
 
 export function getMockListing(slug: string): Listing | null {
-  return MOCK_LISTINGS.find(l => l.slug === slug) ?? null
+  return MOCK_LISTINGS.find((l) => l.slug === slug) ?? null
 }
 
 export function getMockArticles(): Article[] {
@@ -336,7 +338,7 @@ export function getMockArticles(): Article[] {
 }
 
 export function getMockArticle(slug: string): Article | null {
-  return MOCK_ARTICLES.find(a => a.slug === slug) ?? null
+  return MOCK_ARTICLES.find((a) => a.slug === slug) ?? null
 }
 
 export function getMockFacets() {

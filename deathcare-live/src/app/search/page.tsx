@@ -18,40 +18,40 @@ export default async function SearchPage({ searchParams }: SearchPageProps) {
   const { results, total } = await searchListings(q, parseInt(page, 10))
 
   return (
-    <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-      <h1 className="text-3xl font-serif font-bold text-slate-800 mb-6">
+    <div className="mx-auto max-w-4xl px-4 py-8 sm:px-6 lg:px-8">
+      <h1 className="mb-6 font-serif text-3xl font-bold text-slate-800">
         {q ? `Search results for "${q}"` : 'Search the Directory'}
       </h1>
 
       {q && (
-        <p className="text-slate-500 mb-8">
+        <p className="mb-8 text-slate-500">
           {total === 0 ? 'No results found.' : `${total} result${total !== 1 ? 's' : ''} found`}
         </p>
       )}
 
       {!q && (
-        <p className="text-slate-500 mb-8">
+        <p className="mb-8 text-slate-500">
           Use the search bar above to find funeral homes, cremation services, cemeteries, and more.
         </p>
       )}
 
       {results.length > 0 && (
         <div className="space-y-3">
-          {results.map(result => (
+          {results.map((result) => (
             <Link
               key={result.id}
               href={`/directory/${result.listingType}/${result.slug}`}
-              className="block bg-white rounded-xl border border-warm-200 p-5 hover:shadow-md hover:border-sage-200 transition-all duration-200 group"
+              className="border-warm-200 hover:border-sage-200 group block rounded-xl border bg-white p-5 transition-all duration-200 hover:shadow-md"
             >
               <div className="flex items-start justify-between gap-3">
                 <div className="min-w-0">
-                  <h2 className="font-semibold text-slate-800 group-hover:text-sage-600 transition-colors">
+                  <h2 className="group-hover:text-sage-600 font-semibold text-slate-800 transition-colors">
                     {result.title}
                   </h2>
-                  <p className="text-sm text-slate-500 mt-1 line-clamp-2">{result.excerpt}</p>
+                  <p className="mt-1 line-clamp-2 text-sm text-slate-500">{result.excerpt}</p>
                   {(result.city || result.state) && (
-                    <div className="flex items-center gap-1 text-xs text-slate-400 mt-2">
-                      <MapPin className="w-3 h-3" />
+                    <div className="mt-2 flex items-center gap-1 text-xs text-slate-400">
+                      <MapPin className="h-3 w-3" />
                       {[result.city, result.state].filter(Boolean).join(', ')}
                     </div>
                   )}

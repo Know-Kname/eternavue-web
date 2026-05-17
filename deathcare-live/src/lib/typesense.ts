@@ -23,11 +23,11 @@ export async function searchListings(query: string, page = 1): Promise<SearchRes
     const { MOCK_LISTINGS } = await import('./mock-data')
     const q = query.toLowerCase()
     const results = MOCK_LISTINGS.filter(
-      l =>
+      (l) =>
         l.title.toLowerCase().includes(q) ||
         l.excerpt?.toLowerCase().includes(q) ||
         l.acf.city?.toLowerCase().includes(q)
-    ).map(l => ({
+    ).map((l) => ({
       id: l.id,
       slug: l.slug,
       title: l.title,
@@ -58,6 +58,8 @@ export async function searchListings(query: string, page = 1): Promise<SearchRes
   if (!res.ok) return { results: [], total: 0, query }
 
   const data = await res.json()
-  const results: SearchResult[] = (data.hits ?? []).map((hit: { document: SearchResult }) => hit.document)
+  const results: SearchResult[] = (data.hits ?? []).map(
+    (hit: { document: SearchResult }) => hit.document
+  )
   return { results, total: data.found ?? 0, query }
 }

@@ -111,7 +111,11 @@ export const MOCK_BILLS: Bill[] = [
     history: [
       { date: '2026-03-15', action: 'Introduced in House', chamber: 'House' },
       { date: '2026-03-22', action: 'Read second time', chamber: 'House' },
-      { date: '2026-04-10', action: 'Referred to Committee on Regulatory Reform', chamber: 'House' },
+      {
+        date: '2026-04-10',
+        action: 'Referred to Committee on Regulatory Reform',
+        chamber: 'House',
+      },
     ],
     followCount: 84,
     discussionCount: 27,
@@ -129,9 +133,7 @@ export const MOCK_BILLS: Bill[] = [
     lastAction: 'Second reading, Senate floor',
     lastActionDate: '2026-04-28',
     url: 'https://www.legislature.mi.gov/Bills/SB0892',
-    sponsors: [
-      { name: 'Sen. David Park', party: 'R', district: 'SD-20' },
-    ],
+    sponsors: [{ name: 'Sen. David Park', party: 'R', district: 'SD-20' }],
     history: [
       { date: '2026-02-10', action: 'Introduced in Senate', chamber: 'Senate' },
       { date: '2026-03-04', action: 'Passed committee with amendments', chamber: 'Senate' },
@@ -153,12 +155,8 @@ export const MOCK_BILLS: Bill[] = [
     lastAction: 'Introduced, referred to Consumer Protection Committee',
     lastActionDate: '2026-05-02',
     url: 'https://www.legislature.mi.gov/Bills/HB4133',
-    sponsors: [
-      { name: 'Rep. Elena Vasquez', party: 'D', district: 'HD-04' },
-    ],
-    history: [
-      { date: '2026-05-02', action: 'Introduced in House', chamber: 'House' },
-    ],
+    sponsors: [{ name: 'Rep. Elena Vasquez', party: 'D', district: 'HD-04' }],
+    history: [{ date: '2026-05-02', action: 'Introduced in House', chamber: 'House' }],
     followCount: 43,
     discussionCount: 11,
     industryTags: ['pricing', 'consumer-protection', 'ftc'],
@@ -200,12 +198,8 @@ export const MOCK_BILLS: Bill[] = [
     lastAction: 'Introduced in House',
     lastActionDate: '2026-05-08',
     url: 'https://www.legislature.mi.gov/Bills/HB4789',
-    sponsors: [
-      { name: 'Rep. Lena Hoffman', party: 'D', district: 'HD-17' },
-    ],
-    history: [
-      { date: '2026-05-08', action: 'Introduced in House', chamber: 'House' },
-    ],
+    sponsors: [{ name: 'Rep. Lena Hoffman', party: 'D', district: 'HD-17' }],
+    history: [{ date: '2026-05-08', action: 'Introduced in House', chamber: 'House' }],
     followCount: 38,
     discussionCount: 15,
     industryTags: ['green-burial', 'aquamation', 'nor', 'conservation'],
@@ -222,9 +216,7 @@ export const MOCK_BILLS: Bill[] = [
     lastAction: 'Passed House 67–32, sent to Senate',
     lastActionDate: '2026-04-30',
     url: 'https://www.legislature.state.oh.us/Bills/HB312',
-    sponsors: [
-      { name: 'Rep. Christopher Blake', party: 'R', district: 'HD-55' },
-    ],
+    sponsors: [{ name: 'Rep. Christopher Blake', party: 'R', district: 'HD-55' }],
     history: [
       { date: '2026-01-15', action: 'Introduced in House', chamber: 'House' },
       { date: '2026-03-10', action: 'Passed committee 9–1', chamber: 'House' },
@@ -246,9 +238,7 @@ export const MOCK_BILLS: Bill[] = [
     lastAction: 'Referred to Business and Occupational Licensing Committee',
     lastActionDate: '2026-04-05',
     url: 'https://www.ilga.gov/legislation/HB5092',
-    sponsors: [
-      { name: 'Rep. Andre Thompson', party: 'D', district: 'HD-22' },
-    ],
+    sponsors: [{ name: 'Rep. Andre Thompson', party: 'D', district: 'HD-22' }],
     history: [
       { date: '2026-03-20', action: 'Introduced in House', chamber: 'House' },
       { date: '2026-04-05', action: 'Referred to committee', chamber: 'House' },
@@ -282,7 +272,7 @@ export const MOCK_POSTS: Post[] = [
     authorId: 'p2',
     author: MOCK_PROFILES[1],
     kind: 'position',
-    body: 'We\'re supporting SB 892 with amendments. The audit requirement is long overdue — families buying burial rights deserve to know their perpetual care money is safe. Our position: raise the disclosure threshold further and include digital portals for beneficiary access.',
+    body: "We're supporting SB 892 with amendments. The audit requirement is long overdue — families buying burial rights deserve to know their perpetual care money is safe. Our position: raise the disclosure threshold further and include digital portals for beneficiary access.",
     state: 'MI',
     billId: 'mi-sb892',
     billTitle: 'SB 892 — Cemetery Perpetual Care Fund Modernization Act',
@@ -297,7 +287,7 @@ export const MOCK_POSTS: Post[] = [
     authorId: 'p6',
     author: MOCK_PROFILES[5],
     kind: 'note',
-    body: 'Field report from Flint, MI: We\'ve seen a 34% increase in direct cremation requests in Q1 2026 compared to Q1 2025. Families are citing price. The gap between a traditional service and direct cremation has grown to $4,200+ in this market. This is a real pressure point HB 4133 pricing transparency needs to address.',
+    body: "Field report from Flint, MI: We've seen a 34% increase in direct cremation requests in Q1 2026 compared to Q1 2025. Families are citing price. The gap between a traditional service and direct cremation has grown to $4,200+ in this market. This is a real pressure point HB 4133 pricing transparency needs to address.",
     state: 'MI',
     isAnonymous: false,
     upvotes: 61,
@@ -325,7 +315,7 @@ export const MOCK_POSTS: Post[] = [
     authorId: 'p5',
     author: MOCK_PROFILES[4],
     kind: 'question',
-    body: 'What\'s the actual timeline for the Michigan Board of Mortuary Science to update the cremation technician continuing education requirements if HB 4521 passes? Has anyone spoken directly with the MBMS about the rule-making process? The 12-month implementation window seems optimistic.',
+    body: "What's the actual timeline for the Michigan Board of Mortuary Science to update the cremation technician continuing education requirements if HB 4521 passes? Has anyone spoken directly with the MBMS about the rule-making process? The 12-month implementation window seems optimistic.",
     state: 'MI',
     billId: 'mi-hb4521',
     billTitle: 'MI HB 4521 — Michigan Cremation Regulation Reform Act',
@@ -353,7 +343,7 @@ export const MOCK_POSTS: Post[] = [
     authorId: 'p2',
     author: MOCK_PROFILES[1],
     kind: 'note',
-    body: 'Green burial plot sales at Lakeview are up 180% since we opened the conservation section. Waiting list through 2027. If you\'re a cemetery operator not looking at this segment, you\'re missing a real market shift. HB 4789 would help us expand — the NOR framework especially.',
+    body: "Green burial plot sales at Lakeview are up 180% since we opened the conservation section. Waiting list through 2027. If you're a cemetery operator not looking at this segment, you're missing a real market shift. HB 4789 would help us expand — the NOR framework especially.",
     state: 'MI',
     billId: 'mi-hb4789',
     billTitle: 'MI HB 4789 — Green Burial Authorization and Standards Act',
@@ -387,7 +377,8 @@ export const MOCK_COALITIONS: Coalition[] = [
     state: 'MI',
     position: 'support',
     name: 'Michigan Cremation Operators for HB 4521',
-    statement: 'We support HB 4521 with the aquamation provisions intact. The 24-hour waiting period revision reflects modern practice and the science is settled. 47 Michigan cremation operators and funeral homes have signed.',
+    statement:
+      'We support HB 4521 with the aquamation provisions intact. The 24-hour waiting period revision reflects modern practice and the science is settled. 47 Michigan cremation operators and funeral homes have signed.',
     leadProfileId: 'p1',
     leadProfile: MOCK_PROFILES[0],
     memberCount: 47,
@@ -399,7 +390,8 @@ export const MOCK_COALITIONS: Coalition[] = [
     state: 'MI',
     position: 'support',
     name: 'Cemetery Transparency Coalition',
-    statement: 'Michigan cemeteries need modern perpetual care fund oversight. Families deserve annual third-party audits and public disclosure. We support SB 892 and urge the Senate to pass it without weakening the audit requirement.',
+    statement:
+      'Michigan cemeteries need modern perpetual care fund oversight. Families deserve annual third-party audits and public disclosure. We support SB 892 and urge the Senate to pass it without weakening the audit requirement.',
     leadProfileId: 'p2',
     leadProfile: MOCK_PROFILES[1],
     memberCount: 31,
@@ -411,7 +403,8 @@ export const MOCK_COALITIONS: Coalition[] = [
     state: 'MI',
     position: 'amend',
     name: 'Independent Funeral Homes — Amend SB 1017',
-    statement: 'We support consumer protection goals of SB 1017 but urge a sliding-scale cancellation fee rather than a flat 10% cap. Small independent operators need relief; large chains can absorb this better. 28 member firms signed.',
+    statement:
+      'We support consumer protection goals of SB 1017 but urge a sliding-scale cancellation fee rather than a flat 10% cap. Small independent operators need relief; large chains can absorb this better. 28 member firms signed.',
     leadProfileId: 'p6',
     leadProfile: MOCK_PROFILES[5],
     memberCount: 28,
@@ -430,7 +423,8 @@ export const MOCK_JOBS: Job[] = [
     state: 'MI',
     type: 'full-time',
     listingType: 'funeral-homes',
-    description: 'Seeking a licensed Michigan funeral director to join our three-location family operation in Metro Detroit. 28 years in the community. Preneed experience preferred.',
+    description:
+      'Seeking a licensed Michigan funeral director to join our three-location family operation in Metro Detroit. 28 years in the community. Preneed experience preferred.',
     salary: '$65,000–$80,000',
     postedAt: '2026-05-10T00:00:00Z',
     applyUrl: 'https://doefuneralhome.example/careers',
@@ -444,7 +438,8 @@ export const MOCK_JOBS: Job[] = [
     state: 'OH',
     type: 'full-time',
     listingType: 'cemeteries',
-    description: 'Manage day-to-day operations of an 80-acre cemetery in the Cleveland suburbs. Responsible for grounds crew of 8, equipment, and interment operations.',
+    description:
+      'Manage day-to-day operations of an 80-acre cemetery in the Cleveland suburbs. Responsible for grounds crew of 8, equipment, and interment operations.',
     salary: '$55,000–$70,000',
     postedAt: '2026-05-08T00:00:00Z',
     featured: false,
@@ -457,7 +452,8 @@ export const MOCK_JOBS: Job[] = [
     state: 'WA',
     type: 'full-time',
     listingType: 'cremation',
-    description: 'CANA-certified cremation technician or willingness to obtain certification. Experience with modern retort equipment. Seattle area. Benefits + retirement.',
+    description:
+      'CANA-certified cremation technician or willingness to obtain certification. Experience with modern retort equipment. Seattle area. Benefits + retirement.',
     salary: '$48,000–$58,000',
     postedAt: '2026-05-05T00:00:00Z',
     featured: false,
@@ -470,7 +466,8 @@ export const MOCK_JOBS: Job[] = [
     state: 'TX',
     type: 'full-time',
     listingType: 'technology',
-    description: 'B2B SaaS sales to funeral homes. Funeral industry experience a major plus. Full remote, competitive commission, generous territory.',
+    description:
+      'B2B SaaS sales to funeral homes. Funeral industry experience a major plus. Full remote, competitive commission, generous territory.',
     salary: '$70,000 base + commission',
     postedAt: '2026-05-03T00:00:00Z',
     featured: true,
@@ -483,7 +480,8 @@ export const MOCK_JOBS: Job[] = [
     state: 'IL',
     type: 'part-time',
     listingType: 'grief-support',
-    description: 'Licensed therapist (LCSW or LPC) for bereavement counseling, individual and group. 20–25 hrs/week. Hybrid schedule, Chicago Loop.',
+    description:
+      'Licensed therapist (LCSW or LPC) for bereavement counseling, individual and group. 20–25 hrs/week. Hybrid schedule, Chicago Loop.',
     salary: '$32–$42/hour',
     postedAt: '2026-05-01T00:00:00Z',
     featured: false,
@@ -493,10 +491,22 @@ export const MOCK_JOBS: Job[] = [
 // ── Mock State Hubs ────────────────────────────────────────────
 
 export const STATE_NAMES: Record<string, string> = {
-  MI: 'Michigan', OH: 'Ohio', IL: 'Illinois', WA: 'Washington',
-  TX: 'Texas', IN: 'Indiana', TN: 'Tennessee', CA: 'California',
-  OR: 'Oregon', GA: 'Georgia', AZ: 'Arizona', CO: 'Colorado',
-  NY: 'New York', PA: 'Pennsylvania', FL: 'Florida', VA: 'Virginia',
+  MI: 'Michigan',
+  OH: 'Ohio',
+  IL: 'Illinois',
+  WA: 'Washington',
+  TX: 'Texas',
+  IN: 'Indiana',
+  TN: 'Tennessee',
+  CA: 'California',
+  OR: 'Oregon',
+  GA: 'Georgia',
+  AZ: 'Arizona',
+  CO: 'Colorado',
+  NY: 'New York',
+  PA: 'Pennsylvania',
+  FL: 'Florida',
+  VA: 'Virginia',
 }
 
 // States currently active on the platform (used in Header bills dropdown and feed sidebar)
@@ -505,14 +515,14 @@ export const ACTIVE_STATES = ['MI', 'OH', 'IL', 'WA', 'TX'] as const
 export function getMockStateHub(state: string): StateHub | null {
   const stateName = STATE_NAMES[state]
   if (!stateName) return null
-  const bills = MOCK_BILLS.filter(b => b.state === state)
-  const posts = MOCK_POSTS.filter(p => p.state === state).slice(0, 5)
-  const coalitions = MOCK_COALITIONS.filter(c => c.state === state)
+  const bills = MOCK_BILLS.filter((b) => b.state === state)
+  const posts = MOCK_POSTS.filter((p) => p.state === state).slice(0, 5)
+  const coalitions = MOCK_COALITIONS.filter((c) => c.state === state)
   return {
     state,
     stateName,
-    activeBillCount: bills.filter(b => !['signed', 'failed', 'vetoed'].includes(b.status)).length,
-    verifiedOperatorCount: MOCK_PROFILES.filter(p => p.state === state && p.verifiedAt).length,
+    activeBillCount: bills.filter((b) => !['signed', 'failed', 'vetoed'].includes(b.status)).length,
+    verifiedOperatorCount: MOCK_PROFILES.filter((p) => p.state === state && p.verifiedAt).length,
     bills,
     topPosts: posts,
     coalitions,
@@ -521,12 +531,12 @@ export function getMockStateHub(state: string): StateHub | null {
 
 export function getMockPosts(filters?: { state?: string; billId?: string; kind?: string }): Post[] {
   let posts = [...MOCK_POSTS]
-  if (filters?.state) posts = posts.filter(p => p.state === filters.state)
-  if (filters?.billId) posts = posts.filter(p => p.billId === filters.billId)
-  if (filters?.kind) posts = posts.filter(p => p.kind === filters.kind)
+  if (filters?.state) posts = posts.filter((p) => p.state === filters.state)
+  if (filters?.billId) posts = posts.filter((p) => p.billId === filters.billId)
+  if (filters?.kind) posts = posts.filter((p) => p.kind === filters.kind)
   return posts
 }
 
 export function getMockBill(id: string): Bill | null {
-  return MOCK_BILLS.find(b => b.id === id) ?? null
+  return MOCK_BILLS.find((b) => b.id === id) ?? null
 }

@@ -24,9 +24,9 @@ export default async function DirectoryPage({
   const { listings, facets, pageInfo } = await getListings(filters)
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
       <div className="mb-6">
-        <h1 className="text-3xl font-serif font-bold text-slate-800 mb-2">Directory</h1>
+        <h1 className="mb-2 font-serif text-3xl font-bold text-slate-800">Directory</h1>
         <p className="text-slate-500">
           {pageInfo.total
             ? `${pageInfo.total} listings found`
@@ -38,9 +38,9 @@ export default async function DirectoryPage({
         <CategoryNav />
       </div>
 
-      <div className="flex flex-col lg:flex-row gap-8">
+      <div className="flex flex-col gap-8 lg:flex-row">
         {/* Sidebar */}
-        <div className="lg:w-56 xl:w-64 shrink-0">
+        <div className="shrink-0 lg:w-56 xl:w-64">
           <div className="sticky top-24 space-y-4">
             <SearchInput />
             <FilterSidebar facets={facets} />
@@ -48,7 +48,7 @@ export default async function DirectoryPage({
         </div>
 
         {/* Main content */}
-        <div className="flex-1 min-w-0 space-y-6">
+        <div className="min-w-0 flex-1 space-y-6">
           <ListingGrid listings={listings} />
           <Pagination pageInfo={pageInfo} basePath="/directory" />
         </div>

@@ -14,9 +14,9 @@ export default async function ResourcesPage() {
   const { articles } = await getArticles()
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
       <div className="mb-8">
-        <h1 className="text-3xl font-serif font-bold text-slate-800 mb-2">Resources</h1>
+        <h1 className="mb-2 font-serif text-3xl font-bold text-slate-800">Resources</h1>
         <p className="text-slate-500">
           Industry news, technology insights, consumer guides, and grief support.
         </p>

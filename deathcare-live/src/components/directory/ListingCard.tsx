@@ -15,11 +15,11 @@ export function ListingCard({ listing }: ListingCardProps) {
   const href = `/directory/${listingType}/${slug}`
 
   return (
-    <Link href={href} className="block group">
-      <article className="bg-white rounded-xl border border-warm-200 shadow-sm p-5 h-full flex flex-col gap-4 transition-shadow duration-200 group-hover:shadow-md group-hover:border-sage-200">
+    <Link href={href} className="group block">
+      <article className="border-warm-200 group-hover:border-sage-200 flex h-full flex-col gap-4 rounded-xl border bg-white p-5 shadow-sm transition-shadow duration-200 group-hover:shadow-md">
         <div className="flex items-start gap-3">
           {acf.logo ? (
-            <div className="w-12 h-12 relative rounded-lg overflow-hidden shrink-0 border border-warm-200">
+            <div className="border-warm-200 relative h-12 w-12 shrink-0 overflow-hidden rounded-lg border">
               <Image
                 src={acf.logo.sourceUrl}
                 alt={acf.logo.altText || title}
@@ -29,23 +29,23 @@ export function ListingCard({ listing }: ListingCardProps) {
               />
             </div>
           ) : (
-            <div className="w-12 h-12 rounded-lg bg-sage-50 flex items-center justify-center shrink-0 text-sage-400 text-lg font-serif font-bold border border-sage-100">
+            <div className="bg-sage-50 text-sage-400 border-sage-100 flex h-12 w-12 shrink-0 items-center justify-center rounded-lg border font-serif text-lg font-bold">
               {title.charAt(0)}
             </div>
           )}
 
-          <div className="flex-1 min-w-0">
+          <div className="min-w-0 flex-1">
             <div className="flex items-start justify-between gap-2">
-              <h3 className="font-semibold text-slate-800 text-sm leading-snug line-clamp-2 group-hover:text-sage-600 transition-colors">
+              <h3 className="group-hover:text-sage-600 line-clamp-2 text-sm leading-snug font-semibold text-slate-800 transition-colors">
                 {title}
               </h3>
               {acf.featured && (
-                <Star className="w-4 h-4 text-gold-500 fill-gold-400 shrink-0 mt-0.5" />
+                <Star className="text-gold-500 fill-gold-400 mt-0.5 h-4 w-4 shrink-0" />
               )}
             </div>
             {(acf.city || acf.state) && (
-              <div className="flex items-center gap-1 text-xs text-slate-500 mt-1">
-                <MapPin className="w-3 h-3" />
+              <div className="mt-1 flex items-center gap-1 text-xs text-slate-500">
+                <MapPin className="h-3 w-3" />
                 <span>{[acf.city, acf.state].filter(Boolean).join(', ')}</span>
               </div>
             )}
@@ -53,7 +53,7 @@ export function ListingCard({ listing }: ListingCardProps) {
         </div>
 
         {excerpt && (
-          <p className="text-sm text-slate-600 line-clamp-2 leading-relaxed flex-1">{excerpt}</p>
+          <p className="line-clamp-2 flex-1 text-sm leading-relaxed text-slate-600">{excerpt}</p>
         )}
 
         <div className="flex items-center justify-between pt-1">
@@ -61,26 +61,26 @@ export function ListingCard({ listing }: ListingCardProps) {
           <div className="flex items-center gap-3">
             {acf.phone && (
               <span
-                onClick={e => {
+                onClick={(e) => {
                   e.preventDefault()
                   window.location.href = `tel:${acf.phone}`
                 }}
-                className="text-slate-400 hover:text-sage-500 transition-colors"
+                className="hover:text-sage-500 text-slate-400 transition-colors"
                 aria-label="Call"
               >
-                <Phone className="w-4 h-4" />
+                <Phone className="h-4 w-4" />
               </span>
             )}
             {acf.website && (
               <span
-                onClick={e => {
+                onClick={(e) => {
                   e.preventDefault()
                   window.open(acf.website, '_blank', 'noopener,noreferrer')
                 }}
-                className="text-slate-400 hover:text-sage-500 transition-colors"
+                className="hover:text-sage-500 text-slate-400 transition-colors"
                 aria-label="Website"
               >
-                <Globe className="w-4 h-4" />
+                <Globe className="h-4 w-4" />
               </span>
             )}
           </div>

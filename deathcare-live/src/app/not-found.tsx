@@ -2,22 +2,22 @@ import Link from 'next/link'
 
 export default function NotFound() {
   return (
-    <div className="max-w-lg mx-auto px-4 py-24 text-center">
-      <div className="text-6xl font-serif font-bold text-warm-200 mb-4 select-none">404</div>
-      <h1 className="text-2xl font-serif font-bold text-slate-800 mb-3">Page not found</h1>
-      <p className="text-slate-500 mb-8">
+    <div className="mx-auto max-w-lg px-4 py-24 text-center">
+      <div className="text-warm-200 mb-4 font-serif text-6xl font-bold select-none">404</div>
+      <h1 className="mb-3 font-serif text-2xl font-bold text-slate-800">Page not found</h1>
+      <p className="mb-8 text-slate-500">
         The listing or page you&apos;re looking for doesn&apos;t exist or has moved.
       </p>
-      <div className="flex flex-col sm:flex-row gap-3 justify-center">
+      <div className="flex flex-col justify-center gap-3 sm:flex-row">
         <Link
           href="/directory"
-          className="px-5 py-2.5 rounded-lg bg-sage-400 text-white font-medium hover:bg-sage-500 transition-colors text-sm"
+          className="bg-sage-400 hover:bg-sage-500 rounded-lg px-5 py-2.5 text-sm font-medium text-white transition-colors"
         >
           Browse the Directory
         </Link>
         <Link
           href="/"
-          className="px-5 py-2.5 rounded-lg border border-slate-300 text-slate-600 font-medium hover:bg-warm-100 transition-colors text-sm"
+          className="hover:bg-warm-100 rounded-lg border border-slate-300 px-5 py-2.5 text-sm font-medium text-slate-600 transition-colors"
         >
           Go Home
         </Link>

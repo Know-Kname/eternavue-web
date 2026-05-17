@@ -8,7 +8,7 @@ const config: Config = {
       colors: {
         // Legacy directory palette (kept for backward compat)
         sage: {
-          50:  '#f2f7f2',
+          50: '#f2f7f2',
           100: '#e0ece0',
           200: '#c1d9c1',
           300: '#93be93',
@@ -20,7 +20,7 @@ const config: Config = {
           900: '#1e2d1e',
         },
         clay: {
-          50:  '#f9f5f3',
+          50: '#f9f5f3',
           100: '#f1e8e2',
           200: '#e3d1c7',
           300: '#ccb0a0',
@@ -32,13 +32,13 @@ const config: Config = {
           900: '#3d302b',
         },
         warm: {
-          50:  '#FAF8F5',
+          50: '#FAF8F5',
           100: '#F5F0E8',
           200: '#EDE5D8',
         },
         // Community platform palette
         teal: {
-          50:  '#f0fafa',
+          50: '#f0fafa',
           100: '#cceff0',
           200: '#99dfe2',
           300: '#5ec6ca',
@@ -50,7 +50,7 @@ const config: Config = {
           900: '#041e21',
         },
         gold: {
-          50:  '#fffbeb',
+          50: '#fffbeb',
           100: '#fef3c7',
           200: '#fde68a',
           300: '#f8cc52',
@@ -62,7 +62,7 @@ const config: Config = {
           900: '#291e00',
         },
         purple: {
-          50:  '#f8f4ff',
+          50: '#f8f4ff',
           100: '#ede5ff',
           200: '#d9ccff',
           300: '#bba3f7',
@@ -74,7 +74,7 @@ const config: Config = {
           900: '#240f33',
         },
         success: {
-          50:  '#f2fae8',
+          50: '#f2fae8',
           100: '#ddf2c0',
           200: '#b7e585',
           300: '#8dd450',
@@ -87,13 +87,13 @@ const config: Config = {
         },
         surface: {
           DEFAULT: '#f7f6f2',
-          2:       '#f9f8f5',
-          offset:  '#edeae5',
+          2: '#f9f8f5',
+          offset: '#edeae5',
         },
       },
       fontFamily: {
-        sans:    ['Inter', 'system-ui', '-apple-system', 'sans-serif'],
-        serif:   ['"Instrument Serif"', 'Georgia', 'Cambria', 'Times New Roman', 'serif'],
+        sans: ['Inter', 'system-ui', '-apple-system', 'sans-serif'],
+        serif: ['"Instrument Serif"', 'Georgia', 'Cambria', 'Times New Roman', 'serif'],
         display: ['"Instrument Serif"', 'Georgia', 'serif'],
       },
     },

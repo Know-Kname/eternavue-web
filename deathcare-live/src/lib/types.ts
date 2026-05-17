@@ -90,7 +90,13 @@ export interface ListingFilters {
 
 // ── Community types ────────────────────────────────────────────
 
-export type UserRole = 'director' | 'operator' | 'supplier' | 'association' | 'educator' | 'observer'
+export type UserRole =
+  | 'director'
+  | 'operator'
+  | 'supplier'
+  | 'association'
+  | 'educator'
+  | 'observer'
 
 export type PostKind = 'note' | 'analysis' | 'position' | 'question' | 'report'
 
@@ -167,11 +173,11 @@ export interface BillHistoryEvent {
 }
 
 export interface Bill {
-  id: string                // LegiScan bill_id as string
-  billNumber: string        // e.g. "HB 4521"
+  id: string // LegiScan bill_id as string
+  billNumber: string // e.g. "HB 4521"
   title: string
   description: string
-  state: string             // 2-letter state code
+  state: string // 2-letter state code
   status: BillStatus
   statusDate: string
   lastAction: string
