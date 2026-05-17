@@ -12,6 +12,10 @@
     "index:typesense": "ts-node --project tsconfig.scripts.json scripts/index-typesense.ts"
   },
   "dependencies": {
+    "@clerk/nextjs": "^7.3.5",
+    "@react-email/components": "^1.0.12",
+    "@supabase/ssr": "^0.10.3",
+    "@supabase/supabase-js": "^2.105.4",
     "clsx": "^2.1.0",
     "dotenv": "^16.4.0",
     "graphql": "^16.9.0",
@@ -22,6 +26,7 @@
     "nuqs": "^2.4.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
+    "resend": "^6.12.3",
     "tailwind-merge": "^3.0.0",
     "typesense": "^1.8.2"
   },
