@@ -1,5 +1,6 @@
 import Link from 'next/link'
-import { getMockPosts } from '@/lib/mock-community'
+import { MOCK_BILLS, MOCK_POSTS, ACTIVE_STATES, STATE_NAMES, getMockPosts } from '@/lib/mock-community'
+import { TERMINAL_STATUSES } from '@/lib/bill-utils'
 import { PostCard } from '@/components/community/PostCard'
 import { FeedFilter } from '@/components/community/FeedFilter'
 import type { Metadata } from 'next'
@@ -12,6 +13,15 @@ export const metadata: Metadata = {
 
 export const revalidate = 300
 
+function getActiveSidebarStats() {
+  return ACTIVE_STATES.map(code => ({
+    state: code,
+    name: STATE_NAMES[code],
+    bills: MOCK_BILLS.filter(b => b.state === code && !TERMINAL_STATUSES.includes(b.status)).length,
+    posts: MOCK_POSTS.filter(p => p.state === code).length,
+  }))
+}
+
 export default async function FeedPage({
   searchParams,
 }: {
@@ -22,11 +32,11 @@ export default async function FeedPage({
     kind: params.kind || undefined,
     state: params.state || undefined,
   })
+  const activeStates = getActiveSidebarStats()
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-        {/* Main feed */}
         <div className="lg:col-span-2 space-y-4">
           <div className="flex items-center justify-between mb-2">
             <h1 className="text-2xl font-serif font-bold text-slate-900">Community Feed</h1>
@@ -38,10 +48,8 @@ export default async function FeedPage({
             </Link>
           </div>
 
-          {/* Filter */}
           <FeedFilter />
 
-          {/* Posts */}
           {posts.length > 0 ? (
             <div className="space-y-4 mt-4">
               {posts.map(post => (
@@ -56,9 +64,7 @@ export default async function FeedPage({
           )}
         </div>
 
-        {/* Sidebar */}
         <aside className="space-y-6">
-          {/* What is this */}
           <div className="bg-teal-50 rounded-xl border border-teal-100 p-5">
             <h2 className="text-sm font-semibold text-teal-800 mb-2">About this feed</h2>
             <p className="text-sm text-teal-700 leading-relaxed">
@@ -72,17 +78,10 @@ export default async function FeedPage({
             </Link>
           </div>
 
-          {/* Active states */}
           <div className="bg-white rounded-xl border border-slate-200 p-5">
             <h2 className="text-sm font-semibold text-slate-700 mb-3">Active states</h2>
             <div className="space-y-2">
-              {[
-                { state: 'MI', bills: 5, posts: 24 },
-                { state: 'OH', bills: 2, posts: 18 },
-                { state: 'IL', bills: 1, posts: 12 },
-                { state: 'WA', bills: 0, posts: 8 },
-                { state: 'TX', bills: 0, posts: 6 },
-              ].map(s => (
+              {activeStates.map(s => (
                 <Link
                   key={s.state}
                   href={`/states/${s.state}`}
@@ -103,7 +102,6 @@ export default async function FeedPage({
             </div>
           </div>
 
-          {/* Join CTA */}
           <div className="bg-white rounded-xl border border-slate-200 p-5">
             <h2 className="text-sm font-semibold text-slate-700 mb-2">Verified members only</h2>
             <p className="text-xs text-slate-500 mb-3 leading-relaxed">

@@ -1,6 +1,7 @@
 import { notFound } from 'next/navigation'
 import Link from 'next/link'
-import { getMockStateHub } from '@/lib/mock-community'
+import { getMockStateHub, MOCK_BILLS, STATE_NAMES } from '@/lib/mock-community'
+import { TERMINAL_STATUSES } from '@/lib/bill-utils'
 import { BillCard } from '@/components/legislative/BillCard'
 import { PostCard } from '@/components/community/PostCard'
 import { CoalitionPanel } from '@/components/legislative/CoalitionPanel'
@@ -21,8 +22,16 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 }
 
 export async function generateStaticParams() {
-  const { STATE_NAMES } = await import('@/lib/mock-community')
-  return Object.keys(STATE_NAMES).map(state => ({ state }))
+  // Only pre-render states with actual bill data — avoids 15 empty build pages
+  const activeStateCodes = [...new Set(
+    MOCK_BILLS.filter(b => !TERMINAL_STATUSES.includes(b.status)).map(b => b.state)
+  )]
+  // Also include states in STATE_NAMES that have any bills (even terminal)
+  const allWithData = [...new Set([
+    ...activeStateCodes,
+    ...MOCK_BILLS.map(b => b.state),
+  ])]
+  return allWithData.filter(s => STATE_NAMES[s]).map(state => ({ state }))
 }
 
 export const revalidate = 3600
@@ -34,32 +43,28 @@ export default async function StateHubPage({ params }: PageProps) {
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-      {/* Breadcrumb */}
       <nav className="flex items-center gap-2 text-sm text-slate-400 mb-6">
         <Link href="/states" className="hover:text-teal-600 transition-colors">States</Link>
         <span>/</span>
         <span className="text-slate-700 font-medium">{hub.stateName}</span>
       </nav>
 
-      {/* Hero */}
       <div className="bg-gradient-to-br from-teal-500 to-teal-600 rounded-2xl p-6 sm:p-8 text-white mb-8">
         <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-4">
           <div>
             <h1 className="text-3xl font-serif font-bold mb-1">{hub.stateName}</h1>
             <p className="text-teal-100 text-sm">Deathcare Industry Hub</p>
             <div className="flex gap-6 mt-4">
-              <div>
-                <p className="text-2xl font-bold">{hub.activeBillCount}</p>
-                <p className="text-teal-200 text-xs mt-0.5">Active bills</p>
-              </div>
-              <div>
-                <p className="text-2xl font-bold">{hub.verifiedOperatorCount}</p>
-                <p className="text-teal-200 text-xs mt-0.5">Verified operators</p>
-              </div>
-              <div>
-                <p className="text-2xl font-bold">{hub.coalitions.length}</p>
-                <p className="text-teal-200 text-xs mt-0.5">Active coalitions</p>
-              </div>
+              {[
+                { value: hub.activeBillCount, label: 'Active bills' },
+                { value: hub.verifiedOperatorCount, label: 'Verified operators' },
+                { value: hub.coalitions.length, label: 'Active coalitions' },
+              ].map(s => (
+                <div key={s.label}>
+                  <p className="text-2xl font-bold">{s.value}</p>
+                  <p className="text-teal-200 text-xs mt-0.5">{s.label}</p>
+                </div>
+              ))}
             </div>
           </div>
           <Link
@@ -72,9 +77,7 @@ export default async function StateHubPage({ params }: PageProps) {
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-        {/* Main content */}
         <div className="lg:col-span-2 space-y-8">
-          {/* Bills */}
           {hub.bills.length > 0 && (
             <section>
               <div className="flex items-center justify-between mb-4">
@@ -94,7 +97,6 @@ export default async function StateHubPage({ params }: PageProps) {
             </section>
           )}
 
-          {/* Community posts */}
           {hub.topPosts.length > 0 && (
             <section>
               <div className="flex items-center justify-between mb-4">
@@ -115,14 +117,11 @@ export default async function StateHubPage({ params }: PageProps) {
           )}
         </div>
 
-        {/* Sidebar */}
         <aside className="space-y-6">
-          {/* Coalitions */}
           {hub.coalitions.length > 0 && (
             <CoalitionPanel coalitions={hub.coalitions} />
           )}
 
-          {/* Quick links */}
           <div className="bg-white rounded-xl border border-slate-200 p-5">
             <h3 className="text-sm font-semibold text-slate-700 mb-3">Quick links</h3>
             <ul className="space-y-2">

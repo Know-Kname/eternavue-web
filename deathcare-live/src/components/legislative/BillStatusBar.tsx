@@ -1,4 +1,5 @@
-import { cn } from '@/lib/utils'
+import { cn, slugToLabel } from '@/lib/utils'
+import { TERMINAL_STATUSES } from '@/lib/bill-utils'
 import type { BillStatus } from '@/lib/types'
 
 const STEPS: { key: BillStatus; label: string }[] = [
@@ -10,17 +11,17 @@ const STEPS: { key: BillStatus; label: string }[] = [
 ]
 
 const STEP_ORDER: Record<BillStatus, number> = {
-  introduced:   0,
-  committee:    1,
-  floor:        2,
-  passed:       3,
-  signed:       4,
-  vetoed:       3,
-  failed:       3,
+  introduced:     0,
+  committee:      1,
+  floor:          2,
+  passed:         3,
+  signed:         4,
+  vetoed:         3,
+  failed:         3,
   'carried-over': 1,
 }
 
-const TERMINAL_NEGATIVE: BillStatus[] = ['vetoed', 'failed']
+const TERMINAL_NEGATIVE: BillStatus[] = TERMINAL_STATUSES.filter(s => s !== 'signed')
 
 interface BillStatusBarProps {
   status: BillStatus
@@ -37,15 +38,15 @@ export function BillStatusBar({ status }: BillStatusBarProps) {
         const isCurrent = i === currentStep
         const isFuture = i > currentStep
 
-        let dotClass = 'w-3 h-3 rounded-full shrink-0 '
-        if (isCurrent && isNegative) dotClass += 'bg-red-400'
-        else if (isComplete || isCurrent) dotClass += 'bg-teal-500'
-        else dotClass += 'bg-slate-200'
-
-        let lineClass = 'flex-1 h-0.5 '
-        if (i < STEPS.length - 1) {
-          lineClass += isComplete ? 'bg-teal-500' : 'bg-slate-200'
-        }
+        const dotClass = cn(
+          'w-3 h-3 rounded-full shrink-0',
+          isCurrent && isNegative ? 'bg-red-400' :
+          isComplete || isCurrent ? 'bg-teal-500' : 'bg-slate-200'
+        )
+        const lineClass = cn(
+          'flex-1 h-0.5',
+          isComplete ? 'bg-teal-500' : 'bg-slate-200'
+        )
 
         return (
           <div key={step.key} className="flex items-center flex-1 min-w-0">
@@ -55,9 +56,7 @@ export function BillStatusBar({ status }: BillStatusBarProps) {
                 'text-xs mt-1 whitespace-nowrap hidden sm:block',
                 isFuture ? 'text-slate-400' : isCurrent ? 'text-teal-700 font-semibold' : 'text-slate-600'
               )}>
-                {isCurrent && isNegative
-                  ? status.charAt(0).toUpperCase() + status.slice(1)
-                  : step.label}
+                {isCurrent && isNegative ? slugToLabel(status) : step.label}
               </span>
             </div>
             {i < STEPS.length - 1 && <div className={lineClass} />}

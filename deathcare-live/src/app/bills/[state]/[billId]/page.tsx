@@ -1,6 +1,8 @@
 import { notFound } from 'next/navigation'
 import Link from 'next/link'
 import { MOCK_BILLS, MOCK_POSTS, MOCK_COALITIONS, STATE_NAMES } from '@/lib/mock-community'
+import { STATUS_BADGE } from '@/lib/bill-utils'
+import { formatDate } from '@/lib/utils'
 import { BillStatusBar } from '@/components/legislative/BillStatusBar'
 import { CoalitionPanel } from '@/components/legislative/CoalitionPanel'
 import { PostCard } from '@/components/community/PostCard'
@@ -35,10 +37,10 @@ export default async function BillPage({ params }: PageProps) {
 
   const discussions = MOCK_POSTS.filter(p => p.billId === bill.id)
   const coalitions = MOCK_COALITIONS.filter(c => c.billId === bill.id)
+  const badge = STATUS_BADGE[bill.status]
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-      {/* Breadcrumb */}
       <nav className="flex items-center gap-2 text-sm text-slate-400 mb-6 flex-wrap">
         <Link href="/states" className="hover:text-teal-600 transition-colors">States</Link>
         <span>/</span>
@@ -50,9 +52,7 @@ export default async function BillPage({ params }: PageProps) {
       </nav>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-        {/* Main content */}
         <div className="lg:col-span-2 space-y-6">
-          {/* Bill header */}
           <div className="bg-white rounded-2xl border border-slate-200 p-6">
             <div className="flex items-start gap-3 mb-4 flex-wrap">
               <span className="text-sm font-bold text-gold-600 bg-gold-50 px-3 py-1 rounded-full">
@@ -60,6 +60,9 @@ export default async function BillPage({ params }: PageProps) {
               </span>
               <span className="text-sm font-medium text-slate-500 bg-slate-100 px-3 py-1 rounded-full">
                 {bill.state}
+              </span>
+              <span className={`text-sm font-medium px-3 py-1 rounded-full ${badge.className}`}>
+                {badge.label}
               </span>
               {bill.industryTags?.map(tag => (
                 <span key={tag} className="text-xs text-slate-400 bg-slate-50 px-2 py-1 rounded-full">
@@ -74,7 +77,6 @@ export default async function BillPage({ params }: PageProps) {
 
             <p className="text-slate-600 leading-relaxed mb-6">{bill.description}</p>
 
-            {/* Status bar */}
             <div className="mb-4">
               <p className="text-xs font-semibold text-slate-500 uppercase tracking-wide mb-2">
                 Legislative status
@@ -83,11 +85,12 @@ export default async function BillPage({ params }: PageProps) {
             </div>
 
             <p className="text-sm text-slate-400">
-              Last action: <span className="text-slate-600">{bill.lastAction}</span> · {bill.lastActionDate}
+              Last action: <span className="text-slate-600">{bill.lastAction}</span>
+              {' · '}
+              <span>{formatDate(bill.lastActionDate)}</span>
             </p>
           </div>
 
-          {/* Sponsors */}
           {bill.sponsors.length > 0 && (
             <div className="bg-white rounded-xl border border-slate-200 p-5">
               <h2 className="text-sm font-semibold text-slate-700 mb-3 uppercase tracking-wide">
@@ -109,7 +112,6 @@ export default async function BillPage({ params }: PageProps) {
             </div>
           )}
 
-          {/* History */}
           {bill.history.length > 0 && (
             <div className="bg-white rounded-xl border border-slate-200 p-5">
               <h2 className="text-sm font-semibold text-slate-700 mb-3 uppercase tracking-wide">
@@ -118,7 +120,7 @@ export default async function BillPage({ params }: PageProps) {
               <ol className="space-y-3">
                 {[...bill.history].reverse().map((h, i) => (
                   <li key={i} className="flex gap-4 text-sm">
-                    <span className="shrink-0 text-slate-400 w-24">{h.date}</span>
+                    <span className="shrink-0 text-slate-400 w-28">{formatDate(h.date)}</span>
                     <div>
                       <span className="text-slate-700">{h.action}</span>
                       {h.chamber && (
@@ -131,7 +133,6 @@ export default async function BillPage({ params }: PageProps) {
             </div>
           )}
 
-          {/* Discussions */}
           {discussions.length > 0 && (
             <section>
               <h2 className="text-xl font-serif font-bold text-slate-900 mb-4">
@@ -146,9 +147,7 @@ export default async function BillPage({ params }: PageProps) {
           )}
         </div>
 
-        {/* Sidebar */}
         <aside className="space-y-6">
-          {/* Action kit */}
           <div className="bg-teal-500 rounded-xl p-5 text-white">
             <h3 className="font-semibold mb-2">Take action</h3>
             <p className="text-sm text-teal-100 mb-4">
@@ -172,30 +171,23 @@ export default async function BillPage({ params }: PageProps) {
             </div>
           </div>
 
-          {/* Stats */}
           <div className="bg-white rounded-xl border border-slate-200 p-5">
             <h3 className="text-sm font-semibold text-slate-700 mb-3">Bill stats</h3>
             <div className="grid grid-cols-2 gap-3">
-              <div className="text-center">
-                <p className="text-2xl font-bold text-teal-600">{bill.followCount ?? 0}</p>
-                <p className="text-xs text-slate-400 mt-0.5">Following</p>
-              </div>
-              <div className="text-center">
-                <p className="text-2xl font-bold text-purple-600">{bill.discussionCount ?? 0}</p>
-                <p className="text-xs text-slate-400 mt-0.5">Discussions</p>
-              </div>
-              <div className="text-center">
-                <p className="text-2xl font-bold text-gold-600">{coalitions.length}</p>
-                <p className="text-xs text-slate-400 mt-0.5">Coalitions</p>
-              </div>
-              <div className="text-center">
-                <p className="text-2xl font-bold text-slate-600">{bill.sponsors.length}</p>
-                <p className="text-xs text-slate-400 mt-0.5">Sponsors</p>
-              </div>
+              {[
+                { value: bill.followCount ?? 0, label: 'Following',   color: 'text-teal-600' },
+                { value: bill.discussionCount ?? 0, label: 'Discussions', color: 'text-purple-600' },
+                { value: coalitions.length, label: 'Coalitions',   color: 'text-gold-600' },
+                { value: bill.sponsors.length, label: 'Sponsors',     color: 'text-slate-600' },
+              ].map(s => (
+                <div key={s.label} className="text-center">
+                  <p className={`text-2xl font-bold ${s.color}`}>{s.value}</p>
+                  <p className="text-xs text-slate-400 mt-0.5">{s.label}</p>
+                </div>
+              ))}
             </div>
           </div>
 
-          {/* Coalitions */}
           {coalitions.length > 0 && (
             <CoalitionPanel coalitions={coalitions} />
           )}

@@ -499,6 +499,9 @@ export const STATE_NAMES: Record<string, string> = {
   NY: 'New York', PA: 'Pennsylvania', FL: 'Florida', VA: 'Virginia',
 }
 
+// States currently active on the platform (used in Header bills dropdown and feed sidebar)
+export const ACTIVE_STATES = ['MI', 'OH', 'IL', 'WA', 'TX'] as const
+
 export function getMockStateHub(state: string): StateHub | null {
   const stateName = STATE_NAMES[state]
   if (!stateName) return null

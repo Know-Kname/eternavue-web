@@ -1,12 +1,12 @@
 import Link from 'next/link'
 import { Search } from 'lucide-react'
+import { ACTIVE_STATES, STATE_NAMES } from '@/lib/mock-community'
 
 export function Header() {
   return (
     <header className="sticky top-0 z-50 bg-white/95 backdrop-blur-sm border-b border-slate-200 shadow-sm">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
-          {/* Logo */}
           <Link href="/" className="flex items-center gap-2 shrink-0">
             <div className="w-7 h-7 rounded-full bg-teal-500 flex items-center justify-center">
               <svg viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="1.8" className="w-4 h-4">
@@ -20,18 +20,11 @@ export function Header() {
             </span>
           </Link>
 
-          {/* Primary nav */}
           <nav className="hidden lg:flex items-center gap-1">
-            <Link
-              href="/feed"
-              className="px-3 py-2 text-sm text-slate-600 hover:text-teal-600 hover:bg-teal-50 rounded-lg transition-colors"
-            >
+            <Link href="/feed" className="px-3 py-2 text-sm text-slate-600 hover:text-teal-600 hover:bg-teal-50 rounded-lg transition-colors">
               Feed
             </Link>
-            <Link
-              href="/states"
-              className="px-3 py-2 text-sm text-slate-600 hover:text-teal-600 hover:bg-teal-50 rounded-lg transition-colors"
-            >
+            <Link href="/states" className="px-3 py-2 text-sm text-slate-600 hover:text-teal-600 hover:bg-teal-50 rounded-lg transition-colors">
               States
             </Link>
             <div className="relative group">
@@ -41,39 +34,29 @@ export function Header() {
                   <path d="M2 4l4 4 4-4"/>
                 </svg>
               </button>
-              <div className="absolute top-full left-0 mt-1 w-48 bg-white rounded-xl border border-slate-200 shadow-lg py-1 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all">
-                {['MI', 'OH', 'IL', 'WA', 'TX'].map(state => (
+              <div className="absolute top-full left-0 mt-1 w-52 bg-white rounded-xl border border-slate-200 shadow-lg py-1 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all">
+                {ACTIVE_STATES.map(code => (
                   <Link
-                    key={state}
-                    href={`/bills/${state}`}
+                    key={code}
+                    href={`/bills/${code}`}
                     className="block px-4 py-2 text-sm text-slate-600 hover:text-teal-600 hover:bg-teal-50 transition-colors"
                   >
-                    {state} legislation
+                    {STATE_NAMES[code]} legislation
                   </Link>
                 ))}
               </div>
             </div>
-            <Link
-              href="/directory"
-              className="px-3 py-2 text-sm text-slate-600 hover:text-teal-600 hover:bg-teal-50 rounded-lg transition-colors"
-            >
+            <Link href="/directory" className="px-3 py-2 text-sm text-slate-600 hover:text-teal-600 hover:bg-teal-50 rounded-lg transition-colors">
               Directory
             </Link>
-            <Link
-              href="/jobs"
-              className="px-3 py-2 text-sm text-slate-600 hover:text-teal-600 hover:bg-teal-50 rounded-lg transition-colors"
-            >
+            <Link href="/jobs" className="px-3 py-2 text-sm text-slate-600 hover:text-teal-600 hover:bg-teal-50 rounded-lg transition-colors">
               Jobs
             </Link>
-            <Link
-              href="/resources"
-              className="px-3 py-2 text-sm text-slate-600 hover:text-teal-600 hover:bg-teal-50 rounded-lg transition-colors"
-            >
+            <Link href="/resources" className="px-3 py-2 text-sm text-slate-600 hover:text-teal-600 hover:bg-teal-50 rounded-lg transition-colors">
               Resources
             </Link>
           </nav>
 
-          {/* Right actions */}
           <div className="flex items-center gap-2">
             <Link
               href="/search"

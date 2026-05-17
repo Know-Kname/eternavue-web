@@ -1,5 +1,6 @@
 import Link from 'next/link'
-import { MOCK_BILLS, STATE_NAMES } from '@/lib/mock-community'
+import { MOCK_BILLS, STATE_NAMES, getMockStateHub } from '@/lib/mock-community'
+import { TERMINAL_STATUSES } from '@/lib/bill-utils'
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
@@ -10,21 +11,19 @@ export const metadata: Metadata = {
 
 export const revalidate = 3600
 
-// Aggregate bill/post counts per state
 function getStateStats() {
   const stats: Record<string, { bills: number; activeBills: number }> = {}
   for (const bill of MOCK_BILLS) {
     if (!stats[bill.state]) stats[bill.state] = { bills: 0, activeBills: 0 }
     stats[bill.state].bills++
-    if (!['signed', 'failed', 'vetoed'].includes(bill.status)) {
-      stats[bill.state].activeBills++
-    }
+    if (!TERMINAL_STATUSES.includes(bill.status)) stats[bill.state].activeBills++
   }
   return stats
 }
 
 export default function StatesPage() {
   const stats = getStateStats()
+  const miHub = getMockStateHub('MI')
   const statesWithActivity = Object.entries(STATE_NAMES)
     .map(([code, name]) => ({
       code,
@@ -43,26 +42,28 @@ export default function StatesPage() {
         </p>
       </div>
 
-      {/* Launch state highlight */}
-      <div className="mb-8 bg-gradient-to-r from-teal-500 to-teal-600 rounded-2xl p-6 text-white">
-        <div className="flex items-start justify-between gap-4">
-          <div>
-            <p className="text-teal-100 text-sm font-medium uppercase tracking-wide mb-1">Launch State</p>
-            <h2 className="text-2xl font-serif font-bold mb-2">Michigan</h2>
-            <p className="text-teal-100 text-sm leading-relaxed max-w-lg">
-              5 active bills in session, 47 verified operators and directors, and the most active community discussion of any state. The Michigan wedge is live.
-            </p>
+      {miHub && (
+        <div className="mb-8 bg-gradient-to-r from-teal-500 to-teal-600 rounded-2xl p-6 text-white">
+          <div className="flex items-start justify-between gap-4">
+            <div>
+              <p className="text-teal-100 text-sm font-medium uppercase tracking-wide mb-1">Launch State</p>
+              <h2 className="text-2xl font-serif font-bold mb-2">Michigan</h2>
+              <p className="text-teal-100 text-sm leading-relaxed max-w-lg">
+                {miHub.activeBillCount} active bill{miHub.activeBillCount !== 1 ? 's' : ''} in session,{' '}
+                {miHub.verifiedOperatorCount} verified operators and directors, and the most active
+                community discussion of any state. The Michigan wedge is live.
+              </p>
+            </div>
+            <Link
+              href="/states/MI"
+              className="shrink-0 px-5 py-2.5 rounded-xl bg-white text-teal-700 font-semibold text-sm hover:bg-teal-50 transition-colors"
+            >
+              Open Hub →
+            </Link>
           </div>
-          <Link
-            href="/states/MI"
-            className="shrink-0 px-5 py-2.5 rounded-xl bg-white text-teal-700 font-semibold text-sm hover:bg-teal-50 transition-colors"
-          >
-            Open Hub →
-          </Link>
         </div>
-      </div>
+      )}
 
-      {/* All states grid */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
         {statesWithActivity.map(s => (
           <Link key={s.code} href={`/states/${s.code}`} className="block group">

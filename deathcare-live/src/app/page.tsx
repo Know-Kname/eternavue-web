@@ -33,11 +33,11 @@ export default async function HomePage() {
   const { articles } = await getArticles()
   const featuredArticles = articles.slice(0, 3)
 
-  const featuredBill = MOCK_BILLS[0] // MI HB4521 — most active
+  const featuredBill = MOCK_BILLS[0]
   const topPosts = MOCK_POSTS.slice(0, 3)
-  const featuredProfile = MOCK_PROFILES[0] // James Kowalski
-  // getMockStateHub always returns a value for valid states; MI is guaranteed
-  const miHub = getMockStateHub('MI')!
+  const featuredProfile = MOCK_PROFILES[0]
+  const miHub = getMockStateHub('MI')
+  if (!miHub) return null
 
   return (
     <>

@@ -93,7 +93,8 @@ export async function getBill(billId: string | number): Promise<Bill | null> {
         chamber: h.chamber,
       })),
     }
-  } catch {
+  } catch (err) {
+    console.error('[legiscan] getBill failed:', err)
     return null
   }
 }
@@ -124,12 +125,12 @@ export async function searchBills(
       sponsors: [],
       history: [],
     }))
-  } catch {
+  } catch (err) {
+    console.error('[legiscan] searchBills failed:', err)
     return []
   }
 }
 
-// Returns mock bills when LegiScan API key is absent
 export async function getBillsForState(state: string): Promise<Bill[]> {
   if (!config.legiscan.apiKey) {
     const { MOCK_BILLS } = await import('./mock-community')
@@ -138,3 +139,4 @@ export async function getBillsForState(state: string): Promise<Bill[]> {
   const industryTerms = 'funeral cremation cemetery preneed burial embalming death care'
   return searchBills(state, industryTerms)
 }
+
