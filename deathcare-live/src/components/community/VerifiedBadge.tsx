@@ -2,12 +2,12 @@ import { cn } from '@/lib/utils'
 import type { UserRole } from '@/lib/types'
 
 const ROLE_CONFIG: Record<UserRole, { label: string; className: string }> = {
-  director:    { label: 'Funeral Director',    className: 'bg-teal-100 text-teal-700' },
-  operator:    { label: 'Operator',            className: 'bg-teal-100 text-teal-700' },
-  supplier:    { label: 'Supplier',            className: 'bg-gold-100 text-amber-700' },
-  association: { label: 'Association',         className: 'bg-purple-100 text-purple-700' },
-  educator:    { label: 'Educator',            className: 'bg-green-100 text-green-700' },
-  observer:    { label: 'Observer',            className: 'bg-slate-100 text-slate-600' },
+  director:    { label: 'Funeral Director', className: 'bg-teal-50 text-teal-700 ring-1 ring-teal-200' },
+  operator:    { label: 'Operator',         className: 'bg-sky-50 text-sky-700 ring-1 ring-sky-200' },
+  supplier:    { label: 'Supplier',         className: 'bg-amber-50 text-amber-700 ring-1 ring-amber-200' },
+  association: { label: 'Association',      className: 'bg-purple-50 text-purple-700 ring-1 ring-purple-200' },
+  educator:    { label: 'Educator',         className: 'bg-green-50 text-green-700 ring-1 ring-green-200' },
+  observer:    { label: 'Observer',         className: 'bg-slate-50 text-slate-500 ring-1 ring-slate-200' },
 }
 
 interface VerifiedBadgeProps {
@@ -22,16 +22,15 @@ export function VerifiedBadge({ role, verified, size = 'sm', className }: Verifi
   return (
     <span
       className={cn(
-        'inline-flex items-center gap-1 rounded-full font-medium',
+        'inline-flex items-center gap-1 rounded-full font-semibold',
         size === 'sm' ? 'px-2 py-0.5 text-xs' : 'px-2.5 py-1 text-sm',
         roleClass,
         className
       )}
     >
       {verified && (
-        <svg className="w-3 h-3 shrink-0" viewBox="0 0 12 12" fill="currentColor">
-          <path d="M6 0l1.5 1.5L9 1l.5 1.5L11 3l-1 1.5.5 1.5L9 7l.5 1.5L9 10l-1.5-.5L6 11l-1.5-.5L3 10l-.5-1.5L1 7l1-1.5L1.5 4 3 3l.5-1.5L5 1z" opacity=".3"/>
-          <path d="M5 6.5L3.5 5 2.5 6l2.5 2.5 5-5-1-1z"/>
+        <svg className="w-2.5 h-2.5 shrink-0" viewBox="0 0 10 10" fill="currentColor">
+          <path d="M5 0a5 5 0 100 10A5 5 0 005 0zm-.5 7.5L2 5l1-1 1.5 1.5 3-3 1 1z"/>
         </svg>
       )}
       {label}

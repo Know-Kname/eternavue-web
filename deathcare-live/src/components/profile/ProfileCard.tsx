@@ -1,6 +1,22 @@
 import Link from 'next/link'
 import { VerifiedBadge } from '@/components/community/VerifiedBadge'
-import type { Profile } from '@/lib/types'
+import type { Profile, UserRole } from '@/lib/types'
+
+const ROLE_AVATAR: Record<UserRole, { bg: string; text: string; ring: string }> = {
+  director:    { bg: 'bg-teal-500',   text: 'text-white', ring: 'ring-teal-200' },
+  operator:    { bg: 'bg-sky-500',    text: 'text-white', ring: 'ring-sky-200' },
+  supplier:    { bg: 'bg-amber-500',  text: 'text-white', ring: 'ring-amber-200' },
+  association: { bg: 'bg-purple-500', text: 'text-white', ring: 'ring-purple-200' },
+  educator:    { bg: 'bg-green-500',  text: 'text-white', ring: 'ring-green-200' },
+  observer:    { bg: 'bg-slate-400',  text: 'text-white', ring: 'ring-slate-200' },
+}
+
+const EXPERTISE_COLORS = [
+  'bg-teal-50 text-teal-700',
+  'bg-sky-50 text-sky-700',
+  'bg-purple-50 text-purple-700',
+  'bg-amber-50 text-amber-700',
+]
 
 interface ProfileCardProps {
   profile: Profile
@@ -8,54 +24,69 @@ interface ProfileCardProps {
 }
 
 export function ProfileCard({ profile, compact }: ProfileCardProps) {
+  const avatar = ROLE_AVATAR[profile.role]
+
   return (
     <Link href={`/profile/${profile.username}`} className="block group">
-      <div className="bg-white rounded-xl border border-slate-200 p-4 hover:border-teal-200 hover:shadow-sm transition-all">
-        <div className="flex items-start gap-3">
-          {/* Avatar */}
-          <div className="w-10 h-10 rounded-full bg-teal-100 flex items-center justify-center shrink-0 text-teal-700 font-bold text-base group-hover:bg-teal-200 transition-colors">
+      <div className="bg-white rounded-xl border border-slate-200 p-5 hover:border-teal-200 hover:shadow-md transition-all duration-200">
+        <div className="flex items-start gap-3.5">
+          <div className={`w-12 h-12 rounded-full flex items-center justify-center shrink-0 font-bold text-lg ${avatar.bg} ${avatar.text} ring-4 ${avatar.ring} group-hover:scale-105 transition-transform duration-200`}>
             {profile.displayName[0]}
           </div>
 
           <div className="min-w-0 flex-1">
-            <div className="flex items-center gap-1.5 flex-wrap mb-1">
-              <span className="text-sm font-semibold text-slate-900 group-hover:text-teal-600 transition-colors">
+            <div className="flex items-start justify-between gap-2 mb-0.5">
+              <span className="text-sm font-bold text-slate-900 group-hover:text-teal-600 transition-colors leading-snug">
                 {profile.displayName}
               </span>
-              <VerifiedBadge role={profile.role} verified={!!profile.verifiedAt} />
+              {profile.yearsActive && (
+                <span className="shrink-0 text-xs font-medium text-slate-400 bg-slate-50 px-2 py-0.5 rounded-full">
+                  {profile.yearsActive} yrs
+                </span>
+              )}
             </div>
-            {profile.state && (
-              <p className="text-xs text-slate-400 mb-1">{profile.state}</p>
-            )}
+            <div className="flex items-center gap-1.5 flex-wrap mb-1">
+              <VerifiedBadge role={profile.role} verified={!!profile.verifiedAt} />
+              {profile.state && (
+                <span className="text-xs text-slate-400">{profile.state}</span>
+              )}
+            </div>
             {!compact && profile.bio && (
-              <p className="text-xs text-slate-500 line-clamp-2 leading-relaxed">{profile.bio}</p>
-            )}
-            {!compact && profile.expertise.length > 0 && (
-              <div className="flex flex-wrap gap-1 mt-2">
-                {profile.expertise.slice(0, 3).map(tag => (
-                  <span
-                    key={tag}
-                    className="inline-flex px-1.5 py-0.5 rounded text-xs bg-slate-100 text-slate-500"
-                  >
-                    {tag}
-                  </span>
-                ))}
-              </div>
+              <p className="text-xs text-slate-500 line-clamp-2 leading-relaxed mt-1">{profile.bio}</p>
             )}
           </div>
         </div>
 
+        {!compact && profile.expertise.length > 0 && (
+          <div className="flex flex-wrap gap-1.5 mt-3">
+            {profile.expertise.slice(0, 4).map((tag, i) => (
+              <span
+                key={tag}
+                className={`inline-flex px-2 py-0.5 rounded-full text-xs font-medium ${EXPERTISE_COLORS[i % EXPERTISE_COLORS.length]}`}
+              >
+                {tag}
+              </span>
+            ))}
+          </div>
+        )}
+
         {!compact && (
-          <div className="flex items-center gap-4 mt-3 pt-3 border-t border-slate-100 text-xs text-slate-400">
+          <div className="flex items-center gap-5 mt-4 pt-3 border-t border-slate-100 text-xs">
             {profile.postCount !== undefined && (
-              <span>{profile.postCount} posts</span>
+              <div className="text-center">
+                <p className="font-bold text-slate-800">{profile.postCount}</p>
+                <p className="text-slate-400">posts</p>
+              </div>
             )}
             {profile.endorsementCount !== undefined && (
-              <span>{profile.endorsementCount} endorsements</span>
+              <div className="text-center">
+                <p className="font-bold text-slate-800">{profile.endorsementCount}</p>
+                <p className="text-slate-400">endorsements</p>
+              </div>
             )}
-            {profile.yearsActive !== undefined && (
-              <span>{profile.yearsActive} yrs active</span>
-            )}
+            <span className="ml-auto text-teal-500 font-semibold group-hover:text-teal-600 transition-colors">
+              View profile →
+            </span>
           </div>
         )}
       </div>

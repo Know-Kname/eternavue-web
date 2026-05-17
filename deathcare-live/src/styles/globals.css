@@ -30,9 +30,11 @@
 
   --color-gold-50:  #fffbeb;
   --color-gold-100: #fef3c7;
+  --color-gold-200: #fde68a;
   --color-gold-400: #f0b429;
   --color-gold-500: #d19900;
   --color-gold-600: #a37600;
+  --color-gold-700: #7d5700;
 
   --color-purple-50:  #f8f4ff;
   --color-purple-100: #ede5ff;
@@ -56,18 +58,34 @@
 /* ── Base ─────────────────────────────────────────────────────── */
 html {
   scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 body {
   background-color: var(--color-surface);
   color: theme(colors.slate.800);
   font-family: var(--font-body);
+  line-height: 1.6;
 }
 
-/* Instrument Serif for display headings */
 h1, h2, h3 {
   font-family: var(--font-display);
   letter-spacing: -0.02em;
+  line-height: 1.2;
+}
+
+*:focus-visible {
+  outline: 2px solid var(--color-teal-500);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* Smooth transitions on interactive elements */
+a, button {
+  transition-property: color, background-color, border-color, box-shadow, opacity, transform;
+  transition-duration: 150ms;
+  transition-timing-function: ease;
 }
 
 /* ── Utilities ───────────────────────────────────────────────── */
@@ -77,6 +95,15 @@ h1, h2, h3 {
 }
 .scrollbar-hide::-webkit-scrollbar {
   display: none;
+}
+
+/* Fade-up animation for page content */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.animate-fade-up {
+  animation: fadeUp 0.35s ease both;
 }
 
 /* Card glow accent used on community cards */
