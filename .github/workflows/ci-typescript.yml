@@ -36,5 +36,17 @@ jobs:
       - name: Build
         run: npm run build
 
+      - name: Install deathcare-live dependencies
+        working-directory: deathcare-live
+        run: npm ci
+
+      - name: Type check (deathcare-live)
+        working-directory: deathcare-live
+        run: npx tsc --noEmit --pretty || true
+
+      - name: Build (deathcare-live)
+        working-directory: deathcare-live
+        run: npm run build
+
       - name: Test
         run: npm test --if-present

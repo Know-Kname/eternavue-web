@@ -40,6 +40,18 @@ jobs:
       - name: Build
         run: npm run build
 
+      - name: Install deathcare-live dependencies
+        working-directory: deathcare-live
+        run: npm ci
+
+      - name: TypeScript Type Check (deathcare-live)
+        working-directory: deathcare-live
+        run: npx tsc --noEmit
+
+      - name: Build (deathcare-live)
+        working-directory: deathcare-live
+        run: npm run build
+
   # Design system validation
   design-tokens:
     name: Design System Sync
