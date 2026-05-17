@@ -12,7 +12,7 @@ export async function POST(req: NextRequest) {
   try {
     const body = await req.json()
     const tag: string = body?.tag ?? 'wp'
-    revalidateTag(tag)
+    revalidateTag(tag, {})
     return NextResponse.json({ revalidated: true, tag })
   } catch {
     return NextResponse.json({ error: 'Invalid request body' }, { status: 400 })

@@ -50,6 +50,11 @@ export const config = {
     profileTtl: 86400,
   },
 
+  gemini: {
+    apiKey: process.env.GEMINI_API_KEY || '',
+    model: process.env.GEMINI_MODEL || 'gemini-2.5-flash',
+  },
+
   analytics: {
     id: process.env.NEXT_PUBLIC_GA_ID || '',
     enabled: !!process.env.NEXT_PUBLIC_GA_ID,
@@ -61,6 +66,7 @@ export const config = {
     useMockData: !process.env.NEXT_PUBLIC_WP_GRAPHQL_URL,
     useMockCommunity: !process.env.NEXT_PUBLIC_SUPABASE_URL,
     useClerk: !!process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY,
+    useGemini: !!process.env.GEMINI_API_KEY,
   },
 } as const
 
