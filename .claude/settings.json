@@ -1,0 +1,10 @@
+{
+  "permissions": {
+    "allow": [
+      "mcp__github__get_file_contents",
+      "mcp__github__pull_request_read",
+      "Bash(npm run type-check *)",
+      "Bash(npm audit *)"
+    ]
+  }
+}

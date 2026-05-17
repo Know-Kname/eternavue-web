@@ -48,6 +48,15 @@ jobs:
         working-directory: deathcare-live
         run: npx tsc --noEmit
 
+      - name: Prettier Format Check (deathcare-live)
+        working-directory: deathcare-live
+        run: npm run format:check
+        continue-on-error: true
+
+      - name: Test (deathcare-live)
+        working-directory: deathcare-live
+        run: npm test
+
       - name: Build (deathcare-live)
         working-directory: deathcare-live
         run: npm run build
@@ -135,6 +144,21 @@ jobs:
     if: github.event_name == 'pull_request'
     steps:
       - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+          cache-dependency-path: deathcare-live/package-lock.json
+
+      - name: Install deathcare-live dependencies
+        working-directory: deathcare-live
+        run: npm ci
+
+      - name: Build deathcare-live
+        working-directory: deathcare-live
+        run: npm run build
 
       - name: Lighthouse CI
         uses: treosh/lighthouse-ci-action@v10

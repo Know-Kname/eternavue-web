@@ -44,9 +44,13 @@ jobs:
         working-directory: deathcare-live
         run: npx tsc --noEmit --pretty || true
 
+      - name: Test (deathcare-live)
+        working-directory: deathcare-live
+        run: npm test
+
       - name: Build (deathcare-live)
         working-directory: deathcare-live
         run: npm run build
 
-      - name: Test
+      - name: Test (root)
         run: npm test --if-present
