@@ -4,8 +4,14 @@ import { MOCK_BILLS, MOCK_POSTS, MOCK_COALITIONS, STATE_NAMES } from '@/lib/mock
 import { STATUS_BADGE } from '@/lib/bill-utils'
 import { formatDate } from '@/lib/utils'
 import { BillStatusBar } from '@/components/legislative/BillStatusBar'
+import { BillSummary } from '@/components/legislative/BillSummary'
+import { BillPositionPoll } from '@/components/legislative/BillPositionPoll'
+import { ImpactBadge } from '@/components/legislative/ImpactBadge'
+import { ActionKit } from '@/components/legislative/ActionKit'
 import { CoalitionPanel } from '@/components/legislative/CoalitionPanel'
+import { BillCard } from '@/components/legislative/BillCard'
 import { PostCard } from '@/components/community/PostCard'
+import type { Bill } from '@/lib/types'
 import type { Metadata } from 'next'
 
 interface PageProps {
@@ -18,7 +24,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   if (!bill) return {}
   return {
     title: `${bill.billNumber} — ${bill.title}`,
-    description: bill.description,
+    description: bill.plainSummary ?? bill.description,
   }
 }
 
@@ -27,6 +33,20 @@ export async function generateStaticParams() {
 }
 
 export const revalidate = 3600
+
+function getRelatedBills(bill: Bill): Bill[] {
+  const tags = new Set(bill.industryTags ?? [])
+  return MOCK_BILLS.filter((b) => b.id !== bill.id)
+    .map((b) => {
+      const sharedTags = (b.industryTags ?? []).filter((t) => tags.has(t)).length
+      const sameState = b.state === bill.state ? 1 : 0
+      return { bill: b, score: sharedTags * 2 + sameState }
+    })
+    .filter((entry) => entry.score > 0)
+    .sort((a, b) => b.score - a.score)
+    .slice(0, 4)
+    .map((entry) => entry.bill)
+}
 
 export default async function BillPage({ params }: PageProps) {
   const { state, billId } = await params
@@ -37,6 +57,7 @@ export default async function BillPage({ params }: PageProps) {
 
   const discussions = MOCK_POSTS.filter((p) => p.billId === bill.id)
   const coalitions = MOCK_COALITIONS.filter((c) => c.billId === bill.id)
+  const relatedBills = getRelatedBills(bill)
   const badge = STATUS_BADGE[bill.status]
 
   return (
@@ -60,24 +81,22 @@ export default async function BillPage({ params }: PageProps) {
       <div className="grid grid-cols-1 gap-8 lg:grid-cols-3">
         <div className="space-y-6 lg:col-span-2">
           <div className="rounded-2xl border border-slate-200 bg-white p-6">
-            <div className="mb-4 flex flex-wrap items-start gap-3">
+            <div className="mb-4 flex flex-wrap items-center gap-3">
               <span className="text-gold-600 bg-gold-50 rounded-full px-3 py-1 text-sm font-bold">
                 {bill.billNumber}
               </span>
               <span className="rounded-full bg-slate-100 px-3 py-1 text-sm font-medium text-slate-500">
                 {bill.state}
               </span>
+              {bill.chamber && (
+                <span className="rounded-full bg-slate-100 px-3 py-1 text-sm font-medium text-slate-500">
+                  {bill.chamber}
+                </span>
+              )}
               <span className={`rounded-full px-3 py-1 text-sm font-medium ${badge.className}`}>
                 {badge.label}
               </span>
-              {bill.industryTags?.map((tag) => (
-                <span
-                  key={tag}
-                  className="rounded-full bg-slate-50 px-2 py-1 text-xs text-slate-400"
-                >
-                  {tag}
-                </span>
-              ))}
+              {bill.impactScore && <ImpactBadge score={bill.impactScore} />}
             </div>
 
             <h1 className="mb-3 font-serif text-2xl leading-snug font-bold text-slate-900">
@@ -93,12 +112,27 @@ export default async function BillPage({ params }: PageProps) {
               <BillStatusBar status={bill.status} />
             </div>
 
-            <p className="text-sm text-slate-400">
-              Last action: <span className="text-slate-600">{bill.lastAction}</span>
-              {' · '}
+            <div className="flex flex-wrap items-center gap-x-2 gap-y-1 text-sm text-slate-400">
+              <span>
+                Last action: <span className="text-slate-600">{bill.lastAction}</span>
+              </span>
+              <span>·</span>
               <span>{formatDate(bill.lastActionDate)}</span>
-            </p>
+              <span>·</span>
+              <a
+                href={bill.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="font-medium text-teal-600 transition-colors hover:text-teal-700"
+              >
+                Official bill text ↗
+              </a>
+            </div>
           </div>
+
+          <BillSummary bill={bill} />
+
+          {bill.positions && <BillPositionPoll positions={bill.positions} />}
 
           {bill.sponsors.length > 0 && (
             <div className="rounded-xl border border-slate-200 bg-white p-5">
@@ -161,28 +195,7 @@ export default async function BillPage({ params }: PageProps) {
         </div>
 
         <aside className="space-y-6">
-          <div className="rounded-xl bg-teal-500 p-5 text-white">
-            <h3 className="mb-2 font-semibold">Take action</h3>
-            <p className="mb-4 text-sm text-teal-100">
-              Follow this bill, join a coalition, or contact your representative.
-            </p>
-            <div className="space-y-2">
-              <Link
-                href="/join"
-                className="flex w-full justify-center rounded-lg bg-white px-4 py-2 text-sm font-semibold text-teal-700 transition-colors hover:bg-teal-50"
-              >
-                Follow this bill
-              </Link>
-              <a
-                href={bill.url}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex w-full justify-center rounded-lg bg-teal-600 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-teal-700"
-              >
-                View on legislature.gov ↗
-              </a>
-            </div>
-          </div>
+          <ActionKit bill={bill} />
 
           <div className="rounded-xl border border-slate-200 bg-white p-5">
             <h3 className="mb-3 text-sm font-semibold text-slate-700">Bill stats</h3>
@@ -205,7 +218,33 @@ export default async function BillPage({ params }: PageProps) {
             </div>
           </div>
 
+          <div className="rounded-xl bg-teal-500 p-5 text-white">
+            <h3 className="mb-2 font-semibold">Stay ahead of this bill</h3>
+            <p className="mb-4 text-sm text-teal-100">
+              Follow {bill.billNumber} to get an alert every time its status changes.
+            </p>
+            <Link
+              href="/join"
+              className="flex w-full justify-center rounded-lg bg-white px-4 py-2 text-sm font-semibold text-teal-700 transition-colors hover:bg-teal-50"
+            >
+              Follow this bill
+            </Link>
+          </div>
+
           {coalitions.length > 0 && <CoalitionPanel coalitions={coalitions} />}
+
+          {relatedBills.length > 0 && (
+            <div>
+              <h3 className="mb-3 text-sm font-semibold tracking-wide text-slate-700 uppercase">
+                Related bills
+              </h3>
+              <div className="space-y-3">
+                {relatedBills.map((related) => (
+                  <BillCard key={related.id} bill={related} compact />
+                ))}
+              </div>
+            </div>
+          )}
         </aside>
       </div>
     </div>

@@ -172,6 +172,15 @@ export interface BillHistoryEvent {
   chamber?: string
 }
 
+export type ImpactScore = 'low' | 'medium' | 'high' | 'critical'
+
+export interface BillPositionTally {
+  support: number
+  oppose: number
+  amend: number
+  monitor: number
+}
+
 export interface Bill {
   id: string // LegiScan bill_id as string
   billNumber: string // e.g. "HB 4521"
@@ -189,6 +198,17 @@ export interface Bill {
   followCount?: number
   discussionCount?: number
   industryTags?: string[]
+  // Bill intelligence (PRD M3)
+  chamber?: 'House' | 'Senate'
+  committee?: string
+  introducedDate?: string
+  impactScore?: ImpactScore
+  // Plain-English summary — AI-drafted, human-reviewed before publish
+  plainSummary?: string
+  keyProvisions?: string[]
+  operatorImpact?: string
+  // Aggregate community position tally
+  positions?: BillPositionTally
 }
 
 export interface Coalition {

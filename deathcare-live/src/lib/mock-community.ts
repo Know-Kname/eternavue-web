@@ -120,6 +120,21 @@ export const MOCK_BILLS: Bill[] = [
     followCount: 84,
     discussionCount: 27,
     industryTags: ['cremation', 'aquamation', 'permitting'],
+    chamber: 'House',
+    committee: 'Committee on Regulatory Reform',
+    introducedDate: '2026-03-15',
+    impactScore: 'high',
+    plainSummary:
+      "This bill cuts Michigan's mandatory cremation waiting period in half — from 48 hours to 24 — and, for the first time, writes alkaline hydrolysis (water cremation) into state law with its own permit category. For most funeral homes it means faster turnaround on cremation cases and a clear legal path to add a service that is currently in a gray area.",
+    keyProvisions: [
+      'Reduces the mandatory cremation waiting period from 48 to 24 hours',
+      'Creates a dedicated state permit for alkaline hydrolysis (aquamation) facilities',
+      'Replaces county-specific cremation authorization forms with a single statewide standard',
+      'Allows electronic submission of cremation permits to county registrars',
+    ],
+    operatorImpact:
+      'Funeral homes already offering cremation gain faster case turnaround and a clearer path to add aquamation. Operators without aquamation equipment should expect competitive pressure as early adopters begin advertising the new service.',
+    positions: { support: 142, oppose: 23, amend: 67, monitor: 38 },
   },
   {
     id: 'mi-sb892',
@@ -142,6 +157,21 @@ export const MOCK_BILLS: Bill[] = [
     followCount: 61,
     discussionCount: 19,
     industryTags: ['cemetery', 'perpetual-care', 'finance'],
+    chamber: 'Senate',
+    committee: 'Committee on Finance',
+    introducedDate: '2026-02-10',
+    impactScore: 'critical',
+    plainSummary:
+      'This bill rewrites how cemeteries must fund and report their perpetual care trusts. It raises the minimum amount set aside from each sale and adds a mandatory annual third-party audit that becomes public record. Cemetery operators will face higher upfront set-asides and new disclosure obligations.',
+    keyProvisions: [
+      'Raises the minimum perpetual care fund contribution per interment right sold',
+      'Requires an annual independent audit of every perpetual care fund',
+      'Makes audit results a public record filed with the state',
+      'Modernizes the permitted investment classes for fund assets',
+    ],
+    operatorImpact:
+      'Cemetery operators will see reduced cash flow on each sale as a larger share is locked into the care fund, plus a recurring audit expense. Well-funded cemeteries gain a transparency advantage they can market; underfunded operations may face a compliance gap.',
+    positions: { support: 88, oppose: 134, amend: 96, monitor: 41 },
   },
   {
     id: 'mi-hb4133',
@@ -160,6 +190,21 @@ export const MOCK_BILLS: Bill[] = [
     followCount: 43,
     discussionCount: 11,
     industryTags: ['pricing', 'consumer-protection', 'ftc'],
+    chamber: 'House',
+    committee: 'Consumer Protection Committee',
+    introducedDate: '2026-05-02',
+    impactScore: 'medium',
+    plainSummary:
+      "This bill takes the FTC Funeral Rule's price-disclosure idea online — every licensed funeral establishment would have to post an itemized general price list on its public website and send an electronic price list to any family that asks. It is a marketing and compliance change more than an operational one.",
+    keyProvisions: [
+      "Requires itemized general price lists on every funeral home's public website",
+      'Mandates electronic price lists on request from families',
+      'Aligns state disclosure rules with the federal FTC Funeral Rule',
+      'Sets a phase-in period for smaller establishments',
+    ],
+    operatorImpact:
+      "Funeral homes that already publish pricing absorb little cost; those that don't will need website updates and may face more comparison shopping. Only about a third of homes currently post prices, so this levels a field many operators have avoided.",
+    positions: { support: 76, oppose: 81, amend: 44, monitor: 52 },
   },
   {
     id: 'mi-sb1017',
@@ -185,6 +230,21 @@ export const MOCK_BILLS: Bill[] = [
     followCount: 72,
     discussionCount: 34,
     industryTags: ['preneed', 'consumer-protection', 'trust-funds'],
+    chamber: 'Senate',
+    committee: 'Judiciary Committee',
+    introducedDate: '2026-03-01',
+    impactScore: 'high',
+    plainSummary:
+      'This bill reshapes preneed funeral contracts in the consumer’s favor. It caps what a funeral home can keep when a family cancels at 10%, forces a 30-day full-refund window, and requires trust fund balances to appear on annual statements. Operators relying on preneed cancellation revenue will need to adjust.',
+    keyProvisions: [
+      'Caps preneed contract cancellation fees at 10% of the contract value',
+      'Establishes a 30-day full-refund window after signing',
+      'Requires trust fund balance disclosure on annual statements',
+      'Adds penalties for non-compliant preneed sellers',
+    ],
+    operatorImpact:
+      'Funeral homes lose the ability to retain large cancellation fees and must improve trust fund reporting. Operators with conservative preneed practices are largely unaffected; aggressive preneed sellers face the biggest adjustment.',
+    positions: { support: 119, oppose: 71, amend: 88, monitor: 35 },
   },
   {
     id: 'mi-hb4789',
@@ -203,6 +263,20 @@ export const MOCK_BILLS: Bill[] = [
     followCount: 38,
     discussionCount: 15,
     industryTags: ['green-burial', 'aquamation', 'nor', 'conservation'],
+    chamber: 'House',
+    introducedDate: '2026-05-08',
+    impactScore: 'medium',
+    plainSummary:
+      "This bill opens Michigan to the newest disposition methods — it creates a legal framework for natural organic reduction (human composting), expands aquamation permits, and lets cemeteries earn a 'conservation burial' designation for preserving natural land. It is an opportunity bill more than a compliance burden.",
+    keyProvisions: [
+      'Creates a licensing framework for natural organic reduction (human composting) facilities',
+      'Expands the availability of alkaline hydrolysis permits',
+      "Establishes a 'conservation burial' cemetery designation",
+      'Directs the state to publish NOR facility standards within 12 months',
+    ],
+    operatorImpact:
+      'Operators gain new service lines and a marketable green designation, but adding NOR or aquamation requires capital investment. Traditional-only operations face no mandate but may see demand shift toward green options.',
+    positions: { support: 97, oppose: 34, amend: 41, monitor: 58 },
   },
   {
     id: 'oh-hb312',
@@ -225,6 +299,21 @@ export const MOCK_BILLS: Bill[] = [
     followCount: 103,
     discussionCount: 51,
     industryTags: ['aquamation', 'cremation', 'ohio'],
+    chamber: 'House',
+    committee: 'Health Committee',
+    introducedDate: '2026-01-15',
+    impactScore: 'high',
+    plainSummary:
+      'This bill makes water cremation legal in Ohio for the first time. It sets up licensing for aquamation facilities and writes environmental discharge standards. Having passed the House 67–32, it is the furthest-along disposition bill in the region and a likely template for neighboring states.',
+    keyProvisions: [
+      'Legalizes alkaline hydrolysis as a method of final disposition in Ohio',
+      'Establishes a licensing process for aquamation facilities',
+      'Sets environmental standards for effluent discharge',
+      'Requires consumer disclosure of the aquamation process',
+    ],
+    operatorImpact:
+      'Ohio funeral homes can add aquamation as a service once licensing opens. Early movers gain a marketing edge; the discharge standards mean facility upgrades for those that adopt it.',
+    positions: { support: 168, oppose: 44, amend: 52, monitor: 61 },
   },
   {
     id: 'il-hb5092',
@@ -246,6 +335,21 @@ export const MOCK_BILLS: Bill[] = [
     followCount: 29,
     discussionCount: 8,
     industryTags: ['licensing', 'reciprocity', 'workforce'],
+    chamber: 'House',
+    committee: 'Business and Occupational Licensing Committee',
+    introducedDate: '2026-03-20',
+    impactScore: 'low',
+    plainSummary:
+      "This bill lets funeral directors licensed in states with comparable standards practice in Illinois without re-testing. It mainly helps multi-state operators and professionals near state lines, and eases Illinois's funeral director workforce shortage.",
+    keyProvisions: [
+      'Establishes interstate license reciprocity for funeral directors',
+      'Applies only to states with equivalent licensing standards',
+      'Directs the licensing board to publish a list of reciprocal states',
+      'Maintains Illinois continuing-education requirements for reciprocal licensees',
+    ],
+    operatorImpact:
+      'Multi-state operators can move staff across the Illinois line more easily, and the hiring pool widens. Single-state Illinois professionals see slightly more labor competition but little direct change.',
+    positions: { support: 54, oppose: 19, amend: 22, monitor: 31 },
   },
 ]
 

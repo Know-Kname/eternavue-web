@@ -34,6 +34,7 @@ npm run index:typesense  # sync WordPress listings into Typesense (requires .env
 ### AI integration — Gemini
 
 `src/lib/gemini.ts` wraps the `@google/generative-ai` SDK. Uses `gemini-2.5-flash` by default (configurable via `GEMINI_MODEL`). Two exported functions:
+
 - `generateWeeklyBriefing(input)` — drafts the "State of Deathcare" digest headline + summaries
 - `generateBillAnalysis(bill)` — plain-language analysis of a legislative bill for industry pros
 
@@ -75,7 +76,7 @@ src/components/
   layout/       → Header, Footer, MobileMenu, Providers
   directory/    → ListingCard, ListingGrid, FilterSidebar, SearchInput, CategoryNav, Pagination
   community/    → PostCard, FeedFilter, VerifiedBadge
-  legislative/  → BillCard, BillStatusBar, CoalitionPanel
+  legislative/  → BillCard, BillStatusBar, BillSummary, BillPositionPoll, ImpactBadge, ActionKit, CoalitionPanel
   profile/      → ProfileCard
   resources/    → ArticleCard, ArticleGrid
 ```
