@@ -98,9 +98,9 @@ export function Footer() {
               {[
                 { href: '/digest', label: 'Weekly Digest' },
                 { href: '/ce', label: 'CE Tracker' },
+                { href: '/rfq', label: 'Vendor RFQ' },
                 { href: '/resources', label: 'Industry News' },
                 { href: '/about', label: 'About' },
-                { href: '/about', label: 'Privacy' },
               ].map((link, i) => (
                 <li key={`${link.href}-${i}`}>
                   <Link
