@@ -6,6 +6,8 @@ import { BillCard } from '@/components/legislative/BillCard'
 import { PostCard } from '@/components/community/PostCard'
 import { ProfileCard } from '@/components/profile/ProfileCard'
 import { MOCK_BILLS, MOCK_POSTS, MOCK_PROFILES, getMockStateHub } from '@/lib/mock-community'
+import { MOCK_DIGEST_ISSUES } from '@/lib/mock-digest'
+import { formatDate } from '@/lib/utils'
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
@@ -15,6 +17,8 @@ export const metadata: Metadata = {
 }
 
 export const revalidate = 3600
+
+const latestDigest = MOCK_DIGEST_ISSUES[0]
 
 // Live-ish stats (will come from Supabase once connected)
 const LIVE_STATS = {
@@ -231,6 +235,55 @@ export default async function HomePage() {
                   className="block rounded-lg bg-white py-2.5 text-center text-sm font-semibold text-teal-700 transition-colors hover:bg-teal-50"
                 >
                   Apply for access →
+                </Link>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ── Digest teaser ── */}
+      <section className="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8">
+        <div className="overflow-hidden rounded-2xl border border-slate-200 bg-white">
+          <div className="grid grid-cols-1 lg:grid-cols-5">
+            <div className="bg-gradient-to-br from-teal-800 to-teal-900 px-7 py-8 text-white lg:col-span-2">
+              <p className="mb-2 text-xs font-semibold tracking-wider text-teal-300 uppercase">
+                Issue #{latestDigest.issueNumber} · {formatDate(latestDigest.publishedAt)}
+              </p>
+              <p className="mb-1 text-sm font-semibold text-teal-200">State of Deathcare</p>
+              <h2 className="font-serif text-lg font-bold leading-snug">
+                {latestDigest.headline}
+              </h2>
+              <Link
+                href="/digest"
+                className="mt-4 inline-flex items-center gap-1.5 text-sm font-semibold text-teal-300 transition-colors hover:text-white"
+              >
+                Read full issue <ArrowRight className="h-3.5 w-3.5" />
+              </Link>
+            </div>
+            <div className="flex flex-col justify-between px-7 py-6 lg:col-span-3">
+              <div className="space-y-3">
+                {latestDigest.featuredBills.slice(0, 2).map((fb) => (
+                  <div key={fb.billId} className="flex items-start gap-3">
+                    <Link
+                      href={`/bills/${fb.state}/${fb.billId}`}
+                      className="text-gold-700 bg-gold-50 mt-0.5 shrink-0 rounded px-1.5 py-0.5 text-xs font-bold transition-colors hover:text-teal-700"
+                    >
+                      {fb.billNumber}
+                    </Link>
+                    <p className="text-sm leading-relaxed text-slate-600 line-clamp-2">{fb.summary}</p>
+                  </div>
+                ))}
+              </div>
+              <div className="mt-4 flex items-center justify-between border-t border-slate-100 pt-4">
+                <p className="text-xs text-slate-400">
+                  {latestDigest.stats.newBillsTracked} bills · {latestDigest.stats.discussionsStarted} discussions
+                </p>
+                <Link
+                  href="/join"
+                  className="rounded-lg bg-teal-500 px-4 py-1.5 text-xs font-semibold text-white transition-colors hover:bg-teal-600"
+                >
+                  Subscribe free →
                 </Link>
               </div>
             </div>

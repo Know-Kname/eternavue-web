@@ -96,11 +96,11 @@ export function Footer() {
             </h3>
             <ul className="space-y-2">
               {[
+                { href: '/digest', label: 'Weekly Digest' },
+                { href: '/ce', label: 'CE Tracker' },
                 { href: '/resources', label: 'Industry News' },
-                { href: '/resources', label: 'Policy Watch' },
                 { href: '/about', label: 'About' },
                 { href: '/about', label: 'Privacy' },
-                { href: '/about', label: 'Terms' },
               ].map((link, i) => (
                 <li key={`${link.href}-${i}`}>
                   <Link
