@@ -9,6 +9,7 @@ import {
 import { TERMINAL_STATUSES } from '@/lib/bill-utils'
 import { PostCard } from '@/components/community/PostCard'
 import { FeedFilter } from '@/components/community/FeedFilter'
+import { PostComposer } from '@/components/community/PostComposer'
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
@@ -45,15 +46,11 @@ export default async function FeedPage({
     <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
       <div className="grid grid-cols-1 gap-8 lg:grid-cols-3">
         <div className="space-y-4 lg:col-span-2">
-          <div className="mb-2 flex items-center justify-between">
+          <div className="mb-4 flex items-center justify-between">
             <h1 className="font-serif text-2xl font-bold text-slate-900">Community Feed</h1>
-            <Link
-              href="/join"
-              className="rounded-lg bg-teal-500 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-teal-600"
-            >
-              Post to Feed
-            </Link>
           </div>
+
+          <PostComposer />
 
           <FeedFilter />
 
