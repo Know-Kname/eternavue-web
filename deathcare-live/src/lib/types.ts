@@ -234,6 +234,34 @@ export interface StateHub {
   coalitions: Coalition[]
 }
 
+// ── Digest types ──────────────────────────────────────────────
+
+export interface DigestFeaturedBill {
+  billId: string
+  billNumber: string
+  state: string
+  summary: string
+  momentum: 'rising' | 'falling' | 'stable'
+}
+
+export interface DigestIssue {
+  id: string
+  issueNumber: number
+  publishedAt: string
+  headline: string
+  subheadline: string
+  editorNote: string
+  featuredBills: DigestFeaturedBill[]
+  featuredPostId?: string
+  stats: {
+    newMembers: number
+    newBillsTracked: number
+    discussionsStarted: number
+    statesActive: number
+  }
+  tags: string[]
+}
+
 // ── Job board types ────────────────────────────────────────────
 
 export type JobType = 'full-time' | 'part-time' | 'contract' | 'apprenticeship'

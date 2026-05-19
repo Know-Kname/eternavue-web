@@ -73,6 +73,7 @@ export function Header() {
             {[
               { href: '/directory', label: 'Directory' },
               { href: '/jobs', label: 'Jobs' },
+              { href: '/digest', label: 'Digest' },
               { href: '/resources', label: 'Resources' },
             ].map((link) => (
               <Link

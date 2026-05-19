@@ -68,14 +68,43 @@ Colors defined in both `tailwind.config.ts` (Tailwind utilities) and `src/styles
 
 Fonts: **Instrument Serif** (display, `font-display`) + **Inter** (body, `font-body`) via `next/font/google`.
 
+### Auth — Clerk Core 3
+
+`@clerk/nextjs` v7. `Providers.tsx` conditionally wraps with `ClerkProvider` when `NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY` is set. When absent, the app stays in public read-only mode. Auth proxy in `src/proxy.ts` (Next.js 16 renamed `middleware.ts` → `proxy.ts`).
+
+**Safe Clerk hook pattern**: When Clerk may or may not be present, use an inner component that calls `useUser()` only when it's guaranteed to be inside `ClerkProvider`:
+```typescript
+const IS_CLERK_ENABLED = !!process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY
+
+function ClerkUserNav() {
+  const { isLoaded, isSignedIn, user } = useUser() // safe: only mounts when Clerk is enabled
+  ...
+}
+export function AuthNav() {
+  if (IS_CLERK_ENABLED) return <ClerkUserNav />
+  return <StaticFallback />
+}
+```
+
+Protected routes: `/profile/[username]/edit` (via `auth.protect()` in proxy.ts).
+
+### API routes
+
+- `POST /api/revalidate` — ISR webhook (WordPress → Next.js cache invalidation)
+- `POST /api/bills/sync` — LegiScan bill sync cron (every 6h via vercel.json)
+- `POST /api/digest/send` — Weekly digest email cron (Mondays 1 PM UTC via vercel.json)
+- `POST /api/posts` — Create community post (Clerk-gated when Clerk is configured)
+
+Cron routes require `Authorization: Bearer <REVALIDATION_SECRET>` header.
+
 ### Component structure
 
 ```
 src/components/
   ui/           → Button, Badge, Card, Input, Skeleton (design system primitives)
-  layout/       → Header, Footer, MobileMenu, Providers
+  layout/       → Header, Footer, MobileMenu, Providers, AuthNav
   directory/    → ListingCard, ListingGrid, FilterSidebar, SearchInput, CategoryNav, Pagination
-  community/    → PostCard, FeedFilter, VerifiedBadge
+  community/    → PostCard, FeedFilter, VerifiedBadge, PostComposer
   legislative/  → BillCard, BillStatusBar, BillSummary, BillPositionPoll, ImpactBadge, ActionKit, CoalitionPanel
   profile/      → ProfileCard
   resources/    → ArticleCard, ArticleGrid

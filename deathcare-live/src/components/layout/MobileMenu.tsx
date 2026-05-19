@@ -61,6 +61,7 @@ const NAV_LINKS = [
   { href: '/states', label: 'States' },
   { href: '/directory', label: 'Directory' },
   { href: '/jobs', label: 'Jobs' },
+  { href: '/digest', label: 'Digest' },
   { href: '/resources', label: 'Resources' },
 ]
 
