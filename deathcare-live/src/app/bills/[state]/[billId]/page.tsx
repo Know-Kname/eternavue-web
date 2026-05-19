@@ -10,6 +10,7 @@ import { ImpactBadge } from '@/components/legislative/ImpactBadge'
 import { ActionKit } from '@/components/legislative/ActionKit'
 import { CoalitionPanel } from '@/components/legislative/CoalitionPanel'
 import { BillCard } from '@/components/legislative/BillCard'
+import { BillFollowButton } from '@/components/legislative/BillFollowButton'
 import { PostCard } from '@/components/community/PostCard'
 import type { Bill } from '@/lib/types'
 import type { Metadata } from 'next'
@@ -223,12 +224,7 @@ export default async function BillPage({ params }: PageProps) {
             <p className="mb-4 text-sm text-teal-100">
               Follow {bill.billNumber} to get an alert every time its status changes.
             </p>
-            <Link
-              href="/join"
-              className="flex w-full justify-center rounded-lg bg-white px-4 py-2 text-sm font-semibold text-teal-700 transition-colors hover:bg-teal-50"
-            >
-              Follow this bill
-            </Link>
+            <BillFollowButton billId={bill.id} billNumber={bill.billNumber} />
           </div>
 
           {coalitions.length > 0 && <CoalitionPanel coalitions={coalitions} />}

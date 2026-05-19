@@ -25,6 +25,11 @@ export const metadata: Metadata = {
     siteName: 'deathcare.live',
     type: 'website',
   },
+  twitter: {
+    card: 'summary_large_image',
+    site: '@deathcarelive',
+    creator: '@deathcarelive',
+  },
 }
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
