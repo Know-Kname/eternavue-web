@@ -2,6 +2,7 @@ import Link from 'next/link'
 import { Search } from 'lucide-react'
 import { ACTIVE_STATES, STATE_NAMES } from '@/lib/mock-community'
 import { MobileMenu } from './MobileMenu'
+import { AuthNav } from './AuthNav'
 
 export function Header() {
   return (
@@ -92,12 +93,7 @@ export function Header() {
             >
               <Search className="h-5 w-5" />
             </Link>
-            <Link
-              href="/join"
-              className="hidden rounded-lg bg-teal-500 px-4 py-2 text-sm font-semibold text-white shadow-sm transition-colors hover:bg-teal-600 sm:inline-flex"
-            >
-              Join free
-            </Link>
+            <AuthNav />
             <MobileMenu />
           </div>
         </div>
