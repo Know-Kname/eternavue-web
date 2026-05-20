@@ -17,17 +17,18 @@ const spaceGrotesk = Space_Grotesk({
 export const metadata: Metadata = {
   metadataBase: new URL('https://eternavue.com'),
   title: {
-    default: "Eternavue | Where Memory Becomes Light",
+    default: "Eternavue | The digital memorial layer for cemeteries and funeral homes",
     template: "%s | Eternavue",
   },
-  description: "Eternavue transforms ordinary events into extraordinary experiences with stunning holographic visuals. Concerts, product launches, brand activations, weddings, and private celebrations — powered by cutting-edge holographic technology. Detroit-born innovation.",
+  description: "Eternavue is a white-label digital memorial platform for cemeteries and funeral homes — livestreamed services, lasting online tributes, and family keepsakes. Built by the 4th-generation steward of Detroit Memorial Park (est. 1925). Not a tech company that discovered grief.",
   keywords: [
-    "holographic memorial", "holographic tribute", "memorial services",
-    "holographic experience", "celebration of life hologram", "corporate holographic display",
-    "Detroit Memorial Park", "Michigan holographic services", "immersive memorial",
-    "holographic projection", "memorial technology", "event hologram", "Warren Michigan"
+    "digital memorial platform", "white-label memorial platform", "cemetery technology",
+    "funeral home livestreaming", "online tribute platform", "memorial event page",
+    "cemetery software", "Detroit Memorial Park", "operator-built memorial tech",
+    "funeral livestreaming", "memorial keepsakes", "preserved presence",
+    "Black-owned cemetery technology", "Warren Michigan cemetery",
   ],
-  authors: [{ name: "Eternavue", url: "https://eternavue.com" }],
+  authors: [{ name: "Christian Wright Hughes", url: "https://eternavue.com" }],
   creator: "Eternavue",
   publisher: "Eternavue",
   robots: {
@@ -42,8 +43,8 @@ export const metadata: Metadata = {
     },
   },
   openGraph: {
-    title: "Eternavue | Where Memory Becomes Light",
-    description: "Stunning holographic visuals for events, brand activations, and celebrations. Detroit-born innovation.",
+    title: "Eternavue | The digital memorial layer for cemeteries and funeral homes",
+    description: "White-label digital memorial platform. Livestreamed services, lasting tribute pages, family keepsakes — all under your brand. Built by people who have operated a cemetery since 1925.",
     url: "https://eternavue.com",
     siteName: "Eternavue",
     locale: "en_US",
@@ -53,14 +54,14 @@ export const metadata: Metadata = {
         url: "/og-image.png",
         width: 1200,
         height: 630,
-        alt: "Eternavue - Where Memory Becomes Light",
+        alt: "Eternavue — the digital memorial layer for cemeteries and funeral homes",
       }
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Eternavue | Where Memory Becomes Light",
-    description: "Transforming ordinary events into extraordinary experiences with holographic visuals.",
+    title: "Eternavue | The digital memorial layer for cemeteries and funeral homes",
+    description: "White-label digital memorial platform for cemeteries and funeral homes. Operator-built.",
     images: ["/og-image.png"],
   },
   alternates: {
@@ -71,51 +72,51 @@ export const metadata: Metadata = {
 
 const jsonLd = {
   "@context": "https://schema.org",
-  "@type": "LocalBusiness",
+  "@type": "SoftwareApplication",
   name: "Eternavue",
-  description: "Transforming ordinary events into extraordinary experiences with high-quality holographic visuals. Concerts, corporate activations, celebrations, and more.",
+  description: "White-label digital memorial platform for cemeteries and funeral homes — livestreamed services, lasting online tributes, family keepsakes. Built by the 4th-generation steward of Detroit Memorial Park.",
+  applicationCategory: "BusinessApplication",
+  operatingSystem: "Web",
   url: "https://eternavue.com",
-  telephone: "+15867511313",
-  email: "info@eternavue.com",
-  address: {
-    "@type": "PostalAddress",
-    streetAddress: "4280 E. Thirteen Mile Rd",
-    addressLocality: "Warren",
-    addressRegion: "MI",
-    postalCode: "48092",
-    addressCountry: "US",
-  },
-  geo: {
-    "@type": "GeoCoordinates",
-    latitude: 42.5074,
-    longitude: -83.0130,
-  },
-  openingHoursSpecification: {
-    "@type": "OpeningHoursSpecification",
-    dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
-    opens: "09:00",
-    closes: "17:00",
-  },
+  email: "christian@thewrightguy.com",
   founder: {
-    "@type": "Organization",
-    name: "Eternavue",
+    "@type": "Person",
+    name: "Christian Wright Hughes",
+    jobTitle: "Founder; 4th-generation steward, Detroit Memorial Park",
   },
+  offers: [
+    {
+      "@type": "Offer",
+      name: "Basic",
+      description: "Livestreamed service + branded memorial event page",
+      priceCurrency: "USD",
+      priceSpecification: {
+        "@type": "PriceSpecification",
+        minPrice: 150,
+        maxPrice: 400,
+      },
+    },
+    {
+      "@type": "Offer",
+      name: "Plus",
+      description: "Everything in Basic + lasting online tribute page, guestbook, highlight reel, digital keepsakes",
+      priceCurrency: "USD",
+      priceSpecification: {
+        "@type": "PriceSpecification",
+        minPrice: 500,
+        maxPrice: 1200,
+      },
+    },
+    {
+      "@type": "Offer",
+      name: "Premium",
+      description: "Everything in Plus + holographic capture / projection (priced by quote)",
+      priceCurrency: "USD",
+    },
+  ],
   sameAs: [
-    "https://www.linkedin.com/company/eternavue",
-    "https://www.instagram.com/eternavue",
-    "https://www.facebook.com/eternavue",
+    "https://thewrightguy.com",
   ],
-  serviceType: [
-    "Holographic Event Experiences",
-    "Holographic Brand Activations",
-    "Corporate Holographic Displays",
-    "Private Event Holographic Visuals",
-  ],
-  areaServed: {
-    "@type": "State",
-    name: "Michigan",
-  },
-  priceRange: "$$$$",
   image: "https://eternavue.com/og-image.png",
 };
 

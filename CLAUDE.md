@@ -1,6 +1,8 @@
 # Eternavue Web
 
-Eternavue holographic experiences - website and booking platform.
+Eternavue — white-label digital memorial platform (livestreamed services, lasting online tributes, family keepsakes; holographic capture as a Premium-tier option). This repo is the marketing website and lead-capture platform.
+
+> Canonical positioning: `Eternavue/Eternavue_Positioning_2026.md` in the business folder. Eternavue is **not** a "hologram company."
 
 ## Tech Stack
 - Next.js 16.1.6 with App Router

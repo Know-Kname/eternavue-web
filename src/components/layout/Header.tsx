@@ -25,8 +25,7 @@ export function Header({ onCtaClick }: HeaderProps) {
   }, [])
 
   const navLinks = [
-    { name: 'Services', href: '#services' },
-    { name: 'Solutions', href: '#technology' },
+    { name: 'Platform', href: '#tiers' },
     { name: 'About', href: '#about' },
     { name: 'FAQ', href: '#faq' },
   ]
@@ -73,7 +72,7 @@ export function Header({ onCtaClick }: HeaderProps) {
                   !isScrolled && "bg-primary-500/80 hover:bg-primary-500"
                 )}
               >
-                Contact Us
+                Talk to us
               </Button>
             </div>
 
@@ -115,7 +114,7 @@ export function Header({ onCtaClick }: HeaderProps) {
                   onCtaClick?.()
                   setIsMobileMenuOpen(false)
                 }} fullWidth>
-                  Contact Us
+                  Talk to us
                 </Button>
               </div>
             </div>

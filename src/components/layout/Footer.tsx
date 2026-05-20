@@ -15,22 +15,22 @@ export function Footer() {
           <div className="md:col-span-1 space-y-6">
             <Logo size="md" variant="light" />
             <p className="text-sm leading-relaxed text-ghost">
-              Transforming ordinary events into extraordinary experiences with high-quality holographic visuals.
+              The white-label digital memorial platform for cemeteries and funeral homes. Operator-built, cemetery-native.
             </p>
             <div className="text-xs text-ghost">
-              <p>Detroit-born innovation</p>
-              <p>Serving clients nationwide</p>
+              <p>Founder-owned independent venture</p>
+              <p>Flagship partner: Detroit Memorial Park (est. 1925)</p>
             </div>
           </div>
 
-          {/* Services Column */}
+          {/* Platform Column */}
           <div>
-            <h4 className="mb-6 text-lg font-heading font-bold lowercase text-white">services</h4>
+            <h4 className="mb-6 text-lg font-heading font-bold lowercase text-white">platform</h4>
             <ul className="space-y-4 text-sm text-ghost">
-              <li><a href="#services" className="transition-colors hover:text-primary-400">Holographic Experiences</a></li>
-              <li><a href="#services" className="transition-colors hover:text-primary-400">Events & Celebrations</a></li>
-              <li><a href="#services" className="transition-colors hover:text-primary-400">Corporate & Brand</a></li>
-              <li><a href="#technology" className="transition-colors hover:text-primary-400">How It Works</a></li>
+              <li><a href="#tiers" className="transition-colors hover:text-primary-400">Basic — livestream + page</a></li>
+              <li><a href="#tiers" className="transition-colors hover:text-primary-400">Plus — tribute + keepsakes</a></li>
+              <li><a href="#tiers" className="transition-colors hover:text-primary-400">Premium — holographic capture</a></li>
+              <li><a href="#about" className="transition-colors hover:text-primary-400">The moat</a></li>
             </ul>
           </div>
 
@@ -38,7 +38,7 @@ export function Footer() {
           <div>
             <h4 className="mb-6 text-lg font-heading font-bold lowercase text-white">company</h4>
             <ul className="space-y-4 text-sm text-ghost">
-              <li><a href="#about" className="transition-colors hover:text-primary-400">About Us</a></li>
+              <li><a href="#about" className="transition-colors hover:text-primary-400">Operator-built</a></li>
               <li><a href="#faq" className="transition-colors hover:text-primary-400">FAQ</a></li>
             </ul>
           </div>
@@ -53,7 +53,7 @@ export function Footer() {
               </li>
               <li className="flex items-center gap-3">
                 <Mail className="h-5 w-5 shrink-0 text-accent-400" />
-                <a href="mailto:info@eternavue.com" className="transition-colors hover:text-white">info@eternavue.com</a>
+                <a href="mailto:christian@thewrightguy.com" className="transition-colors hover:text-white">christian@thewrightguy.com</a>
               </li>
               <li className="flex items-center gap-3">
                 <Phone className="h-5 w-5 shrink-0 text-accent-400" />

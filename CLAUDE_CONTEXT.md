@@ -7,8 +7,8 @@
 
 ### To generate the landing page:
 "Generate src/app/page.tsx for Eternavue's MVP landing page with:
-1. Hero section (tagline: 'Holographic Experiences That Honor Legacy', CTA: 'Request a Demo')
-2. Three service cards (Memorials, Events, Corporate)
+1. Hero section (tagline: 'The digital memorial platform for the institutions that hold human memory', CTA: 'Request a Demo')
+2. Three package-tier cards (Basic, Plus, Premium)
 3. Trust signal: 'Founded at Detroit Memorial Park, serving families since 1925'
 4. Contact form (name, email, phone, service interest, message)
 5. Footer with links
