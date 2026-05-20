@@ -1,0 +1,646 @@
+import type { Profile, Post, Bill, Coalition, Job, StateHub } from './types'
+
+// ── Mock Profiles ──────────────────────────────────────────────
+
+export const MOCK_PROFILES: Profile[] = [
+  {
+    id: 'p1',
+    username: 'james-kowalski',
+    displayName: 'James Kowalski',
+    role: 'director',
+    state: 'MI',
+    verifiedAt: '2026-01-15',
+    bio: 'Third-generation funeral director serving Metro Detroit for 28 years. NFDA board member, advocate for preneed reform.',
+    yearsActive: 28,
+    expertise: ['preneed', 'grief-counseling', 'veteran-services'],
+    createdAt: '2026-01-10',
+    postCount: 47,
+    endorsementCount: 31,
+  },
+  {
+    id: 'p2',
+    username: 'sarah-chen',
+    displayName: 'Sarah Chen',
+    role: 'operator',
+    state: 'MI',
+    verifiedAt: '2026-01-20',
+    bio: 'CEO of Lakeview Memorial Group — three cemeteries across Oakland County. Passionate about conservation burial and perpetual care fund transparency.',
+    yearsActive: 15,
+    expertise: ['green-burial', 'perpetual-care', 'conservation'],
+    createdAt: '2026-01-18',
+    postCount: 32,
+    endorsementCount: 24,
+  },
+  {
+    id: 'p3',
+    username: 'darnell-washington',
+    displayName: 'Darnell Washington',
+    role: 'director',
+    state: 'OH',
+    verifiedAt: '2026-02-01',
+    bio: 'Licensed funeral director, Columbus OH. Active in Ohio Funeral Directors Association. Advocating for alkaline hydrolysis legalization.',
+    yearsActive: 12,
+    expertise: ['aquamation', 'community-outreach', 'funeral-director'],
+    createdAt: '2026-01-28',
+    postCount: 28,
+    endorsementCount: 18,
+  },
+  {
+    id: 'p4',
+    username: 'maria-reyes',
+    displayName: 'Maria Reyes',
+    role: 'supplier',
+    state: 'TX',
+    verifiedAt: '2026-02-10',
+    bio: 'VP Sales, Evergreen Casket Company. 20+ years supplying funeral homes across the Midwest and South.',
+    yearsActive: 20,
+    expertise: ['caskets', 'urns', 'wholesale'],
+    createdAt: '2026-02-05',
+    postCount: 15,
+    endorsementCount: 9,
+  },
+  {
+    id: 'p5',
+    username: 'dr-patricia-okafor',
+    displayName: 'Dr. Patricia Okafor',
+    role: 'educator',
+    state: 'IL',
+    verifiedAt: '2026-02-15',
+    bio: 'Mortuary science professor at Malcolm X College. Researcher in deathcare workforce equity and culturally responsive care.',
+    yearsActive: 18,
+    expertise: ['mortuary-science', 'education', 'culturally-responsive-care'],
+    createdAt: '2026-02-12',
+    postCount: 21,
+    endorsementCount: 40,
+  },
+  {
+    id: 'p6',
+    username: 'tom-reinhardt',
+    displayName: 'Tom Reinhardt',
+    role: 'director',
+    state: 'MI',
+    verifiedAt: '2026-01-25',
+    bio: 'Owner, Reinhardt & Sons Funeral Home — Flint, MI. 35 years in the business. Following the preneed reform bill closely.',
+    yearsActive: 35,
+    expertise: ['preneed', 'traditional-burial', 'grief-support'],
+    createdAt: '2026-01-22',
+    postCount: 19,
+    endorsementCount: 26,
+  },
+]
+
+// ── Mock Bills ─────────────────────────────────────────────────
+
+export const MOCK_BILLS: Bill[] = [
+  {
+    id: 'mi-hb4521',
+    billNumber: 'HB 4521',
+    title: 'Michigan Cremation Regulation Reform Act',
+    description:
+      'Amends the Michigan Funeral Establishment and Mortuary Science Act to modernize cremation permit requirements, revise the 48-hour waiting period to 24 hours, and establish standards for aquamation (alkaline hydrolysis).',
+    state: 'MI',
+    status: 'committee',
+    statusDate: '2026-04-10',
+    lastAction: 'Referred to Committee on Regulatory Reform',
+    lastActionDate: '2026-04-10',
+    url: 'https://www.legislature.mi.gov/Bills/HB4521',
+    sponsors: [
+      { name: 'Rep. Amanda Torres', party: 'D', district: 'HD-09' },
+      { name: 'Rep. Brian Koops', party: 'R', district: 'HD-22' },
+    ],
+    history: [
+      { date: '2026-03-15', action: 'Introduced in House', chamber: 'House' },
+      { date: '2026-03-22', action: 'Read second time', chamber: 'House' },
+      {
+        date: '2026-04-10',
+        action: 'Referred to Committee on Regulatory Reform',
+        chamber: 'House',
+      },
+    ],
+    followCount: 84,
+    discussionCount: 27,
+    industryTags: ['cremation', 'aquamation', 'permitting'],
+    chamber: 'House',
+    committee: 'Committee on Regulatory Reform',
+    introducedDate: '2026-03-15',
+    impactScore: 'high',
+    plainSummary:
+      "This bill cuts Michigan's mandatory cremation waiting period in half — from 48 hours to 24 — and, for the first time, writes alkaline hydrolysis (water cremation) into state law with its own permit category. For most funeral homes it means faster turnaround on cremation cases and a clear legal path to add a service that is currently in a gray area.",
+    keyProvisions: [
+      'Reduces the mandatory cremation waiting period from 48 to 24 hours',
+      'Creates a dedicated state permit for alkaline hydrolysis (aquamation) facilities',
+      'Replaces county-specific cremation authorization forms with a single statewide standard',
+      'Allows electronic submission of cremation permits to county registrars',
+    ],
+    operatorImpact:
+      'Funeral homes already offering cremation gain faster case turnaround and a clearer path to add aquamation. Operators without aquamation equipment should expect competitive pressure as early adopters begin advertising the new service.',
+    positions: { support: 142, oppose: 23, amend: 67, monitor: 38 },
+  },
+  {
+    id: 'mi-sb892',
+    billNumber: 'SB 892',
+    title: 'Cemetery Perpetual Care Fund Modernization Act',
+    description:
+      'Updates investment standards for cemetery perpetual care funds, raises the minimum funding threshold, and requires annual third-party audits with public disclosure.',
+    state: 'MI',
+    status: 'floor',
+    statusDate: '2026-04-28',
+    lastAction: 'Second reading, Senate floor',
+    lastActionDate: '2026-04-28',
+    url: 'https://www.legislature.mi.gov/Bills/SB0892',
+    sponsors: [{ name: 'Sen. David Park', party: 'R', district: 'SD-20' }],
+    history: [
+      { date: '2026-02-10', action: 'Introduced in Senate', chamber: 'Senate' },
+      { date: '2026-03-04', action: 'Passed committee with amendments', chamber: 'Senate' },
+      { date: '2026-04-28', action: 'Second reading, Senate floor', chamber: 'Senate' },
+    ],
+    followCount: 61,
+    discussionCount: 19,
+    industryTags: ['cemetery', 'perpetual-care', 'finance'],
+    chamber: 'Senate',
+    committee: 'Committee on Finance',
+    introducedDate: '2026-02-10',
+    impactScore: 'critical',
+    plainSummary:
+      'This bill rewrites how cemeteries must fund and report their perpetual care trusts. It raises the minimum amount set aside from each sale and adds a mandatory annual third-party audit that becomes public record. Cemetery operators will face higher upfront set-asides and new disclosure obligations.',
+    keyProvisions: [
+      'Raises the minimum perpetual care fund contribution per interment right sold',
+      'Requires an annual independent audit of every perpetual care fund',
+      'Makes audit results a public record filed with the state',
+      'Modernizes the permitted investment classes for fund assets',
+    ],
+    operatorImpact:
+      'Cemetery operators will see reduced cash flow on each sale as a larger share is locked into the care fund, plus a recurring audit expense. Well-funded cemeteries gain a transparency advantage they can market; underfunded operations may face a compliance gap.',
+    positions: { support: 88, oppose: 134, amend: 96, monitor: 41 },
+  },
+  {
+    id: 'mi-hb4133',
+    billNumber: 'HB 4133',
+    title: 'Funeral Home Price Transparency Act',
+    description:
+      'Requires licensed funeral establishments to post itemized pricing on their public websites, in parity with FTC Funeral Rule requirements, and mandates electronic price lists to families who request them.',
+    state: 'MI',
+    status: 'introduced',
+    statusDate: '2026-05-02',
+    lastAction: 'Introduced, referred to Consumer Protection Committee',
+    lastActionDate: '2026-05-02',
+    url: 'https://www.legislature.mi.gov/Bills/HB4133',
+    sponsors: [{ name: 'Rep. Elena Vasquez', party: 'D', district: 'HD-04' }],
+    history: [{ date: '2026-05-02', action: 'Introduced in House', chamber: 'House' }],
+    followCount: 43,
+    discussionCount: 11,
+    industryTags: ['pricing', 'consumer-protection', 'ftc'],
+    chamber: 'House',
+    committee: 'Consumer Protection Committee',
+    introducedDate: '2026-05-02',
+    impactScore: 'medium',
+    plainSummary:
+      "This bill takes the FTC Funeral Rule's price-disclosure idea online — every licensed funeral establishment would have to post an itemized general price list on its public website and send an electronic price list to any family that asks. It is a marketing and compliance change more than an operational one.",
+    keyProvisions: [
+      "Requires itemized general price lists on every funeral home's public website",
+      'Mandates electronic price lists on request from families',
+      'Aligns state disclosure rules with the federal FTC Funeral Rule',
+      'Sets a phase-in period for smaller establishments',
+    ],
+    operatorImpact:
+      "Funeral homes that already publish pricing absorb little cost; those that don't will need website updates and may face more comparison shopping. Only about a third of homes currently post prices, so this levels a field many operators have avoided.",
+    positions: { support: 76, oppose: 81, amend: 44, monitor: 52 },
+  },
+  {
+    id: 'mi-sb1017',
+    billNumber: 'SB 1017',
+    title: 'Preneed Funeral Contract Consumer Protection Act',
+    description:
+      'Strengthens consumer protections for preneed funeral contracts: caps cancellation fees at 10%, requires 30-day full-refund window, and mandates trust fund disclosure on annual statements.',
+    state: 'MI',
+    status: 'committee',
+    statusDate: '2026-04-18',
+    lastAction: 'Public hearing held — Judiciary Committee',
+    lastActionDate: '2026-04-18',
+    url: 'https://www.legislature.mi.gov/Bills/SB1017',
+    sponsors: [
+      { name: 'Sen. Rachel Kim', party: 'D', district: 'SD-07' },
+      { name: 'Sen. Mark Sullivan', party: 'R', district: 'SD-14' },
+    ],
+    history: [
+      { date: '2026-03-01', action: 'Introduced in Senate', chamber: 'Senate' },
+      { date: '2026-03-20', action: 'Referred to Judiciary Committee', chamber: 'Senate' },
+      { date: '2026-04-18', action: 'Public hearing held', chamber: 'Senate' },
+    ],
+    followCount: 72,
+    discussionCount: 34,
+    industryTags: ['preneed', 'consumer-protection', 'trust-funds'],
+    chamber: 'Senate',
+    committee: 'Judiciary Committee',
+    introducedDate: '2026-03-01',
+    impactScore: 'high',
+    plainSummary:
+      'This bill reshapes preneed funeral contracts in the consumer’s favor. It caps what a funeral home can keep when a family cancels at 10%, forces a 30-day full-refund window, and requires trust fund balances to appear on annual statements. Operators relying on preneed cancellation revenue will need to adjust.',
+    keyProvisions: [
+      'Caps preneed contract cancellation fees at 10% of the contract value',
+      'Establishes a 30-day full-refund window after signing',
+      'Requires trust fund balance disclosure on annual statements',
+      'Adds penalties for non-compliant preneed sellers',
+    ],
+    operatorImpact:
+      'Funeral homes lose the ability to retain large cancellation fees and must improve trust fund reporting. Operators with conservative preneed practices are largely unaffected; aggressive preneed sellers face the biggest adjustment.',
+    positions: { support: 119, oppose: 71, amend: 88, monitor: 35 },
+  },
+  {
+    id: 'mi-hb4789',
+    billNumber: 'HB 4789',
+    title: 'Green Burial Authorization and Standards Act',
+    description:
+      'Establishes a regulatory framework for natural organic reduction (NOR/human composting), expands alkaline hydrolysis permits, and creates a "conservation burial" designation for cemeteries preserving natural land.',
+    state: 'MI',
+    status: 'introduced',
+    statusDate: '2026-05-08',
+    lastAction: 'Introduced in House',
+    lastActionDate: '2026-05-08',
+    url: 'https://www.legislature.mi.gov/Bills/HB4789',
+    sponsors: [{ name: 'Rep. Lena Hoffman', party: 'D', district: 'HD-17' }],
+    history: [{ date: '2026-05-08', action: 'Introduced in House', chamber: 'House' }],
+    followCount: 38,
+    discussionCount: 15,
+    industryTags: ['green-burial', 'aquamation', 'nor', 'conservation'],
+    chamber: 'House',
+    introducedDate: '2026-05-08',
+    impactScore: 'medium',
+    plainSummary:
+      "This bill opens Michigan to the newest disposition methods — it creates a legal framework for natural organic reduction (human composting), expands aquamation permits, and lets cemeteries earn a 'conservation burial' designation for preserving natural land. It is an opportunity bill more than a compliance burden.",
+    keyProvisions: [
+      'Creates a licensing framework for natural organic reduction (human composting) facilities',
+      'Expands the availability of alkaline hydrolysis permits',
+      "Establishes a 'conservation burial' cemetery designation",
+      'Directs the state to publish NOR facility standards within 12 months',
+    ],
+    operatorImpact:
+      'Operators gain new service lines and a marketable green designation, but adding NOR or aquamation requires capital investment. Traditional-only operations face no mandate but may see demand shift toward green options.',
+    positions: { support: 97, oppose: 34, amend: 41, monitor: 58 },
+  },
+  {
+    id: 'oh-hb312',
+    billNumber: 'HB 312',
+    title: 'Ohio Alkaline Hydrolysis Legalization Act',
+    description:
+      'Adds alkaline hydrolysis (water cremation) as a legal method of final disposition in Ohio, establishes licensing requirements for aquamation facilities, and sets environmental discharge standards.',
+    state: 'OH',
+    status: 'passed',
+    statusDate: '2026-04-30',
+    lastAction: 'Passed House 67–32, sent to Senate',
+    lastActionDate: '2026-04-30',
+    url: 'https://www.legislature.state.oh.us/Bills/HB312',
+    sponsors: [{ name: 'Rep. Christopher Blake', party: 'R', district: 'HD-55' }],
+    history: [
+      { date: '2026-01-15', action: 'Introduced in House', chamber: 'House' },
+      { date: '2026-03-10', action: 'Passed committee 9–1', chamber: 'House' },
+      { date: '2026-04-30', action: 'Passed House 67–32', chamber: 'House' },
+    ],
+    followCount: 103,
+    discussionCount: 51,
+    industryTags: ['aquamation', 'cremation', 'ohio'],
+    chamber: 'House',
+    committee: 'Health Committee',
+    introducedDate: '2026-01-15',
+    impactScore: 'high',
+    plainSummary:
+      'This bill makes water cremation legal in Ohio for the first time. It sets up licensing for aquamation facilities and writes environmental discharge standards. Having passed the House 67–32, it is the furthest-along disposition bill in the region and a likely template for neighboring states.',
+    keyProvisions: [
+      'Legalizes alkaline hydrolysis as a method of final disposition in Ohio',
+      'Establishes a licensing process for aquamation facilities',
+      'Sets environmental standards for effluent discharge',
+      'Requires consumer disclosure of the aquamation process',
+    ],
+    operatorImpact:
+      'Ohio funeral homes can add aquamation as a service once licensing opens. Early movers gain a marketing edge; the discharge standards mean facility upgrades for those that adopt it.',
+    positions: { support: 168, oppose: 44, amend: 52, monitor: 61 },
+  },
+  {
+    id: 'il-hb5092',
+    billNumber: 'HB 5092',
+    title: 'Funeral Director Licensing Reciprocity Act',
+    description:
+      'Establishes interstate reciprocity for funeral director licenses between Illinois and states with equivalent licensing standards, streamlining multi-state practice for licensed professionals.',
+    state: 'IL',
+    status: 'committee',
+    statusDate: '2026-04-05',
+    lastAction: 'Referred to Business and Occupational Licensing Committee',
+    lastActionDate: '2026-04-05',
+    url: 'https://www.ilga.gov/legislation/HB5092',
+    sponsors: [{ name: 'Rep. Andre Thompson', party: 'D', district: 'HD-22' }],
+    history: [
+      { date: '2026-03-20', action: 'Introduced in House', chamber: 'House' },
+      { date: '2026-04-05', action: 'Referred to committee', chamber: 'House' },
+    ],
+    followCount: 29,
+    discussionCount: 8,
+    industryTags: ['licensing', 'reciprocity', 'workforce'],
+    chamber: 'House',
+    committee: 'Business and Occupational Licensing Committee',
+    introducedDate: '2026-03-20',
+    impactScore: 'low',
+    plainSummary:
+      "This bill lets funeral directors licensed in states with comparable standards practice in Illinois without re-testing. It mainly helps multi-state operators and professionals near state lines, and eases Illinois's funeral director workforce shortage.",
+    keyProvisions: [
+      'Establishes interstate license reciprocity for funeral directors',
+      'Applies only to states with equivalent licensing standards',
+      'Directs the licensing board to publish a list of reciprocal states',
+      'Maintains Illinois continuing-education requirements for reciprocal licensees',
+    ],
+    operatorImpact:
+      'Multi-state operators can move staff across the Illinois line more easily, and the hiring pool widens. Single-state Illinois professionals see slightly more labor competition but little direct change.',
+    positions: { support: 54, oppose: 19, amend: 22, monitor: 31 },
+  },
+]
+
+// ── Mock Posts ─────────────────────────────────────────────────
+
+export const MOCK_POSTS: Post[] = [
+  {
+    id: 'post1',
+    authorId: 'p1',
+    author: MOCK_PROFILES[0],
+    kind: 'analysis',
+    body: 'SB 1017 is the most significant preneed legislation Michigan has seen in 20 years. The 30-day full-refund window is a big consumer win, but the 10% cancellation cap may actually hurt smaller funeral homes more than large chains — we should be advocating for a sliding scale based on services already delivered.',
+    state: 'MI',
+    billId: 'mi-sb1017',
+    billTitle: 'SB 1017 — Preneed Funeral Contract Consumer Protection Act',
+    isAnonymous: false,
+    upvotes: 47,
+    commentCount: 12,
+    createdAt: '2026-05-10T14:22:00Z',
+    updatedAt: '2026-05-10T14:22:00Z',
+  },
+  {
+    id: 'post2',
+    authorId: 'p2',
+    author: MOCK_PROFILES[1],
+    kind: 'position',
+    body: "We're supporting SB 892 with amendments. The audit requirement is long overdue — families buying burial rights deserve to know their perpetual care money is safe. Our position: raise the disclosure threshold further and include digital portals for beneficiary access.",
+    state: 'MI',
+    billId: 'mi-sb892',
+    billTitle: 'SB 892 — Cemetery Perpetual Care Fund Modernization Act',
+    isAnonymous: false,
+    upvotes: 38,
+    commentCount: 9,
+    createdAt: '2026-05-09T10:15:00Z',
+    updatedAt: '2026-05-09T10:15:00Z',
+  },
+  {
+    id: 'post3',
+    authorId: 'p6',
+    author: MOCK_PROFILES[5],
+    kind: 'note',
+    body: "Field report from Flint, MI: We've seen a 34% increase in direct cremation requests in Q1 2026 compared to Q1 2025. Families are citing price. The gap between a traditional service and direct cremation has grown to $4,200+ in this market. This is a real pressure point HB 4133 pricing transparency needs to address.",
+    state: 'MI',
+    isAnonymous: false,
+    upvotes: 61,
+    commentCount: 18,
+    createdAt: '2026-05-08T09:30:00Z',
+    updatedAt: '2026-05-08T09:30:00Z',
+  },
+  {
+    id: 'post4',
+    authorId: 'p3',
+    author: MOCK_PROFILES[2],
+    kind: 'analysis',
+    body: 'Ohio HB 312 passing the House is huge. Alkaline hydrolysis is legal in 21 states now — the momentum is real. For those tracking Michigan HB 4521: Ohio is the model to cite. They included environmental discharge standards that satisfied the wastewater treatment concerns. Michigan should copy that framework exactly.',
+    state: 'OH',
+    billId: 'oh-hb312',
+    billTitle: 'OH HB 312 — Alkaline Hydrolysis Legalization Act',
+    isAnonymous: false,
+    upvotes: 53,
+    commentCount: 14,
+    createdAt: '2026-05-07T16:45:00Z',
+    updatedAt: '2026-05-07T16:45:00Z',
+  },
+  {
+    id: 'post5',
+    authorId: 'p5',
+    author: MOCK_PROFILES[4],
+    kind: 'question',
+    body: "What's the actual timeline for the Michigan Board of Mortuary Science to update the cremation technician continuing education requirements if HB 4521 passes? Has anyone spoken directly with the MBMS about the rule-making process? The 12-month implementation window seems optimistic.",
+    state: 'MI',
+    billId: 'mi-hb4521',
+    billTitle: 'MI HB 4521 — Michigan Cremation Regulation Reform Act',
+    isAnonymous: false,
+    upvotes: 22,
+    commentCount: 7,
+    createdAt: '2026-05-06T11:20:00Z',
+    updatedAt: '2026-05-06T11:20:00Z',
+  },
+  {
+    id: 'post6',
+    authorId: 'p4',
+    author: MOCK_PROFILES[3],
+    kind: 'note',
+    body: 'Anonymous field report (supplier): Q1 2026 wholesale casket orders from Michigan funeral homes down 8% YoY. Direct-to-family casket sales up significantly. The FTC price comparison rule is having a measurable effect on the market. Families are shopping. HB 4133 will accelerate this.',
+    state: 'MI',
+    isAnonymous: true,
+    upvotes: 44,
+    commentCount: 11,
+    createdAt: '2026-05-05T08:10:00Z',
+    updatedAt: '2026-05-05T08:10:00Z',
+  },
+  {
+    id: 'post7',
+    authorId: 'p2',
+    author: MOCK_PROFILES[1],
+    kind: 'note',
+    body: "Green burial plot sales at Lakeview are up 180% since we opened the conservation section. Waiting list through 2027. If you're a cemetery operator not looking at this segment, you're missing a real market shift. HB 4789 would help us expand — the NOR framework especially.",
+    state: 'MI',
+    billId: 'mi-hb4789',
+    billTitle: 'MI HB 4789 — Green Burial Authorization and Standards Act',
+    isAnonymous: false,
+    upvotes: 67,
+    commentCount: 22,
+    createdAt: '2026-05-04T13:55:00Z',
+    updatedAt: '2026-05-04T13:55:00Z',
+  },
+  {
+    id: 'post8',
+    authorId: 'p1',
+    author: MOCK_PROFILES[0],
+    kind: 'report',
+    body: 'State of Deathcare — Michigan, May 2026: Five bills in active session touching funeral homes, cemeteries, and cremation. SB 892 is furthest along (Senate floor). SB 1017 public hearing was productive; expect amendments on the cancellation fee cap. HB 4521 still in committee — need more testimony from operators. Show up.',
+    state: 'MI',
+    isAnonymous: false,
+    upvotes: 89,
+    commentCount: 31,
+    createdAt: '2026-05-03T07:00:00Z',
+    updatedAt: '2026-05-03T07:00:00Z',
+  },
+]
+
+// ── Mock Coalitions ────────────────────────────────────────────
+
+export const MOCK_COALITIONS: Coalition[] = [
+  {
+    id: 'c1',
+    billId: 'mi-hb4521',
+    state: 'MI',
+    position: 'support',
+    name: 'Michigan Cremation Operators for HB 4521',
+    statement:
+      'We support HB 4521 with the aquamation provisions intact. The 24-hour waiting period revision reflects modern practice and the science is settled. 47 Michigan cremation operators and funeral homes have signed.',
+    leadProfileId: 'p1',
+    leadProfile: MOCK_PROFILES[0],
+    memberCount: 47,
+    createdAt: '2026-04-20T09:00:00Z',
+  },
+  {
+    id: 'c2',
+    billId: 'mi-sb892',
+    state: 'MI',
+    position: 'support',
+    name: 'Cemetery Transparency Coalition',
+    statement:
+      'Michigan cemeteries need modern perpetual care fund oversight. Families deserve annual third-party audits and public disclosure. We support SB 892 and urge the Senate to pass it without weakening the audit requirement.',
+    leadProfileId: 'p2',
+    leadProfile: MOCK_PROFILES[1],
+    memberCount: 31,
+    createdAt: '2026-04-15T14:30:00Z',
+  },
+  {
+    id: 'c3',
+    billId: 'mi-sb1017',
+    state: 'MI',
+    position: 'amend',
+    name: 'Independent Funeral Homes — Amend SB 1017',
+    statement:
+      'We support consumer protection goals of SB 1017 but urge a sliding-scale cancellation fee rather than a flat 10% cap. Small independent operators need relief; large chains can absorb this better. 28 member firms signed.',
+    leadProfileId: 'p6',
+    leadProfile: MOCK_PROFILES[5],
+    memberCount: 28,
+    createdAt: '2026-04-22T11:00:00Z',
+  },
+]
+
+// ── Mock Jobs ──────────────────────────────────────────────────
+
+export const MOCK_JOBS: Job[] = [
+  {
+    id: 'j1',
+    title: 'Licensed Funeral Director',
+    company: 'Doe Family Funeral Home',
+    location: 'Detroit, MI',
+    state: 'MI',
+    type: 'full-time',
+    listingType: 'funeral-homes',
+    description:
+      'Seeking a licensed Michigan funeral director to join our three-location family operation in Metro Detroit. 28 years in the community. Preneed experience preferred.',
+    salary: '$65,000–$80,000',
+    postedAt: '2026-05-10T00:00:00Z',
+    applyUrl: 'https://doefuneralhome.example/careers',
+    featured: true,
+  },
+  {
+    id: 'j2',
+    title: 'Cemetery Grounds Manager',
+    company: 'Lakeview Memorial Gardens',
+    location: 'Cleveland, OH',
+    state: 'OH',
+    type: 'full-time',
+    listingType: 'cemeteries',
+    description:
+      'Manage day-to-day operations of an 80-acre cemetery in the Cleveland suburbs. Responsible for grounds crew of 8, equipment, and interment operations.',
+    salary: '$55,000–$70,000',
+    postedAt: '2026-05-08T00:00:00Z',
+    featured: false,
+  },
+  {
+    id: 'j3',
+    title: 'Cremation Technician',
+    company: 'Pacific Cremation Services',
+    location: 'Seattle, WA',
+    state: 'WA',
+    type: 'full-time',
+    listingType: 'cremation',
+    description:
+      'CANA-certified cremation technician or willingness to obtain certification. Experience with modern retort equipment. Seattle area. Benefits + retirement.',
+    salary: '$48,000–$58,000',
+    postedAt: '2026-05-05T00:00:00Z',
+    featured: false,
+  },
+  {
+    id: 'j4',
+    title: 'Funeral Home Software Account Executive',
+    company: 'Memorial Software Solutions',
+    location: 'Remote (US)',
+    state: 'TX',
+    type: 'full-time',
+    listingType: 'technology',
+    description:
+      'B2B SaaS sales to funeral homes. Funeral industry experience a major plus. Full remote, competitive commission, generous territory.',
+    salary: '$70,000 base + commission',
+    postedAt: '2026-05-03T00:00:00Z',
+    featured: true,
+  },
+  {
+    id: 'j5',
+    title: 'Grief Counselor (Part-Time)',
+    company: 'Compassionate Grief Center',
+    location: 'Chicago, IL',
+    state: 'IL',
+    type: 'part-time',
+    listingType: 'grief-support',
+    description:
+      'Licensed therapist (LCSW or LPC) for bereavement counseling, individual and group. 20–25 hrs/week. Hybrid schedule, Chicago Loop.',
+    salary: '$32–$42/hour',
+    postedAt: '2026-05-01T00:00:00Z',
+    featured: false,
+  },
+]
+
+// ── Mock State Hubs ────────────────────────────────────────────
+
+export const STATE_NAMES: Record<string, string> = {
+  MI: 'Michigan',
+  OH: 'Ohio',
+  IL: 'Illinois',
+  WA: 'Washington',
+  TX: 'Texas',
+  IN: 'Indiana',
+  TN: 'Tennessee',
+  CA: 'California',
+  OR: 'Oregon',
+  GA: 'Georgia',
+  AZ: 'Arizona',
+  CO: 'Colorado',
+  NY: 'New York',
+  PA: 'Pennsylvania',
+  FL: 'Florida',
+  VA: 'Virginia',
+}
+
+// States currently active on the platform (used in Header bills dropdown and feed sidebar)
+export const ACTIVE_STATES = ['MI', 'OH', 'IL', 'WA', 'TX'] as const
+
+export function getMockStateHub(state: string): StateHub | null {
+  const stateName = STATE_NAMES[state]
+  if (!stateName) return null
+  const bills = MOCK_BILLS.filter((b) => b.state === state)
+  const posts = MOCK_POSTS.filter((p) => p.state === state).slice(0, 5)
+  const coalitions = MOCK_COALITIONS.filter((c) => c.state === state)
+  return {
+    state,
+    stateName,
+    activeBillCount: bills.filter((b) => !['signed', 'failed', 'vetoed'].includes(b.status)).length,
+    verifiedOperatorCount: MOCK_PROFILES.filter((p) => p.state === state && p.verifiedAt).length,
+    bills,
+    topPosts: posts,
+    coalitions,
+  }
+}
+
+export function getMockPosts(filters?: { state?: string; billId?: string; kind?: string }): Post[] {
+  let posts = [...MOCK_POSTS]
+  if (filters?.state) posts = posts.filter((p) => p.state === filters.state)
+  if (filters?.billId) posts = posts.filter((p) => p.billId === filters.billId)
+  if (filters?.kind) posts = posts.filter((p) => p.kind === filters.kind)
+  return posts
+}
+
+export function getMockBill(id: string): Bill | null {
+  return MOCK_BILLS.find((b) => b.id === id) ?? null
+}

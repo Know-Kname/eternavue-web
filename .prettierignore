@@ -1,0 +1,4 @@
+.next
+node_modules
+src/gql/__generated__
+*.lock

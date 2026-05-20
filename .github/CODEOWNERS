@@ -1,0 +1,6 @@
+# Default — all files require review from the repo owner
+*  @know-kname
+
+# CI / deployment config — extra scrutiny
+.github/   @know-kname
+vercel.json  @know-kname

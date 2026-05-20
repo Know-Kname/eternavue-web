@@ -1,0 +1,62 @@
+name: Bug report
+description: Something is broken or not working as expected
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for taking the time to file a bug report.
+
+  - type: dropdown
+    id: area
+    attributes:
+      label: Area
+      options:
+        - Feed / posts
+        - Legislative (bills / state hubs)
+        - Directory
+        - Search
+        - Auth / profiles
+        - Digest / email
+        - CE tracker / RFQ / Jobs
+        - Build / CI
+        - Other
+    validations:
+      required: true
+
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: What happened?
+      description: What did you expect vs. what actually occurred?
+    validations:
+      required: true
+
+  - type: textarea
+    id: repro
+    attributes:
+      label: Steps to reproduce
+      placeholder: |
+        1. Go to /bills/MI
+        2. Click "Follow this bill"
+        3. See error
+    validations:
+      required: true
+
+  - type: input
+    id: url
+    attributes:
+      label: URL (if applicable)
+      placeholder: https://deathcare.live/...
+
+  - type: dropdown
+    id: severity
+    attributes:
+      label: Severity
+      options:
+        - Critical (data loss / broken for all users)
+        - High (broken feature, no workaround)
+        - Medium (broken feature, workaround exists)
+        - Low (visual/minor)
+    validations:
+      required: true

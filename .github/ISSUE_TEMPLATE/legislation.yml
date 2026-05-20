@@ -1,0 +1,73 @@
+name: Track new legislation
+description: Request tracking of a state bill affecting the deathcare industry
+labels: ["legislation", "data"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Use this template to request that a bill be added to the platform's tracked legislation.
+
+  - type: input
+    id: bill-number
+    attributes:
+      label: Bill number
+      placeholder: "e.g. MI HB 4521, OH SB 312"
+    validations:
+      required: true
+
+  - type: input
+    id: state
+    attributes:
+      label: State (2-letter code)
+      placeholder: "MI"
+    validations:
+      required: true
+
+  - type: input
+    id: legiscan-url
+    attributes:
+      label: LegiScan URL
+      placeholder: "https://legiscan.com/..."
+
+  - type: input
+    id: full-title
+    attributes:
+      label: Full title
+      placeholder: "Michigan Cremation Regulation Reform Act"
+    validations:
+      required: true
+
+  - type: textarea
+    id: why-it-matters
+    attributes:
+      label: Why does this bill matter to deathcare operators?
+      description: Plain-English explanation of the industry impact
+    validations:
+      required: true
+
+  - type: dropdown
+    id: impact
+    attributes:
+      label: Estimated operator impact
+      options:
+        - High — affects most operators in this state
+        - Medium — affects a specific segment
+        - Low — niche or procedural
+    validations:
+      required: true
+
+  - type: dropdown
+    id: status
+    attributes:
+      label: Current legislative status
+      options:
+        - Introduced
+        - In committee
+        - Passed committee
+        - Floor vote scheduled
+        - Passed one chamber
+        - Enrolled / awaiting signature
+        - Signed into law
+        - Failed / vetoed
+    validations:
+      required: true

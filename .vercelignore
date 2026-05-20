@@ -1,0 +1,8 @@
+docs/
+supabase/
+scripts/
+CLAUDE.md
+WORDPRESS_SETUP.md
+.env.example
+*.md
+!README.md

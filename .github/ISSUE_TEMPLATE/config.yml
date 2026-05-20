@@ -1,0 +1,8 @@
+blank_issues_enabled: true
+contact_links:
+  - name: Platform discussion
+    url: https://github.com/know-kname/deathcare-live/discussions
+    about: Feature ideas, questions, and community conversation
+  - name: LegiScan (bill data source)
+    url: https://legiscan.com
+    about: Find LegiScan bill IDs for legislation tracking requests

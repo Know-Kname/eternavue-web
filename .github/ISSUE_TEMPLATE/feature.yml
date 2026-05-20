@@ -1,0 +1,63 @@
+name: Feature request
+description: Propose a new feature or improvement
+labels: ["enhancement"]
+body:
+  - type: dropdown
+    id: phase
+    attributes:
+      label: Roadmap phase
+      description: Which phase does this best fit?
+      options:
+        - "Phase 1 — Foundation (feed, auth, homepage)"
+        - "Phase 2 — Legislative layer (bill sync, coalitions, alerts)"
+        - "Phase 3 — Monetization (jobs, RFQ, API, associations)"
+        - "Unscheduled"
+    validations:
+      required: true
+
+  - type: dropdown
+    id: pillar
+    attributes:
+      label: Platform pillar
+      options:
+        - Legislative intelligence
+        - Verified community
+        - Industry directory
+        - Reports & briefings
+        - Cross-entity search
+        - Infrastructure / DX
+    validations:
+      required: true
+
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem
+      description: What problem does this solve for a deathcare operator?
+    validations:
+      required: true
+
+  - type: textarea
+    id: solution
+    attributes:
+      label: Proposed solution
+      description: How should it work?
+    validations:
+      required: true
+
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives considered
+      description: Other approaches you've thought about (optional)
+
+  - type: checkboxes
+    id: persona
+    attributes:
+      label: Who does this serve?
+      options:
+        - label: Funeral director
+        - label: Cemetery / crematory operator
+        - label: Supplier
+        - label: Association staff
+        - label: Educator
