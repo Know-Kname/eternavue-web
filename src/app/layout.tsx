@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Inter, Space_Grotesk } from "next/font/google";
+import { ThemeProvider } from "@/providers/ThemeProvider";
 import "./globals.css";
 
 const inter = Inter({
@@ -129,6 +130,7 @@ export default function RootLayout({
     <html
       lang="en"
       className={`${inter.variable} ${spaceGrotesk.variable} scroll-smooth`}
+      suppressHydrationWarning
     >
       <head>
         <script
@@ -138,8 +140,10 @@ export default function RootLayout({
           }}
         />
       </head>
-      <body className="bg-void text-white font-body antialiased">
-        {children}
+      <body className="bg-void text-white font-body antialiased transition-colors">
+        <ThemeProvider>
+          {children}
+        </ThemeProvider>
       </body>
     </html>
   );
