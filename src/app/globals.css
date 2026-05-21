@@ -125,6 +125,46 @@
       transform: translateY(10px);
     }
   }
+
+  /* ─── Claude / Anthropic Design Tokens ────────────────────────────────────
+     Source: DESIGN.md (getdesign claude)
+     Use these for editorial sections, light-mode surfaces, or warm overlays
+     that contrast the primary void/holographic palette.
+     Tailwind classes: bg-claude-parchment, text-claude-terracotta, etc.
+  ─────────────────────────────────────────────────────────────────────────── */
+
+  /* Surfaces */
+  --color-claude-parchment: #f5f4ed;      /* primary light background */
+  --color-claude-ivory: #faf9f5;          /* elevated cards on parchment */
+  --color-claude-warm-sand: #e8e6dc;      /* button backgrounds, interactive */
+  --color-claude-pure-white: #ffffff;     /* max-contrast elements */
+  --color-claude-dark-surface: #30302e;   /* dark containers, nav borders */
+  --color-claude-deep-dark: #141413;      /* dark page background */
+
+  /* Brand */
+  --color-claude-terracotta: #c96442;     /* primary CTA — use sparingly */
+  --color-claude-coral: #d97757;          /* text accents, links on dark */
+
+  /* Text */
+  --color-claude-near-black: #141413;     /* primary text */
+  --color-claude-charcoal: #4d4c48;       /* button text on light surfaces */
+  --color-claude-olive: #5e5d59;          /* secondary body text */
+  --color-claude-stone: #87867f;          /* tertiary / footnotes */
+  --color-claude-dark-warm: #3d3d3a;      /* dark text links */
+  --color-claude-warm-silver: #b0aea5;    /* text on dark surfaces */
+
+  /* Borders */
+  --color-claude-border-cream: #f0eee6;   /* standard light border */
+  --color-claude-border-warm: #e8e6dc;    /* prominent borders / dividers */
+  --color-claude-border-dark: #30302e;    /* border on dark surfaces */
+
+  /* Shadows / Rings */
+  --shadow-claude-ring: 0px 0px 0px 1px #d1cfc5;
+  --shadow-claude-whisper: rgba(0,0,0,0.05) 0px 4px 24px;
+  --shadow-claude-ring-dark: 0px 0px 0px 1px #30302e;
+
+  /* Typography — Georgia fallback for Anthropic Serif */
+  --font-claude-serif: Georgia, 'Times New Roman', serif;
 }
 
 :root {
@@ -165,6 +205,77 @@ h6 {
   outline: 2px solid var(--color-primary-400);
   outline-offset: 2px;
 }
+
+/* ─── Claude editorial utility classes ────────────────────────────────────── */
+
+/* Section backgrounds */
+.section-parchment {
+  background-color: var(--color-claude-parchment);
+  color: var(--color-claude-near-black);
+}
+
+.section-dark-claude {
+  background-color: var(--color-claude-deep-dark);
+  color: var(--color-claude-warm-silver);
+}
+
+/* Ring shadow (Claude's signature depth system) */
+.ring-claude {
+  box-shadow: var(--shadow-claude-ring);
+}
+
+.ring-claude-dark {
+  box-shadow: var(--shadow-claude-ring-dark);
+}
+
+.shadow-claude-whisper {
+  box-shadow: var(--shadow-claude-whisper);
+}
+
+/* Terracotta CTA button */
+.btn-terracotta {
+  background-color: var(--color-claude-terracotta);
+  color: var(--color-claude-ivory);
+  border-radius: 8px;
+  padding: 9.6px 16.8px;
+  font-family: var(--font-body);
+  font-size: 1rem;
+  font-weight: 500;
+  box-shadow: 0px 0px 0px 0px #c96442, 0px 0px 0px 1px #c96442;
+  transition: opacity 0.15s ease;
+}
+
+.btn-terracotta:hover {
+  opacity: 0.88;
+}
+
+/* Warm sand button */
+.btn-warm-sand {
+  background-color: var(--color-claude-warm-sand);
+  color: var(--color-claude-charcoal);
+  border-radius: 8px;
+  padding: 0px 12px 0px 8px;
+  box-shadow: 0px 0px 0px 0px #e8e6dc, 0px 0px 0px 1px #d1cfc5;
+}
+
+/* Editorial serif heading style */
+.heading-editorial {
+  font-family: var(--font-claude-serif);
+  font-weight: 500;
+  line-height: 1.10;
+  color: var(--color-claude-near-black);
+  letter-spacing: normal;
+}
+
+/* Card on parchment */
+.card-parchment {
+  background-color: var(--color-claude-ivory);
+  border: 1px solid var(--color-claude-border-cream);
+  border-radius: 8px;
+  box-shadow: var(--shadow-claude-whisper);
+}
+
+/* ─────────────────────────────────────────────────────────────────────────── */
 
 /* Utility classes for glow treatment */
 .text-glow {
