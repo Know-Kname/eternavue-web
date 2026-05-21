@@ -24,7 +24,7 @@ export function useTallyForm(formId: string) {
   const [success, setSuccess] = useState(false)
 
   const submit = useCallback(
-    async (data: Record<string, any>) => {
+    async (data: Record<string, unknown>) => {
       setLoading(true)
       setError(null)
       setSuccess(false)
