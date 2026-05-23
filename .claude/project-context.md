@@ -86,7 +86,7 @@ Single landing page with:
 
 1\. Hero section (Eternavue branding + CTA)
 
-2\. Three service cards (Memorials, Events, Corporate)
+2\. Three package-tier cards (Basic, Plus, Premium)
 
 3\. Trust signal (DMP legacy)
 

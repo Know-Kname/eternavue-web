@@ -1,7 +1,6 @@
 'use client'
 
 import { useEffect, useState } from 'react'
-import { Button } from '@/components/ui/Button'
 
 interface ErrorPageProps {
   error: Error & { digest?: string }

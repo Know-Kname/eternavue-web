@@ -1,17 +1,22 @@
 # Eternavue Web
 
-**Holographic Experiences That Honor Legacy**
+**The white-label digital memorial platform for cemeteries and funeral homes.**
 
-Eternavue is a holographic memorial and event platform that creates immersive, emotionally resonant experiences using cutting-edge holographic projection technology. Founded at Detroit Memorial Park (serving families since 1925), we help people celebrate lives, host unforgettable events, and create lasting corporate impressions.
+> Families don't stop needing a place to gather when the service ends. Eternavue gives cemeteries and funeral homes the platform to be that place — a livestreamed service, a lasting tribute page, a digital keepsake families actually keep — all under your brand. Built by people who have operated a cemetery since 1925. Not a tech company that discovered grief.
+
+Eternavue is Christian Wright Hughes's independent venture. Detroit Memorial Park (est. 1925) is the flagship partner and first customer — not the owner. Tiers: **Basic** (livestream + memorial page) → **Plus** (+ lasting tribute, guestbook, keepsakes) → **Premium** (+ holographic capture / projection — top-tier upsell only).
+
+> **Canonical positioning:** see `Eternavue/Eternavue_Positioning_2026.md`. Eternavue is **not** a "hologram company" — holograms are one Premium-tier feature, never the headline.
 
 ---
 
 ## 🎯 Product Vision
 
 ### What We Do
-- **Memorial Services:** Holographic memorials that bring loved ones' stories to life
-- **Special Events:** Weddings, celebrations, and milestone moments with holographic elements  
-- **Corporate Solutions:** Brand activations, product launches, and experiential marketing
+Eternavue is sold to cemeteries and funeral homes as tiered memorial packages:
+- **Basic:** Livestreamed service + a branded memorial event page
+- **Plus:** + a lasting online tribute page, guestbook, highlight reel, and digital keepsakes
+- **Premium:** + holographic capture / projection (top-tier upsell)
 
 ### MVP Goals (Current Phase)
 - Landing page with service showcase
@@ -302,4 +307,4 @@ For project questions: [Create an issue](https://github.com/yourusername/eternav
 
 ---
 
-Built with ❤️ and cutting-edge holographic technology
+Built for the families and institutions that hold human memory.
