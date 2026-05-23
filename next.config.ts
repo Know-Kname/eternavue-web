@@ -3,9 +3,6 @@ import type { NextConfig } from 'next'
 const nextConfig: NextConfig = {
   /* Performance & Optimization */
   reactCompiler: true,
-  experimental: {
-    turbopackUseSystemTlsCerts: true,
-  },
 
   /* Security Headers */
   headers: async () => [
