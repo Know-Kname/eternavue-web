@@ -116,6 +116,39 @@ several Vercel projects, created by multiple concurrent Claude/Cursor agents:
   Lint is advisory so it stops blocking unrelated PRs, but the debt remains and warrants a
   dedicated cleanup (or a deliberate decision to relax specific rules).
 
+## Portfolio & CI map (Vercel team `chi-chi-projects`) — investigated 2026-05-23
+**Account email:** knowledgeknight99@protonmail.com · **Founder (per PR #19):** Christian
+Wright Hughes (matches the DMP user). 13 Vercel projects total; deathcare/eternavue ones:
+
+- **eternavue-web** repo → Vercel `eternavue-web-holo-look` (prj_XA7Q). My PR #34 security
+  commit deploys **READY** here. Most older deployments are **ERROR** (Node-18 era + the
+  PR #33 deathcare commits deployed through this project).
+- **DeathCare-live** repo → **two** Vercel projects: `deathcare-live` + `deathcaredotlive`
+  (duplicates of the same repo; collapse to one).
+- **deathcare-workspace** repo → `deathcare-workspace-deathcare-live` (prod ERROR).
+- Also: `website`, `dmpgrants`, `dmp-centennial-soiree`, `the-wrightr`, `flowerloft-landing`,
+  `zoom2day-landing-pages`, `zoom2day-marketing-suite`, `express-js-on-vercel`,
+  `nextjs-with-supabase` (unrelated/other ventures).
+
+## Open PRs on eternavue-web — overlap & triage (important)
+- **PR #19 `feature/aesthetic-overhaul`** — major repositioning of *eternavue itself* to a
+  white-label digital-memorial platform for cemeteries/funeral homes (founder-authored,
+  READY deploys). **Already bumped Node 18→20 and disabled `react-hooks/set-state-in-effect`.**
+  Still on **Next 16.1.6 (vulnerable)** — it should take the 16.2.6 security bump.
+  → Likely the *real* eternavue direction; my PR #34's CI fix overlaps it.
+- **PR #33 `claude/explore-deathcare-dev-tools-odWCS`** — adds the deathcare-live subdir
+  *into* eternavue (Codebase C). Deploys ERROR. Since `main` should stay deathcare-free,
+  **recommend closing #33** (deathcare lives in its own repos).
+- **PR #34 (this work)** — docs + CI Node 20 + **unique Next 16.2.6 security fix**. Green.
+- **Dependabot:** #32 (Next 16.2.4) **superseded by #34's 16.2.6** → close after #34 merges.
+  Safe to take: #31 eslint-config-next, #30 react, #29 tailwindcss-postcss, #27 setup-node,
+  #18 codeql-action, #16 checkout. **Hold/review:** #28 eslint 9→10 (major; may change lint).
+
+## Tooling/access notes (re-verified)
+- Shell env has **no GitHub PAT / Azure / Vercel / WP tokens**; GitHub-MCP still scoped to
+  `eternavue-web` only (wider-scope relaunch still pending). Vercel MCP works (read used
+  above). WordPress.com MCP connected but currently erroring at the proxy.
+
 ## To resume deeper work (next session)
 Add `Know-Kname/DeathCare-live` and `Know-Kname/deathcare-workspace` to this
 environment's allowed-repository list, then **relaunch**. The new session can read this
