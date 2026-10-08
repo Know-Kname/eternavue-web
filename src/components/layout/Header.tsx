@@ -25,8 +25,10 @@ export function Header({ onCtaClick }: HeaderProps) {
   }, [])
 
   const navLinks = [
-    { name: 'Platform', href: '#tiers' },
-    { name: 'About', href: '#about' },
+    { name: 'Packages', href: '#packages' },
+    { name: 'Partner Economics', href: '#partner-calculator' },
+    { name: 'Heritage Vault', href: '#vault-preview' },
+    { name: 'Moat & Pedigree', href: '#about' },
     { name: 'FAQ', href: '#faq' },
   ]
 

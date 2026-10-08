@@ -1,144 +1,209 @@
 'use client'
 
-import React from 'react'
+import React, { useState } from 'react'
 import { Button } from '@/components/ui/Button'
-import { motion, useReducedMotion, useScroll, useTransform } from 'framer-motion'
-import { ChevronRight, Sparkles } from 'lucide-react'
+import { motion, AnimatePresence, useReducedMotion } from 'framer-motion'
+import { Building2, Heart, ArrowRight, Sparkles, Award } from 'lucide-react'
 
 export interface HeroProps {
-  title: string
-  subtitle: string
-  ctaText: string
-  ctaLink?: string
   onCtaClick?: () => void
+  onModeChange?: (mode: 'b2b' | 'd2c') => void
 }
 
-export function Hero({
-  title,
-  subtitle,
-  ctaText,
-  ctaLink,
-  onCtaClick
-}: HeroProps) {
+export function Hero({ onCtaClick, onModeChange }: HeroProps) {
+  const [mode, setMode] = useState<'b2b' | 'd2c'>('b2b')
   const shouldReduceMotion = useReducedMotion()
-  const { scrollY } = useScroll()
 
-  const orbY = useTransform(scrollY, [0, 600], [0, -120], { clamp: false })
-  const orbYReverse = useTransform(scrollY, [0, 600], [0, 90], { clamp: false })
-  const pulseY = useTransform(scrollY, [0, 600], [0, -60], { clamp: false })
+  const handleModeToggle = (newMode: 'b2b' | 'd2c') => {
+    setMode(newMode)
+    onModeChange?.(newMode)
+  }
 
-  const displayTitle = title.toLowerCase()
+  const contactHref = 'mailto:christian@thewrightguy.com?subject=Eternavue%20%E2%80%94%20Partner%20inquiry'
 
   return (
-    <section className="relative flex min-h-[85vh] items-center justify-center overflow-hidden bg-void">
-      {/* Dynamic Background */}
-      <div className="absolute inset-0 overflow-hidden">
-        <div className="absolute inset-0 z-10 bg-gradient-to-b from-black/40 via-void/70 to-void" />
-
-        {/* Living gradient pulse */}
-        <motion.div
-          style={{ y: shouldReduceMotion ? 0 : pulseY }}
-          animate={shouldReduceMotion ? undefined : { scale: [1, 1.08, 1], opacity: [0.55, 1, 0.55] }}
-          transition={{ duration: 8, repeat: Infinity, ease: 'easeInOut' }}
-          className="bg-pulse-radial absolute inset-0 z-0"
-        />
-
-        {/* Animated orbs */}
-        <motion.div
-          style={{ y: shouldReduceMotion ? 0 : orbY }}
-          animate={{
-            scale: [1, 1.2, 1],
-            opacity: [0.3, 0.5, 0.3],
-            rotate: [0, 45, 0]
-          }}
-          transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
-          className="absolute left-1/4 top-0 h-[500px] w-[500px] rounded-full bg-primary-500/20 blur-[100px]"
-        />
-        <motion.div
-          style={{ y: shouldReduceMotion ? 0 : orbYReverse }}
-          animate={{
-            scale: [1, 1.3, 1],
-            opacity: [0.2, 0.4, 0.2],
-            x: [0, 100, 0]
-          }}
-          transition={{ duration: 15, repeat: Infinity, ease: "easeInOut", delay: 1 }}
-          className="absolute bottom-0 right-1/4 h-[600px] w-[600px] rounded-full bg-accent-500/20 blur-[120px]"
-        />
+    <section className="relative min-h-[92vh] flex items-center justify-center overflow-hidden bg-void pt-28 pb-20 px-6">
+      {/* Warm Ambient Atmosphere */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        {/* Deep ambient radial glows */}
+        <div className="absolute left-1/2 top-1/4 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[500px] bg-terracotta-500/15 rounded-full blur-[140px]" />
+        <div className="absolute right-10 top-1/3 w-[550px] h-[450px] bg-bronze-500/10 rounded-full blur-[130px]" />
+        <div className="absolute left-10 bottom-20 w-[600px] h-[400px] bg-coral-500/10 rounded-full blur-[120px]" />
+        {/* Subtle architectural grain */}
+        <div className="absolute inset-0 bg-[radial-gradient(#e8e6dc_1px,transparent_1px)] [background-size:32px_32px] opacity-[0.03]" />
       </div>
 
-      {/* Grid Pattern Overlay */}
-      <div className="absolute inset-0 z-10 bg-[url('/grid.svg')] bg-center opacity-10 [mask-image:linear-gradient(180deg,white,rgba(255,255,255,0))]" />
-
-      {/* Content */}
-      <div className="relative z-20 max-w-5xl mx-auto px-6 py-20 text-center">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, ease: "easeOut" }}
-        >
-          <div className="mb-8 inline-flex items-center gap-2 rounded-full border border-primary-500/20 bg-primary-500/10 px-3 py-1 text-sm text-primary-300 backdrop-blur-sm">
-            <Sparkles className="w-4 h-4" />
-            <span>The Future of Live Experiences</span>
-          </div>
-
-          <h1 className="text-glow mb-8 font-heading text-5xl font-bold lowercase leading-tight tracking-tight text-white md:text-7xl lg:text-8xl">
-            {displayTitle.split(' ').map((word, i) => (
-              <span key={i} className="inline-block mr-4">
-                {word.includes('holographic') ? (
-                  <span className="animate-pulse bg-gradient-to-r from-primary-400 to-accent-400 bg-clip-text text-transparent">
-                    {word}
-                  </span>
-                ) : word}
-              </span>
-            ))}
-          </h1>
-
-          <p className="mx-auto mb-12 max-w-2xl text-xl leading-relaxed text-ghost md:text-2xl">
-            {subtitle}
-          </p>
-
-          <motion.div
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.2, duration: 0.5 }}
-            className="flex flex-col sm:flex-row gap-6 justify-center items-center"
+      <div className="relative z-10 max-w-5xl mx-auto text-center">
+        {/* Dual-Lens Mode Selector */}
+        <div className="mb-10 inline-flex items-center p-1.5 rounded-full bg-void-light border border-sand-500/15 shadow-2xl backdrop-blur-md">
+          <button
+            onClick={() => handleModeToggle('b2b')}
+            className={`flex items-center gap-2 px-5 py-2 rounded-full text-xs sm:text-sm font-medium transition-all duration-300 ${
+              mode === 'b2b'
+                ? 'bg-gradient-to-r from-terracotta-500 to-coral-500 text-white shadow-lg'
+                : 'text-sand-400 hover:text-sand-200'
+            }`}
           >
-            {ctaLink ? (
-              <a href={ctaLink} className="w-full sm:w-auto">
-                <Button variant="primary" size="lg" className="w-full min-w-[200px] sm:w-auto">
-                  {ctaText}
-                  <ChevronRight className="ml-2 w-5 h-5" />
-                </Button>
-              </a>
-            ) : (
-              <Button
-                variant="primary"
-                size="lg"
-                onClick={onCtaClick}
-                className="w-full min-w-[200px] sm:w-auto"
-              >
-                {ctaText}
-                <ChevronRight className="ml-2 w-5 h-5" />
-              </Button>
-            )}
+            <Building2 className="w-3.5 h-3.5" />
+            <span>For Cemeteries &amp; Funeral Homes</span>
+          </button>
+          <button
+            onClick={() => handleModeToggle('d2c')}
+            className={`flex items-center gap-2 px-5 py-2 rounded-full text-xs sm:text-sm font-medium transition-all duration-300 ${
+              mode === 'd2c'
+                ? 'bg-gradient-to-r from-bronze-500 to-terracotta-500 text-white shadow-lg'
+                : 'text-sand-400 hover:text-sand-200'
+            }`}
+          >
+            <Heart className="w-3.5 h-3.5 text-coral-300" />
+            <span>For Families &amp; Keepsakes</span>
+          </button>
+        </div>
 
-            <Button variant="ghost" size="lg">
-              Watch Video
-            </Button>
-          </motion.div>
-        </motion.div>
+        {/* Dynamic Content Transitions */}
+        <AnimatePresence mode="wait">
+          {mode === 'b2b' ? (
+            <motion.div
+              key="b2b"
+              initial={{ opacity: 0, y: 15 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -15 }}
+              transition={{ duration: 0.4 }}
+              className="space-y-8"
+            >
+              {/* Category Pill */}
+              <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-terracotta-500/30 bg-terracotta-500/10 text-xs uppercase tracking-wider text-terracotta-300 font-semibold">
+                <Sparkles className="w-3.5 h-3.5" />
+                <span>B2B Wholesale Infrastructure · White-Label Deathcare</span>
+              </div>
+
+              {/* Literary Headline */}
+              <h1 className="font-serif text-4xl sm:text-6xl lg:text-7xl font-light text-sand-100 tracking-tight leading-[1.12]">
+                The modern memorial layer for{' '}
+                <span className="italic font-normal bg-gradient-to-r from-sand-200 via-bronze-300 to-terracotta-400 bg-clip-text text-transparent">
+                  independent deathcare.
+                </span>
+              </h1>
+
+              {/* Subtitle */}
+              <p className="max-w-2xl mx-auto text-lg sm:text-xl text-sand-400 font-light leading-relaxed">
+                White-label livestreaming, digital graveside integration, and high-margin physical-to-digital keepsakes. Built by a 4th-generation cemetery operator, not Silicon Valley.
+              </p>
+
+              {/* Action Buttons */}
+              <div className="pt-2 flex flex-col sm:flex-row items-center justify-center gap-4">
+                <a href={contactHref} onClick={onCtaClick} className="w-full sm:w-auto">
+                  <Button variant="primary" size="lg" className="w-full sm:w-auto min-w-55">
+                    <span>Partner Inquiry</span>
+                    <ArrowRight className="w-4 h-4 ml-2" />
+                  </Button>
+                </a>
+                <a href="#partner-calculator" className="w-full sm:w-auto">
+                  <Button variant="secondary" size="lg" className="w-full sm:w-auto min-w-[220px]">
+                    <span>Calculate Retained Margin</span>
+                  </Button>
+                </a>
+              </div>
+
+              {/* Value Badges */}
+              <div className="pt-8 grid grid-cols-1 sm:grid-cols-3 gap-4 max-w-3xl mx-auto">
+                <div className="p-3.5 rounded-xl border border-sand-500/10 bg-void-light/50 backdrop-blur-sm text-left">
+                  <div className="text-xs uppercase tracking-wider text-terracotta-400 font-semibold mb-0.5">Retained Margin</div>
+                  <div className="text-lg font-serif text-sand-100">40% to 60%</div>
+                  <div className="text-xs text-sand-400">Kept directly by cemetery/firm</div>
+                </div>
+                <div className="p-3.5 rounded-xl border border-sand-500/10 bg-void-light/50 backdrop-blur-sm text-left">
+                  <div className="text-xs uppercase tracking-wider text-bronze-400 font-semibold mb-0.5">Brand Ownership</div>
+                  <div className="text-lg font-serif text-sand-100">100% White-Label</div>
+                  <div className="text-xs text-sand-400">Your custom domain &amp; identity</div>
+                </div>
+                <div className="p-3.5 rounded-xl border border-sand-500/10 bg-void-light/50 backdrop-blur-sm text-left">
+                  <div className="text-xs uppercase tracking-wider text-sand-400 font-semibold mb-0.5">Heritage Pedigree</div>
+                  <div className="text-lg font-serif text-sand-100">Est. 1925 Lineage</div>
+                  <div className="text-xs text-sand-400">Detroit Memorial Park flagship</div>
+                </div>
+              </div>
+            </motion.div>
+          ) : (
+            <motion.div
+              key="d2c"
+              initial={{ opacity: 0, y: 15 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -15 }}
+              transition={{ duration: 0.4 }}
+              className="space-y-8"
+            >
+              {/* Category Pill */}
+              <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-bronze-500/30 bg-bronze-500/10 text-xs uppercase tracking-wider text-bronze-300 font-semibold">
+                <Award className="w-3.5 h-3.5" />
+                <span>Centennial Heritage Vault · Direct Family Preservation</span>
+              </div>
+
+              {/* Literary Headline */}
+              <h1 className="font-serif text-4xl sm:text-6xl lg:text-7xl font-light text-sand-100 tracking-tight leading-[1.12]">
+                A timeless digital sanctuary for{' '}
+                <span className="italic font-normal bg-gradient-to-r from-sand-200 via-bronze-300 to-terracotta-400 bg-clip-text text-transparent">
+                  family stories.
+                </span>
+              </h1>
+
+              {/* Subtitle */}
+              <p className="max-w-2xl mx-auto text-lg sm:text-xl text-sand-400 font-light leading-relaxed">
+                Weatherproof solid brass medallions, interactive oral histories, and 100-year immutable cloud vaults. Preserve your lineage beyond a headstone.
+              </p>
+
+              {/* Action Buttons */}
+              <div className="pt-2 flex flex-col sm:flex-row items-center justify-center gap-4">
+                <a href="#packages" className="w-full sm:w-auto">
+                  <Button variant="bronze" size="lg" className="w-full sm:w-auto min-w-[220px]">
+                    <span>View Heritage Packages</span>
+                    <ArrowRight className="w-4 h-4 ml-2" />
+                  </Button>
+                </a>
+                <a href="#vault-preview" className="w-full sm:w-auto">
+                  <Button variant="secondary" size="lg" className="w-full sm:w-auto min-w-[220px]">
+                    <span>Experience Vault Demo</span>
+                  </Button>
+                </a>
+              </div>
+
+              {/* Value Badges */}
+              <div className="pt-8 grid grid-cols-1 sm:grid-cols-3 gap-4 max-w-3xl mx-auto">
+                <div className="p-3.5 rounded-xl border border-sand-500/10 bg-void-light/50 backdrop-blur-sm text-left">
+                  <div className="text-xs uppercase tracking-wider text-bronze-400 font-semibold mb-0.5">Physical Hardware</div>
+                  <div className="text-lg font-serif text-sand-100">Solid Brass &amp; Ceramic</div>
+                  <div className="text-xs text-sand-400">Precision QR + NFC dual-tap</div>
+                </div>
+                <div className="p-3.5 rounded-xl border border-sand-500/10 bg-void-light/50 backdrop-blur-sm text-left">
+                  <div className="text-xs uppercase tracking-wider text-terracotta-400 font-semibold mb-0.5">Longevity Guarantee</div>
+                  <div className="text-lg font-serif text-sand-100">100-Year Cloud Escrow</div>
+                  <div className="text-xs text-sand-400">Decentralized immutable storage</div>
+                </div>
+                <div className="p-3.5 rounded-xl border border-sand-500/10 bg-void-light/50 backdrop-blur-sm text-left">
+                  <div className="text-xs uppercase tracking-wider text-coral-400 font-semibold mb-0.5">Oral History Archive</div>
+                  <div className="text-lg font-serif text-sand-100">Living Voice Waveforms</div>
+                  <div className="text-xs text-sand-400">Pristine lossless audio playback</div>
+                </div>
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </div>
 
       {/* Scroll Indicator */}
       <motion.div
-        animate={shouldReduceMotion ? undefined : { y: [0, 10, 0] }}
-        transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }}
-        className="absolute bottom-10 left-1/2 -translate-x-1/2 text-white/50 z-20"
+        animate={shouldReduceMotion ? undefined : { y: [0, 8, 0] }}
+        transition={{ duration: 2.5, repeat: Infinity, ease: 'easeInOut' }}
+        className="absolute bottom-6 left-1/2 -translate-x-1/2 text-sand-500/60 pointer-events-none"
       >
-        <div className="flex h-10 w-6 justify-center rounded-full border-2 border-primary-500/30 p-1">
-          <div className="h-2 w-1 rounded-full bg-primary-400" />
+        <div className="flex flex-col items-center gap-1.5">
+          <div className="w-5 h-8 rounded-full border border-sand-500/30 flex items-start justify-center p-1">
+            <div className="w-1 h-2 rounded-full bg-sand-400" />
+          </div>
+          <span className="text-[10px] uppercase tracking-widest text-sand-500">Scroll</span>
         </div>
       </motion.div>
     </section>
   )
 }
+

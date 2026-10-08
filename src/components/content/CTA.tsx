@@ -4,7 +4,6 @@ import React from 'react'
 import { Button } from '@/components/ui/Button'
 import { motion } from 'framer-motion'
 import { Sparkles, ArrowRight } from 'lucide-react'
-import { GlitchText } from '@/components/ui/GlitchText'
 
 export interface CTAProps {
   title: string
@@ -27,17 +26,15 @@ export function CTA({
   secondaryButtonText,
   secondaryButtonLink,
   onSecondaryClick,
-  variant = 'primary'
 }: CTAProps) {
   return (
-    <section className="relative overflow-hidden bg-void py-32 px-6">
-      {/* Background Effects */}
-      <div className="absolute inset-0 bg-[url('/grid.svg')] bg-center opacity-5 [mask-image:linear-gradient(180deg,white,rgba(255,255,255,0))]" />
-
-      {/* Living gradient + dual glow */}
-      <div className="bg-pulse-radial pointer-events-none absolute inset-0 animate-pulse-gradient" />
-      <div className="pointer-events-none absolute left-1/2 top-1/2 h-[600px] w-[600px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-primary-500/20 blur-[100px]" />
-      <div className="pointer-events-none absolute right-0 top-0 h-[400px] w-[400px] rounded-full bg-accent-500/20 blur-[100px]" />
+    <section className="relative overflow-hidden bg-void py-32 px-6 border-t border-sand-500/10">
+      {/* Background Atmosphere */}
+      <div className="pointer-events-none absolute inset-0 overflow-hidden">
+        <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-175 h-125 rounded-full bg-terracotta-500/15 blur-[140px]" />
+        <div className="absolute right-10 bottom-10 w-125 h-100 rounded-full bg-bronze-500/10 blur-[130px]" />
+        <div className="absolute inset-0 bg-[radial-gradient(#e8e6dc_1px,transparent_1px)] [background-size:32px_32px] opacity-[0.03]" />
+      </div>
 
       <div className="relative z-10 max-w-4xl mx-auto text-center">
         <motion.div
@@ -46,25 +43,25 @@ export function CTA({
           viewport={{ once: true }}
           transition={{ duration: 0.8 }}
         >
-          <div className="mb-8 inline-flex items-center gap-2 rounded-full border border-primary-500/20 bg-primary-500/10 px-4 py-1.5 text-sm font-medium text-primary-300 backdrop-blur-md">
-            <Sparkles className="w-4 h-4" />
-            <span>Let&apos;s Build Something Extraordinary</span>
+          <div className="mb-8 inline-flex items-center gap-2 rounded-full border border-terracotta-500/30 bg-terracotta-500/10 px-4 py-1.5 text-xs font-semibold text-terracotta-300 uppercase tracking-widest backdrop-blur-md">
+            <Sparkles className="w-3.5 h-3.5" />
+            <span>Sovereign Partnership &amp; Heritage Preservation</span>
           </div>
 
-          <h2 className="mb-6 text-4xl font-bold leading-tight text-white md:text-5xl lg:text-6xl">
-            <GlitchText text={title.toLowerCase()} className="text-glow font-heading lowercase" />
+          <h2 className="mb-6 font-serif text-4xl sm:text-5xl lg:text-6xl font-light text-sand-100 leading-tight">
+            {title}
           </h2>
 
-          <p className="mx-auto mb-12 max-w-2xl text-xl leading-relaxed text-ghost md:text-2xl">
+          <p className="mx-auto mb-12 max-w-2xl text-lg sm:text-xl font-light leading-relaxed text-sand-400">
             {description}
           </p>
 
-          <div className="flex flex-col sm:flex-row gap-6 justify-center items-center">
+          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
             {primaryButtonLink ? (
               <a href={primaryButtonLink} className="w-full sm:w-auto">
-                <Button variant="primary" size="lg" className="w-full min-w-[200px] sm:w-auto">
-                  {primaryButtonText}
-                  <ArrowRight className="ml-2 w-5 h-5" />
+                <Button variant="primary" size="lg" className="w-full sm:w-auto min-w-55">
+                  <span>{primaryButtonText}</span>
+                  <ArrowRight className="ml-2 w-4 h-4" />
                 </Button>
               </a>
             ) : (
@@ -72,28 +69,28 @@ export function CTA({
                 variant="primary"
                 size="lg"
                 onClick={onPrimaryClick}
-                className="w-full min-w-[200px] sm:w-auto"
+                className="w-full sm:w-auto min-w-55"
               >
-                {primaryButtonText}
-                <ArrowRight className="ml-2 w-5 h-5" />
+                <span>{primaryButtonText}</span>
+                <ArrowRight className="ml-2 w-4 h-4" />
               </Button>
             )}
 
             {secondaryButtonText && (
               secondaryButtonLink ? (
                 <a href={secondaryButtonLink} className="w-full sm:w-auto">
-                  <Button variant="ghost" size="lg" className="w-full sm:w-auto border-primary-500/40 text-white hover:border-primary-500/70">
-                    {secondaryButtonText}
+                  <Button variant="secondary" size="lg" className="w-full sm:w-auto min-w-55">
+                    <span>{secondaryButtonText}</span>
                   </Button>
                 </a>
               ) : (
                 <Button
-                  variant="ghost"
+                  variant="secondary"
                   size="lg"
                   onClick={onSecondaryClick}
-                  className="w-full sm:w-auto border-primary-500/40 text-white hover:border-primary-500/70"
+                  className="w-full sm:w-auto min-w-55"
                 >
-                  {secondaryButtonText}
+                  <span>{secondaryButtonText}</span>
                 </Button>
               )
             )}
@@ -103,3 +100,4 @@ export function CTA({
     </section>
   )
 }
+

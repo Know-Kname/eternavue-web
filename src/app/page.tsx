@@ -3,257 +3,172 @@
 import React, { useState } from 'react'
 import { PageWrapper } from '@/components/layout/PageWrapper'
 import { Hero } from '@/components/content/Hero'
-import { GlassCard } from '@/components/ui/GlassCard'
+import { TieredPackages } from '@/components/content/TieredPackages'
+import { PartnerCalculator } from '@/components/content/PartnerCalculator'
+import { HeritageVaultPreview } from '@/components/content/HeritageVaultPreview'
 import { CTA } from '@/components/content/CTA'
-import { motion, AnimatePresence, useReducedMotion, useScroll, useTransform } from 'framer-motion'
+import { GlassCard } from '@/components/ui/GlassCard'
+import { motion, AnimatePresence } from 'framer-motion'
 import {
-  Radio, FileText, Sparkles, ChevronDown,
-  Calendar, ShieldCheck, Layers, Building2
+  Sparkles, ChevronDown,
+  Calendar, ShieldCheck, Layers, Building2, CheckCircle2
 } from 'lucide-react'
-import { NeonIcon } from '@/components/ui/NeonIcon'
-import { GlitchText } from '@/components/ui/GlitchText'
 
 export default function Home() {
   const [openFaq, setOpenFaq] = useState<number | null>(null)
-  const shouldReduceMotion = useReducedMotion()
-  const { scrollY } = useScroll()
-  const servicesBgY = useTransform(scrollY, [0, 1600], [0, -120], { clamp: false })
-  const aboutBgY = useTransform(scrollY, [0, 2600], [0, 80], { clamp: false })
 
   const contactHref = 'mailto:christian@thewrightguy.com?subject=Eternavue%20%E2%80%94%20Partner%20inquiry'
 
   const fadeInUp = {
-    initial: { opacity: 0, y: 30 },
+    initial: { opacity: 0, y: 25 },
     whileInView: { opacity: 1, y: 0 },
-    viewport: { once: true, margin: '-100px' },
-    transition: { duration: 0.8, ease: 'easeOut' }
-  }
-
-  const staggerChildren = {
-    initial: { opacity: 0 },
-    whileInView: { opacity: 1 },
-    viewport: { once: true },
-    transition: { staggerChildren: 0.2 }
+    viewport: { once: true, margin: '-80px' },
+    transition: { duration: 0.7, ease: 'easeOut' }
   }
 
   const faqs = [
     {
       q: 'Is Eternavue a hologram company?',
-      a: "No. Eternavue is a white-label digital memorial platform built for cemeteries and funeral homes. Holographic capture lives in our Premium tier — never the headline, never the introduction. The everyday product is livestreamed services, lasting tribute pages, and family keepsakes."
+      a: "No. Eternavue is a sovereign digital memorial infrastructure platform built for both independent deathcare operators and direct family legacy preservation. While volumetric/holographic capture exists in our bespoke Sovereign tier, our core everyday products are white-label livestreaming, digital graveside records, oral history archives, and physical solid brass QR/NFC medallions."
     },
     {
-      q: 'How does the white-label model work?',
-      a: 'Every family touchpoint carries your brand — your name, your domain, your visual identity. Eternavue is the infrastructure underneath, invisible by design. Families see their cemetery or funeral home, not Eternavue. The data — tribute pages, recordings, guestbooks, keepsakes — belongs to you. We can put that in writing.'
+      q: 'How does the wholesale partner model work for cemeteries and funeral homes?',
+      a: 'Every family touchpoint carries your brand — your name, your domain, and your visual identity. Eternavue operates as the invisible infrastructure underneath. Operators typically retain 40% to 60% of the family-facing price under standard wholesale terms, generating a high-margin recurring software and service revenue stream with zero upfront CAPEX.'
     },
     {
-      q: 'What does it cost?',
-      a: 'Per-service, with revenue share. Basic (livestream + branded memorial page) runs $150–$400. Plus (everything in Basic plus a lasting tribute page, guestbook, highlight reel, keepsakes) runs $500–$1,200. Premium with holographic capture is by quote. Operators retain 40–60% of the family-facing price under typical white-label terms.'
+      q: 'Can families purchase Heritage Vault packages directly?',
+      a: 'Yes. Families can order direct consumer Heritage Packages (starting at $199) which include physical solid brass or ceramic memorial medallions with precision QR and NFC dual-links, lifetime oral history voice archival, and 100-year immutable cloud storage. If your cemetery is an Eternavue partner, the vault integrates directly into your institution’s digital burial map.'
     },
     {
-      q: 'Who built it?',
-      a: 'Christian Wright Hughes — fourth-generation steward of Detroit Memorial Park (est. 1925), Michigan’s first Black-owned cemetery. Eternavue is built by an operator, for operators, in a market that moves on operator-to-operator trust.'
+      q: 'What makes Eternavue different from existing funeral livestreaming vendors?',
+      a: 'Incumbents sell single-purpose point tools designed solely for funeral chapels. Eternavue is cemetery-native, built to solve the long quiet century after the service. We bridge physical cemetery monuments with digital memory records, oral histories, and family genealogy, creating long-term memorial-data gravity.'
+    },
+    {
+      q: 'Who built Eternavue?',
+      a: 'Christian Wright Hughes — fourth-generation operator of Detroit Memorial Park (est. 1925), Michigan’s first Black-owned cemetery. Eternavue was engineered by an operator who understands perpetual care, chain-of-custody, and the sacred trust families place in memorial institutions.'
     },
     {
       q: 'When does the platform go live?',
-      a: 'The pilot launches at Detroit Memorial Park the week of July 28, 2026 — paying families, branded streams, recordings delivered. We are taking conversations with a small number of cemetery and funeral-home partners interested in being the second wave.'
+      a: 'The pilot launches at Detroit Memorial Park the week of July 28, 2026 — delivering branded streams, live family portals, and physical medallion deployments. We are actively conducting partner deliberations with forward-thinking cemetery operators and funeral directors for our secondary expansion tranche.'
     },
   ]
 
   return (
     <PageWrapper onHeaderCtaClick={() => window.location.assign(contactHref)}>
-      {/* Hero Section */}
+      {/* 1. Dual-Lens Hero Section */}
       <Hero
-        title="the digital memorial layer for cemeteries and funeral homes"
-        subtitle="Livestreamed services, lasting online tributes, and family keepsakes — all under your brand. Built by people who have operated a cemetery since 1925. Not a tech company that discovered grief."
-        ctaText="Talk to us"
         onCtaClick={() => window.location.assign(contactHref)}
       />
 
-      {/* Trust Signal Bar */}
-      <section className="bg-void border-b border-white/5 py-8">
-        <div className="max-w-7xl mx-auto px-6 text-center">
-          <motion.p
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true }}
-            transition={{ duration: 1 }}
-            className="text-ghost font-medium"
-          >
-            Operator-built · <span className="font-bold text-primary-300">Detroit Memorial Park, est. 1925</span> · Flagship partner
-          </motion.p>
+      {/* 2. Flagship Pedigree Trust Signal Banner */}
+      <section className="bg-void border-y border-sand-500/10 py-7 px-6">
+        <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-center gap-3 text-center sm:text-left">
+          <div className="flex items-center gap-2 text-terracotta-400">
+            <ShieldCheck className="w-5 h-5 shrink-0" />
+            <span className="text-xs uppercase tracking-widest font-semibold">Operator-Built Infrastructure</span>
+          </div>
+          <span className="hidden sm:inline text-sand-500/40">•</span>
+          <p className="text-sm text-sand-300 font-light">
+            Anchored by <span className="font-semibold text-sand-100">Detroit Memorial Park (est. 1925)</span> — Michigan&apos;s historic centenary cemetery.
+          </p>
         </div>
       </section>
 
-      {/* Stats Section — cemetery white-space */}
-      <section className="border-b border-white/5 bg-neutral-950 py-16 px-6">
+      {/* 3. Market Landscape & Industry Opportunity */}
+      <section className="border-b border-sand-500/10 bg-void-light/50 py-16 px-6">
         <div className="max-w-7xl mx-auto">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
             {[
-              { icon: Building2, value: '~19,000', label: 'US cemeteries' },
-              { icon: Building2, value: '~29,000', label: 'US funeral homes' },
-              { icon: Layers, value: '~8%', label: 'White-label cemetery penetration' },
-              { icon: Calendar, value: '1925', label: 'DMP flagship lineage' },
+              { icon: Building2, value: '~19,000', label: 'US Cemeteries' },
+              { icon: Building2, value: '~29,000', label: 'US Funeral Homes' },
+              { icon: Layers, value: '~8%', label: 'Cemetery Tech Penetration' },
+              { icon: Calendar, value: '1925', label: 'Detroit Flagship Lineage' },
             ].map((stat, idx) => (
               <motion.div
                 key={idx}
-                initial={{ opacity: 0, y: 20 }}
+                initial={{ opacity: 0, y: 15 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                transition={{ delay: idx * 0.1 }}
+                transition={{ delay: idx * 0.08 }}
                 className="text-center"
               >
-                <NeonIcon icon={stat.icon} className="mx-auto mb-3 h-6 w-6 text-primary-400" />
-                <div className="mb-1 font-heading text-3xl font-bold text-white md:text-4xl">{stat.value}</div>
-                <div className="text-sm text-ghost">{stat.label}</div>
+                <div className="mx-auto mb-3 flex h-10 w-10 items-center justify-center rounded-xl bg-terracotta-500/10 text-terracotta-400">
+                  <stat.icon className="h-5 w-5" />
+                </div>
+                <div className="mb-1 font-serif text-3xl font-light text-sand-100 md:text-4xl">{stat.value}</div>
+                <div className="text-xs uppercase tracking-wider text-sand-400 font-medium">{stat.label}</div>
               </motion.div>
             ))}
           </div>
-          <p className="mt-10 text-center text-sm text-ghost">
-            Nearly every named competitor sells almost exclusively to funeral homes. The cemetery channel is structurally underserved.
+          <p className="mt-10 text-center text-xs sm:text-sm text-sand-400 max-w-2xl mx-auto font-light leading-relaxed">
+            Existing deathcare vendors target funeral homes with commoditized streaming. The 19,000+ cemeteries nationwide remain structurally underserved—leaving perpetual digital heritage on the table.
           </p>
         </div>
       </section>
 
-      {/* Tier Ladder — Basic / Plus / Premium */}
-      <section id="tiers" className="relative overflow-hidden bg-void py-24 px-6">
-        <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none">
-          <motion.div
-            style={{ y: shouldReduceMotion ? 0 : servicesBgY }}
-            className="absolute -right-20 top-1/4 h-[600px] w-[600px] rounded-full bg-primary-500/20 blur-[110px]"
-          />
-          <motion.div
-            style={{ y: shouldReduceMotion ? 0 : servicesBgY }}
-            className="absolute bottom-0 left-0 h-[500px] w-[500px] rounded-full bg-accent-500/20 blur-[110px]"
-          />
-        </div>
+      {/* 4. Tiered Packages: Dual B2B Wholesale vs D2C Matrix */}
+      <TieredPackages />
 
-        <div className="max-w-7xl mx-auto relative z-10">
-          <div className="text-center mb-16">
-            <motion.h2 {...fadeInUp} className="mb-6 text-4xl font-bold text-white md:text-5xl">
-              <GlitchText text="the product ladder" className="text-glow text-4xl md:text-5xl font-heading lowercase" />
-            </motion.h2>
-            <motion.p {...fadeInUp} transition={{ delay: 0.1, duration: 0.8 }} className="mx-auto max-w-2xl text-xl text-ghost">
-              One platform. Three tiers. The everyday product is Basic and Plus. Premium is the high-margin halo, never the headline.
-            </motion.p>
-          </div>
+      {/* 5. Partner Margin Economics Calculator */}
+      <PartnerCalculator />
 
-          <motion.div
-            variants={staggerChildren}
-            initial="initial"
-            whileInView="whileInView"
-            viewport={{ once: true }}
-            className="grid grid-cols-1 md:grid-cols-3 gap-6"
-          >
-            {/* Basic */}
-            <GlassCard className="p-8 flex flex-col" hoverEffect={true}>
-              <div className="mb-6 flex h-12 w-12 items-center justify-center rounded-xl bg-primary-500/10 text-primary-400">
-                <NeonIcon icon={Radio} className="h-6 w-6 text-current" />
-              </div>
-              <h3 className="mb-2 font-heading text-2xl font-bold lowercase text-white">basic</h3>
-              <p className="mb-4 text-sm font-medium text-primary-300">$150–$400 / service</p>
-              <p className="mb-6 text-sm text-ghost flex-grow">
-                Livestreamed service + a branded memorial event page. Watchable from anywhere. The entry tier and the doorway to the relationship.
-              </p>
-              <ul className="space-y-2 text-sm text-ghost">
-                <li className="flex items-start"><span className="mr-2 text-accent-400">•</span>HD stream from chapel or graveside</li>
-                <li className="flex items-start"><span className="mr-2 text-accent-400">•</span>Branded event page (your domain)</li>
-                <li className="flex items-start"><span className="mr-2 text-accent-400">•</span>12-month VOD replay</li>
-              </ul>
-            </GlassCard>
+      {/* 6. Live Interactive Heritage Vault Experience */}
+      <HeritageVaultPreview />
 
-            {/* Plus — emphasized */}
-            <GlassCard className="p-8 flex flex-col border-2 border-primary-500/40" hoverEffect={true}>
-              <div className="mb-6 flex h-12 w-12 items-center justify-center rounded-xl bg-accent-500/10 text-accent-400">
-                <NeonIcon icon={FileText} className="h-6 w-6 text-current" />
-              </div>
-              <div className="mb-2 inline-flex w-fit items-center gap-1 rounded-full border border-accent-500/30 bg-accent-500/10 px-2 py-0.5 text-[10px] uppercase tracking-wider text-accent-300">
-                Most partners start here
-              </div>
-              <h3 className="mb-2 font-heading text-2xl font-bold lowercase text-white">plus</h3>
-              <p className="mb-4 text-sm font-medium text-primary-300">$500–$1,200 / service</p>
-              <p className="mb-6 text-sm text-ghost flex-grow">
-                Everything in Basic, plus a lasting online tribute page, guestbook, highlight reel, and digital keepsakes families actually keep.
-              </p>
-              <ul className="space-y-2 text-sm text-ghost">
-                <li className="flex items-start"><span className="mr-2 text-accent-400">•</span>Tribute page + guestbook</li>
-                <li className="flex items-start"><span className="mr-2 text-accent-400">•</span>Highlight reel (5-day SLA)</li>
-                <li className="flex items-start"><span className="mr-2 text-accent-400">•</span>Digital keepsakes for the family</li>
-                <li className="flex items-start"><span className="mr-2 text-accent-400">•</span>Anniversary touch automation</li>
-              </ul>
-            </GlassCard>
-
-            {/* Premium */}
-            <GlassCard className="p-8 flex flex-col" hoverEffect={true}>
-              <div className="mb-6 flex h-12 w-12 items-center justify-center rounded-xl bg-white/10 text-white">
-                <NeonIcon icon={Sparkles} className="h-6 w-6 text-current" />
-              </div>
-              <h3 className="mb-2 font-heading text-2xl font-bold lowercase text-white">premium</h3>
-              <p className="mb-4 text-sm font-medium text-primary-300">By quote</p>
-              <p className="mb-6 text-sm text-ghost flex-grow">
-                Everything in Plus, plus holographic capture or projection — a preserved presence families can return to. R&amp;D-stage; per-event production economics confirmed before pricing.
-              </p>
-              <ul className="space-y-2 text-sm text-ghost">
-                <li className="flex items-start"><span className="mr-2 text-accent-400">•</span>Volumetric capture (partner-delivered)</li>
-                <li className="flex items-start"><span className="mr-2 text-accent-400">•</span>Display options (sub-$10K to enterprise)</li>
-                <li className="flex items-start"><span className="mr-2 text-accent-400">•</span>Preserved presence, not synthetic simulation</li>
-              </ul>
-            </GlassCard>
-          </motion.div>
-
-          <p className="mt-12 text-center text-sm text-ghost">
-            Operator retains 40–60% of the family-facing price under typical white-label revenue share. The everyday Basic and Plus tiers are the revenue engine.
-          </p>
-        </div>
-      </section>
-
-      {/* About / Founder Section */}
-      <section id="about" className="relative overflow-hidden bg-neutral-950 py-24 px-6">
-        <motion.div
-          style={{ y: shouldReduceMotion ? 0 : aboutBgY }}
-          className="pointer-events-none absolute right-0 top-0 h-[500px] w-[500px] rounded-full bg-accent-500/15 blur-[120px]"
-        />
+      {/* 7. Founder Pedigree & The Operator Moat */}
+      <section id="about" className="relative overflow-hidden bg-void py-28 px-6 border-t border-sand-500/10">
+        <div className="pointer-events-none absolute right-0 top-1/4 h-125 w-125 rounded-full bg-bronze-500/10 blur-[140px]" />
+        
         <div className="max-w-6xl mx-auto relative z-10">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
             <motion.div {...fadeInUp}>
-              <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-accent-500/30 bg-accent-500/10 px-3 py-1 text-sm text-accent-300">
-                <NeonIcon icon={ShieldCheck} className="h-4 w-4 text-accent-300" />
-                <span>Operator-built</span>
+              <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-terracotta-500/30 bg-terracotta-500/10 px-3.5 py-1 text-xs uppercase tracking-wider font-semibold text-terracotta-300">
+                <ShieldCheck className="h-3.5 w-3.5" />
+                <span>Centennial Operator Provenance</span>
               </div>
-              <h2 className="mb-6 font-heading text-4xl font-bold lowercase text-white md:text-5xl">
-                built by someone who runs a cemetery.
+              
+              <h2 className="mb-6 font-serif text-3xl sm:text-4xl md:text-5xl font-light text-sand-100 leading-tight">
+                Built by someone who actually runs a cemetery.
               </h2>
-              <p className="mb-6 text-lg leading-relaxed text-ghost">
-                Christian Wright Hughes is the fourth-generation steward of Detroit Memorial Park — Michigan’s first Black-owned cemetery, established 1925. Notable burials include Elijah McCoy, Florence Ballard, and Congressman John Conyers Jr.
+              
+              <p className="mb-6 text-base sm:text-lg leading-relaxed text-sand-300 font-light">
+                Christian Wright Hughes is the fourth-generation operator of Detroit Memorial Park — Michigan’s first Black-owned cemetery, established 1925. Notable interments include inventor Elijah McCoy, Motown icon Florence Ballard, and Congressman John Conyers Jr.
               </p>
-              <p className="mb-6 text-lg leading-relaxed text-ghost">
-                Eternavue exists because the platform he needed for his own institution did not exist on the market. The cemetery channel is structurally underserved — incumbents target funeral homes and the few cemetery vendors are weak on the work that actually matters: perpetual care, record systems, the long quiet decade after the service.
+              
+              <p className="mb-6 text-base sm:text-lg leading-relaxed text-sand-300 font-light">
+                Eternavue was created because software vendors did not understand the solemn gravity of perpetual care. Incumbents build disposable streaming tools; Eternavue builds an enduring digital lineage layer that stays relevant 50 years after the flowers fade.
               </p>
-              <p className="text-lg leading-relaxed text-ghost">
-                Eternavue is a founder-owned independent venture. DMP is flagship partner and first customer — not the owner, not the parent.
-              </p>
+              
+              <div className="p-4 rounded-xl border border-sand-500/15 bg-void-light/70 text-xs sm:text-sm text-sand-400 space-y-1">
+                <div className="font-semibold text-sand-200">Sovereign Venture Governance:</div>
+                <p>Eternavue is an independent technology platform. Detroit Memorial Park serves as the initial flagship partner and testing ground—not parent or majority owner.</p>
+              </div>
             </motion.div>
 
             <motion.div
-              initial={{ opacity: 0, scale: 0.95 }}
+              initial={{ opacity: 0, scale: 0.96 }}
               whileInView={{ opacity: 1, scale: 1 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.8 }}
+              transition={{ duration: 0.7 }}
             >
-              <GlassCard className="p-8 space-y-6">
-                <h3 className="font-heading text-2xl font-bold lowercase text-white">the moat we build</h3>
+              <GlassCard className="p-8 space-y-6 border-sand-500/15" hoverEffect={false}>
+                <h3 className="font-serif text-2xl font-light text-sand-100">
+                  The Four Structural Moats
+                </h3>
+                
                 {[
-                  { title: 'Switching costs', desc: 'Eternavue integrates into your service workflow. Replacement becomes operationally painful.' },
-                  { title: 'Memorial-data gravity', desc: 'Families’ tributes, recordings, and keepsakes accumulate. Your cemetery becomes the long-term service of record.' },
-                  { title: 'Cemetery-network distribution', desc: 'Operator-to-operator referral compounds once two or more unaffiliated cemeteries are live.' },
-                  { title: 'Tier-ladder bundling', desc: 'Incumbents sell point streaming products. Eternavue bundles streaming + tribute + keepsakes (+ optional Premium) into one workflow.' },
+                  { title: 'Operational Workflow Lock-In', desc: 'Eternavue binds into service intake, graveside coordination, and record books. Replacement becomes operationally disruptive.' },
+                  { title: 'Memorial-Data Gravity', desc: 'Every service adds oral histories, family tributes, and digital keepsakes that compound indefinitely under your institution.' },
+                  { title: 'Operator-to-Operator Network', desc: 'Deathcare runs on inter-generational trust. Independent operators adopt what peer institutions have proven in production.' },
+                  { title: 'Hardware + Cloud Hybrid Moat', desc: 'Weatherproof solid brass QR/NFC medallions create permanent physical touchpoints that pure software vendors cannot dislodge.' },
                 ].map((item, i) => (
                   <div key={i} className="flex gap-4">
-                    <div className="mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-primary-500/10 text-primary-400">
-                      <NeonIcon icon={Sparkles} className="h-4 w-4 text-primary-400" />
+                    <div className="mt-1 flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-terracotta-500/15 text-terracotta-400">
+                      <Sparkles className="h-4 w-4" />
                     </div>
                     <div>
-                      <div className="mb-1 text-sm font-semibold text-white">{item.title}</div>
-                      <div className="text-sm text-ghost">{item.desc}</div>
+                      <div className="mb-1 text-sm font-semibold text-sand-100">{item.title}</div>
+                      <div className="text-xs text-sand-400 leading-relaxed font-light">{item.desc}</div>
                     </div>
                   </div>
                 ))}
@@ -263,28 +178,32 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Stage / Honest Status */}
-      <section className="bg-void border-y border-white/5 py-16 px-6">
-        <div className="max-w-4xl mx-auto text-center">
-          <motion.h2 {...fadeInUp} className="mb-4 font-heading text-3xl font-bold lowercase text-white md:text-4xl">
-            where we are today
-          </motion.h2>
-          <motion.p {...fadeInUp} transition={{ delay: 0.1, duration: 0.8 }} className="mb-2 text-lg text-ghost">
-            Pre-revenue. MVP web platform in development. The Detroit Memorial Park pilot launches the week of <span className="font-semibold text-white">July 28, 2026</span> — real commercial transactions, paying families, branded streams.
-          </motion.p>
-          <motion.p {...fadeInUp} transition={{ delay: 0.2, duration: 0.8 }} className="text-sm text-ghost">
-            The second unaffiliated cemetery is the real de-risking event. If you operate a cemetery or funeral home and you want to be in the next wave of partners, we want to hear from you.
-          </motion.p>
+      {/* 8. Pilot Stage & De-risking Timeline */}
+      <section className="bg-void-light/40 border-y border-sand-500/10 py-16 px-6">
+        <div className="max-w-4xl mx-auto text-center space-y-4">
+          <div className="inline-flex items-center gap-2 text-xs uppercase tracking-widest text-bronze-400 font-semibold">
+            <CheckCircle2 className="w-4 h-4" />
+            <span>Commercial Deployment Horizon</span>
+          </div>
+          <h2 className="font-serif text-3xl sm:text-4xl font-light text-sand-100">
+            Real transactions. Paying families. Live pilot.
+          </h2>
+          <p className="text-base text-sand-300 font-light max-w-2xl mx-auto leading-relaxed">
+            The Detroit Memorial Park production pilot commences the week of <span className="font-semibold text-sand-100">July 28, 2026</span>. We are now selecting partner cemeteries and funeral homes for Wave Two onboarding.
+          </p>
         </div>
       </section>
 
-      {/* FAQ Section */}
-      <section id="faq" className="bg-neutral-950 py-24 px-6">
+      {/* 9. FAQ Section */}
+      <section id="faq" className="bg-void py-28 px-6 border-b border-sand-500/10">
         <div className="max-w-3xl mx-auto">
           <div className="text-center mb-16">
-            <motion.h2 {...fadeInUp} className="mb-4 font-heading text-4xl font-bold lowercase text-white md:text-5xl">
-              the questions we get
-            </motion.h2>
+            <div className="inline-flex items-center gap-2 text-xs uppercase tracking-widest text-terracotta-400 font-semibold mb-3">
+              <span>Clarity &amp; Transparency</span>
+            </div>
+            <h2 className="font-serif text-3xl sm:text-4xl md:text-5xl font-light text-sand-100">
+              The questions operators &amp; families ask.
+            </h2>
           </div>
 
           <div className="space-y-4">
@@ -298,11 +217,11 @@ export default function Home() {
               >
                 <button
                   onClick={() => setOpenFaq(openFaq === idx ? null : idx)}
-                  className="group w-full rounded-xl border border-white/10 bg-black/60 p-6 text-left transition-colors hover:border-primary-500/30"
+                  className="group w-full rounded-2xl border border-sand-500/15 bg-void-light/60 p-6 text-left transition-colors hover:border-terracotta-500/40 cursor-pointer"
                 >
                   <div className="flex items-center justify-between gap-4">
-                    <h3 className="text-white font-medium text-base">{faq.q}</h3>
-                    <ChevronDown className={`h-5 w-5 shrink-0 text-ghost transition-transform duration-300 ${openFaq === idx ? 'rotate-180 text-primary-300' : ''}`} />
+                    <h3 className="text-sand-100 font-medium text-base sm:text-lg">{faq.q}</h3>
+                    <ChevronDown className={`h-5 w-5 shrink-0 text-sand-400 transition-transform duration-300 ${openFaq === idx ? 'rotate-180 text-terracotta-400' : ''}`} />
                   </div>
                   <AnimatePresence>
                     {openFaq === idx && (
@@ -313,7 +232,7 @@ export default function Home() {
                         transition={{ duration: 0.3 }}
                         className="overflow-hidden"
                       >
-                        <p className="mt-4 border-t border-white/5 pt-4 text-sm leading-relaxed text-ghost">
+                        <p className="mt-4 border-t border-sand-500/10 pt-4 text-sm leading-relaxed text-sand-300 font-light">
                           {faq.a}
                         </p>
                       </motion.div>
@@ -326,15 +245,14 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Final CTA */}
+      {/* 10. Final Call to Action */}
       <CTA
-        title="ready for a conversation?"
-        description="If you operate a cemetery or funeral home and you want the digital relationship with your families to belong to you, get in touch. We are taking a small number of partner conversations between now and the DMP pilot launch."
-        primaryButtonText="Email Christian"
+        title="Ready to build your digital memorial layer?"
+        description="Whether you are an independent deathcare operator looking to retain 40–60% margin under your own brand, or a family seeking an immutable centenary vault, we invite you to connect."
+        primaryButtonText="Partner Inquiry"
         primaryButtonLink={contactHref}
-        secondaryButtonText="Read the FAQ"
-        secondaryButtonLink="#faq"
-        variant="primary"
+        secondaryButtonText="Explore Packages"
+        secondaryButtonLink="#packages"
       />
     </PageWrapper>
   )

@@ -20,19 +20,19 @@ export function GlassCard({ children, className = '', hoverEffect = true }: Glas
       whileHover={hoverEffect ? { y: -4, scale: 1.01 } : undefined}
       className={cn(
         'relative overflow-hidden rounded-2xl',
-        'bg-black/70 backdrop-blur-[12px]',
-        'border-t border-l border-white/10',
-        'shadow-[0_8px_32px_0_rgba(9,9,11,0.45)]',
+        'bg-neutral-900/85 backdrop-blur-[16px]',
+        'border border-neutral-800/80',
+        'shadow-warm-card',
         'transition-all duration-300',
-        hoverEffect && 'hover:border-t-primary-500/50 hover:border-l-primary-500/50 hover:shadow-glow',
+        hoverEffect && 'hover:border-primary-500/40 hover:-translate-y-1 hover:shadow-glow',
         className
       )}
     >
-      {/* Living gradient glow behind content */}
-      <div className="pointer-events-none absolute inset-0 bg-pulse-radial opacity-60 animate-pulse-gradient" />
+      {/* Subtle warm ambient glow */}
+      <div className="pointer-events-none absolute -right-16 -top-16 h-32 w-32 rounded-full bg-primary-500/5 blur-2xl" />
 
-      {/* Edge sheen */}
-      <div className="pointer-events-none absolute inset-0 bg-gradient-to-tr from-white/10 via-transparent to-transparent opacity-40" />
+      {/* Gentle top edge sheen */}
+      <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/15 to-transparent" />
 
       {children}
     </motion.div>
